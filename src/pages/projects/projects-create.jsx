@@ -25,34 +25,63 @@ function ProjectsCreate() {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value })
     }
-    console.log("---------")
-    console.log("Genre: ", genreArr)
-    console.log("Skill: ", skillArr)
-    console.log("---------")
+    // console.log("---------")
+    // console.log("--> ", form)
+    // console.log("Genre: ", genreArr)
+    // console.log("Skill: ", skillArr)
+    // console.log("---------")
 
-    function handleGenreCheckbox(e) {
-        const { value, checked } = e.target;
+    function handleCheckbox(e) {
+        const { name, value, checked } = e.target;
+        let getArr;
+        let setArr;
+
+        if (name === "genre") {
+            getArr = genreArr;
+            setArr = setGenreArr
+        } else if (name === "lookingFor") {
+            getArr = skillArr;
+            setArr = setSkillArr
+        }
 
         if (checked) {
-            setGenreArr([...genreArr, value])
+            setArr([...getArr, value])
+            setForm({ ...form, [name]: [...getArr, value] })
         }
         else {
-            const newGenreArr = genreArr.filter(e => e !== value)
-            setGenreArr(newGenreArr)
+            const newArr = getArr.filter(e => e !== value)
+            setArr(newArr)
+            setForm({ ...form, [name]: newArr })
         }
     }
 
-    function handleSkillCheckbox(e) {
-        const { value, checked } = e.target;
+    // function handleGenreCheckbox(e) {
+    //     const { name, value, checked } = e.target;
 
-        if (checked) {
-            setSkillArr([...skillArr, value])
-        }
-        else {
-            const newSkillArr = skillArr.filter(e => e !== value)
-            setSkillArr(newSkillArr)
-        }
-    }
+    //     if (checked) {
+    //         setGenreArr([...genreArr, value])
+    //         setForm({ ...form, [name]: [...genreArr, value] })
+    //     }
+    //     else {
+    //         const newGenreArr = genreArr.filter(e => e !== value)
+    //         setGenreArr(newGenreArr)
+    //         setForm({ ...form, [name]: newGenreArr })
+    //     }
+    // }
+
+    // function handleSkillCheckbox(e) {
+    //     const { name, value, checked } = e.target;
+
+    //     if (checked) {
+    //         setSkillArr([...skillArr, value])
+    //         setForm({ ...form, [name]: [...skillArr, value] })
+    //     }
+    //     else {
+    //         const newSkillArr = skillArr.filter(e => e !== value)
+    //         setSkillArr(newSkillArr)
+    //         setForm({ ...form, [name]: newSkillArr })
+    //     }
+    // }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -75,11 +104,11 @@ function ProjectsCreate() {
                 </label>
                 <label>Which genre will your project be?</label>
                 {GENRE_ENUM.map((genre) => {
-                    return <label key={genre}><input onChange={handleGenreCheckbox} type="checkbox" name="genre" value={genre}></input>{genre}</label>
+                    return <label key={genre}><input onChange={handleCheckbox} type="checkbox" name="genre" value={genre}></input>{genre}</label>
                 })}
                 <label>Who are you looking for?</label>
                 {SKILL_ENUM.map((skill) => {
-                    return <label key={skill}><input onChange={handleSkillCheckbox} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
+                    return <label key={skill}><input onChange={handleCheckbox} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
                 })}
                 <label>When do you wanna start?
                     <input onChange={handleChange} value={form.startDate} type="date" name="startDate"></input>
