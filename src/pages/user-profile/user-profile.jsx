@@ -1,4 +1,4 @@
-import "./ProfilePage.css";
+import "./user-profile.css";
 
 function ProfilePage() {
   return (
