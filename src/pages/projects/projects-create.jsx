@@ -15,7 +15,7 @@ function ProjectsCreate() {
         startDate: format(new Date(), 'yyyy-MM-dd'),
         endDate: format(new Date(), 'yyyy-MM-dd'),
         isRemote: false,
-        city: "",
+        city: "", // <-- dropdown via api like for countries?
         country: "",
         initiator: "This will be changed to the ID of the current user!!!", // <-- CHANGES NEED TO BE MADE HERE
         addSample: false,
@@ -31,8 +31,8 @@ function ProjectsCreate() {
             .then(response => {
                 setCountries(response.data)
                 // console.log('Response from API is: ', response);
-                const countryDetail = response.data[0];
-                console.log('a single country details: ', countryDetail);
+                // const countryDetail = response.data[0];
+                // console.log('a single country details: ', countryDetail);
             })
             .catch(err => console.log(err));
     }, [])
@@ -42,7 +42,7 @@ function ProjectsCreate() {
         setForm({ ...form, [name]: value })
     }
 
-    function handleCheckboxChange(e) {
+    function handleCheckboxChange(e) { // <<<<Function also in CreatSample.jsx
         const { name, checked } = e.target;
 
         switch (name) {
@@ -61,7 +61,7 @@ function ProjectsCreate() {
         }
     }
 
-    function setArrayValues(target, arr, setArr) {
+    function setArrayValues(target, arr, setArr) { // <<<<Function also in CreatSample.jsx
         const { name, value, checked } = target;
 
         if (checked) {
@@ -169,9 +169,10 @@ function ProjectsCreate() {
                 <label>Do you want to add a sample?
                     <input onChange={handleCheckboxChange} value={form.addSample} type="checkbox" name="addSample"></input>
                 </label>
-                {form.addSample ? <div style={{ backgroundColor: "grey" }}><CreateSample /></div> : ""}
+
                 <button type="submit">Create</button>
             </form>
+            {form.addSample ? <div style={{ backgroundColor: "grey" }}><CreateSample /></div> : ""}
         </div >
     )
 }
