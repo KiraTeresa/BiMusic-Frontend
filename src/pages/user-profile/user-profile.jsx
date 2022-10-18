@@ -12,16 +12,19 @@ const [userInfo,setUserInfo]= useState(undefined)
       } )
       .then(response => setUserInfo(response.data));
   }, []);
-const {user} = useContext(AuthContext)//this function will give us the user
+const {user} = useContext(AuthContext)//this function will give us the user info
 console.log(userInfo)
   return (
     <div>
-      <h1>useremail,name</h1>
-      <h1>name:{user? user.name :""}</h1>
-      <h1>email:{user? user.email :""} </h1>
-      <h1>about me:{user? user.aboutMe :""} </h1>
-      <h1>city:{user? user.city :""} </h1>  
-      <h1>country:{user? user.country:""} </h1>
+      <h2>Your profile</h2>
+      <h4>Forum Username:{user? user.name :""}</h4>
+      <h4>Email:{user? user.email :""}</h4>
+      <h4>Address:</h4>
+      <h5>{user? user.city :""} </h5>  
+      <h5>{user? user.country:""} </h5>
+      <h4>About me:{user? user.aboutMe :""} </h4>
+      <h4>My Projects: </h4>
+      <h4>My Samples: </h4>
       {/* <h1>collabProjects:{user? user.collabProjects:""} </h1>
       <h1>samples:</h1> */}
       <button>Edit Profile</button>

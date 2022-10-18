@@ -5,8 +5,11 @@ import authService from "../../services/auth.service";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [aboutMe, setAboutMe] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
@@ -14,11 +17,14 @@ function SignupPage() {
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
   const handleName = (e) => setName(e.target.value);
+  const handleCity = (e) => setCity(e.target.value);
+  const handleAboutMe = (e) => setAboutMe(e.target.value);
+  const handleCountry = (e) => setCountry(e.target.value);
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    const requestBody = { email, password, name };
+    const requestBody = { email, password, name, city, country, aboutMe };
     console.log(requestBody)
 
     // Send a request to the server using axios
@@ -64,6 +70,16 @@ function SignupPage() {
 
         <label>Name:</label>
         <input type="text" name="name" value={name} onChange={handleName} />
+
+        <label>City:</label>
+        <input type="text" name="city" value={city} onChange={handleCity} />
+
+
+        <label>Country:</label>
+        <input type="text" name="country" value={country} onChange={handleCountry} />
+
+        <label>About me:</label>
+        <input type="text" name="country" value={aboutMe} onChange={handleAboutMe} />
 
         <button type="submit">Sign Up</button>
       </form>
