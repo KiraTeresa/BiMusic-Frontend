@@ -4,8 +4,12 @@ import SKILL_ENUM from "../../consts/skillEnum"
 import { format } from "date-fns"
 import axios from "axios";
 import CreateSample from "../../components/CreateSample/CreateSample"
+import apiClient from "../../services/apiClient";
+import { useAuth } from "../../context/auth.context";
+import Loading from "../../components/Loading/Loading";
 
 function ProjectsCreate() {
+    const user = useAuth()
     const [form, setForm] = useState({
         title: "",
         shortDescription: "",
@@ -17,13 +21,25 @@ function ProjectsCreate() {
         isRemote: false,
         city: "", // <-- dropdown via api like for countries?
         country: "",
-        initiator: "This will be changed to the ID of the current user!!!", // <-- CHANGES NEED TO BE MADE HERE
+        initiator: user._id,
         addSample: false,
-        sample: "will be a sample ID", // <-- CHANGES NEED TO BE MADE HERE
+        // sample: "will be a sample ID", // <-- CHANGES NEED TO BE MADE HERE
     })
     const [genreArr, setGenreArr] = useState([])
     const [skillArr, setSkillArr] = useState([])
     const [countries, setCountries] = useState([])
+    // const [user, setUser] = useState(undefined)
+    const [isLoading, setIsLoading] = useState(true)
+
+
+
+    // console.log("USER --> ", aUser.user)
+
+    // console.log("HEADER --> ")
+
+    // useEffect(() => {
+    //     apiClient.get("/projects/create").then((result) => console.log("From Server: ", result)).catch(err => console.log(err))
+    // }, [])
 
     useEffect(() => {
         axios
@@ -34,7 +50,7 @@ function ProjectsCreate() {
                 // const countryDetail = response.data[0];
                 // console.log('a single country details: ', countryDetail);
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err)).finally(() => setIsLoading(false));
     }, [])
 
     function handleChange(e) {
@@ -110,7 +126,11 @@ function ProjectsCreate() {
         // TO DO -->
         // create api-client.js in services, set baseURL etc
         // 
-        // apiClient.post("/projects/create", form).then(console.log).catch(console.error)
+        apiClient.post("/projects/create", form).then(console.log).catch(console.error)
+    }
+
+    if (isLoading) {
+        return <Loading />
     }
 
     return (

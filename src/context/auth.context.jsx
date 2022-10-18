@@ -85,8 +85,8 @@ function AuthProviderWrapper(props) {
   );
 }
 
-function useAuth(){
+function useAuth() {
   return useContext(AuthContext)
 }
 
-export { AuthProviderWrapper, AuthContext,useAuth};
+export { AuthProviderWrapper, AuthContext, useAuth };
