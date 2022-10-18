@@ -1,7 +1,26 @@
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import apiClient from '../../services/apiClient'
+
 function Projects() {
+    const [allProjects, setAllProjects] = useState([])
+
+    useEffect(() => {
+        apiClient.get("/projects").then((result) => {
+            console.log("The result: ", result)
+            setAllProjects(result.data)
+        }).catch((err) => console.log("Error when trying to get projects from server."))
+    }, [])
+
     return (
         <div>
             <h2>All available projects</h2>
+            <Link to="/projects/create">
+                <button>Post your project</button>
+            </Link>
+            {allProjects.map(project => {
+                return <div key={project._id}>Title: {project.title}</div>
+            })}
         </div>
     )
 }
