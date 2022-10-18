@@ -7,9 +7,10 @@ import CreateSample from "../../components/CreateSample/CreateSample"
 import apiClient from "../../services/apiClient";
 import { useAuth } from "../../context/auth.context";
 import Loading from "../../components/Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
 function ProjectsCreate() {
-    const user = useAuth()
+    const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
     const [form, setForm] = useState({
         title: "",
         shortDescription: "",
@@ -20,7 +21,7 @@ function ProjectsCreate() {
         endDate: format(new Date(), 'yyyy-MM-dd'),
         isRemote: false,
         city: "", // <-- dropdown via api like for countries?
-        country: "",
+        country: "", // <-- not happy with the current solution, might change it
         initiator: user._id,
         addSample: false,
         // sample: "will be a sample ID", // <-- CHANGES NEED TO BE MADE HERE
@@ -31,24 +32,13 @@ function ProjectsCreate() {
     // const [user, setUser] = useState(undefined)
     const [isLoading, setIsLoading] = useState(true)
 
-
-
-    // console.log("USER --> ", aUser.user)
-
-    // console.log("HEADER --> ")
-
-    // useEffect(() => {
-    //     apiClient.get("/projects/create").then((result) => console.log("From Server: ", result)).catch(err => console.log(err))
-    // }, [])
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios
             .get(`https://restcountries.com/v3.1/all`)
             .then(response => {
                 setCountries(response.data)
-                // console.log('Response from API is: ', response);
-                // const countryDetail = response.data[0];
-                // console.log('a single country details: ', countryDetail);
             })
             .catch(err => console.log(err)).finally(() => setIsLoading(false));
     }, [])
@@ -91,42 +81,13 @@ function ProjectsCreate() {
         }
     }
 
-    // function handleGenreCheckbox(e) {
-    //     const { name, value, checked } = e.target;
-
-    //     if (checked) {
-    //         setGenreArr([...genreArr, value])
-    //         setForm({ ...form, [name]: [...genreArr, value] })
-    //     }
-    //     else {
-    //         const newGenreArr = genreArr.filter(e => e !== value)
-    //         setGenreArr(newGenreArr)
-    //         setForm({ ...form, [name]: newGenreArr })
-    //     }
-    // }
-
-    // function handleSkillCheckbox(e) {
-    //     const { name, value, checked } = e.target;
-
-    //     if (checked) {
-    //         setSkillArr([...skillArr, value])
-    //         setForm({ ...form, [name]: [...skillArr, value] })
-    //     }
-    //     else {
-    //         const newSkillArr = skillArr.filter(e => e !== value)
-    //         setSkillArr(newSkillArr)
-    //         setForm({ ...form, [name]: newSkillArr })
-    //     }
-    // }
-
     function handleSubmit(e) {
         e.preventDefault();
         console.log("FORM --> ", form)
 
-        // TO DO -->
-        // create api-client.js in services, set baseURL etc
-        // 
-        apiClient.post("/projects/create", form).then(console.log).catch(console.error)
+        apiClient.post("/projects/create", form).then((res) => {
+            navigate(`/projects/${res.data}`)
+        }).catch(console.error)
     }
 
     if (isLoading) {
@@ -171,6 +132,8 @@ function ProjectsCreate() {
                 <label>Will you connect online?
                     <input onChange={handleCheckboxChange} value={form.isRemote} type="checkbox" name="isRemote"></input>
                 </label>
+
+                {/* TO DO ----> */}
                 {/* City */}
                 <label>Select a city:
                     <input onChange={handleChange} value={form.city} type="text" name="city" disabled={form.isRemote}></input>
@@ -185,10 +148,14 @@ function ProjectsCreate() {
                         return <option key={country.name.common} value={country.name.common}>{country.name.common}</option>
                     })}
                 </select>
+                {/* <---- TO DO */}
+
+                {/* TO DO ----> */}
                 {/* Sample */}
                 <label>Do you want to add a sample?
                     <input onChange={handleCheckboxChange} value={form.addSample} type="checkbox" name="addSample"></input>
                 </label>
+                {/* <---- TO DO */}
 
                 <button type="submit">Create</button>
             </form>

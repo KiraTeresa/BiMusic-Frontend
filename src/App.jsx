@@ -13,6 +13,7 @@ import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 import APP_PATHS from "./consts/app-paths";
 import EditUserProfile from "./pages/user-profile/EditUserProfile";
+import ProjectDetail from "./pages/projects/projects-detail";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
 
         <Route path={APP_PATHS.PROJECTS} element={<Projects />}></Route>
         <Route path={APP_PATHS.PROJECT_CREATE} element={<ProjectsCreate />}></Route>
+        <Route path={APP_PATHS.PROJECT_DETAIL} element={<ProjectDetail />}></Route>
 
         <Route
           path="/editprofile"
