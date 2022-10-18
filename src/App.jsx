@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 import APP_PATHS from "./consts/app-paths";
+import EditUserProfile from "./pages/user-profile/EditUserProfile";
 
 function App() {
   return (
@@ -46,8 +47,19 @@ function App() {
             </IsAnon>
           }
         />
+
         <Route path={APP_PATHS.PROJECTS} element={<Projects />}></Route>
         <Route path={APP_PATHS.PROJECT_CREATE} element={<ProjectsCreate />}></Route>
+
+        <Route
+          path="/editprofile"
+          element={
+            <IsPrivate>
+              <EditUserProfile />
+            </IsPrivate>
+          }
+        />
+
       </Routes>
     </div>
   );

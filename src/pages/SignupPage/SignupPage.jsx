@@ -19,17 +19,18 @@ function SignupPage() {
     e.preventDefault();
     // Create an object representing the request body
     const requestBody = { email, password, name };
+    console.log(requestBody)
 
     // Send a request to the server using axios
-    /* 
-    const authToken = localStorage.getItem("authToken");
-    axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/auth/signup`, 
-      requestBody, 
-      { headers: { Authorization: `Bearer ${authToken}` },
-    })
-    .then((response) => {})
-    */
+
+    // const authToken = localStorage.getItem("authToken");
+    // axios.post(
+    //   `${process.env.REACT_APP_SERVER_URL}/auth/signup`, 
+    //   requestBody, 
+    //   { headers: { Authorization: `Bearer ${authToken}` },
+    // })
+    // .then((response) => {})
+  
 
     // Or using a service
     authService
