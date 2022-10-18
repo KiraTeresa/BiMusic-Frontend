@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
+import EditUserProfile from "./pages/user-profile/EditUserProfile";
 
 function App() {
   return (
@@ -41,6 +42,14 @@ function App() {
             <IsAnon>
               <LoginPage />
             </IsAnon>
+          }
+        />
+        <Route
+          path="/editprofile"
+          element={
+            <IsPrivate>
+              <EditUserProfile />
+            </IsPrivate>
           }
         />
       </Routes>
