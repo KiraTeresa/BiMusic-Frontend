@@ -30,7 +30,6 @@ function SignupPage() {
     //   { headers: { Authorization: `Bearer ${authToken}` },
     // })
     // .then((response) => {})
-  
 
     // Or using a service
     authService
