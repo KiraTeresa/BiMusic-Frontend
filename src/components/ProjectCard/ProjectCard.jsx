@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import commentIcon from '../../assets/icons/100.png'
 import contributorsIcon from '../../assets/icons/24.png'
 import sampleIcon from '../../assets/icons/71.png'
@@ -8,19 +9,22 @@ function ProjectCard({ project }) {
     return (
         <div className="project-card">
             <h3>{title}</h3>
-            <p>{shortDescription}</p>
+            <div>
+                <p>{shortDescription}</p>
+                <Link to={`/projects/${_id}`}><button>more info...</button></Link>
+            </div>
             <div className="initiator">
                 <p>By: {initiator.name}</p>
                 <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
             </div>
             <div className="item-wrapper">
                 {genre.map((g) => {
-                    return <p key={g}>{g}</p>
+                    return <p className='genre' key={g}>{g}</p>
                 })}
             </div>
             <div className="item-wrapper">
                 {lookingFor.map((skill) => {
-                    return <p key={skill}>{skill}</p>
+                    return <p className='skill' key={skill}>{skill}</p>
                 })}
             </div>
             <div className="basic-info">
