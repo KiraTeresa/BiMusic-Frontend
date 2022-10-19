@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import apiClient from '../../services/apiClient'
 import ProjectCard from '../../components/ProjectCard/ProjectCard'
 import Loading from '../../components/Loading/Loading';
+import './projects.scss'
 
 function Projects() {
     const [allProjects, setAllProjects] = useState([]);
@@ -25,7 +26,7 @@ function Projects() {
             <Link to="/projects/create">
                 <button>Post your project</button>
             </Link>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", maxWidth: "80vw", margin: "auto" }}>
+            <div className="projects-container">
                 {allProjects.map(proj => {
                     return <ProjectCard key={proj._id} project={proj} />
                 })}

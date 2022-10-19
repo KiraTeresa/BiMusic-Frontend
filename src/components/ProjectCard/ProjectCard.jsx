@@ -3,31 +3,35 @@ import contributorsIcon from '../../assets/icons/24.png'
 import sampleIcon from '../../assets/icons/71.png'
 
 function ProjectCard({ project }) {
-    const { _id, title, shortDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, collaborators, comments, sample } = project;
+    const { _id, title, shortDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, collaborators, comments, sample } = project;
 
     return (
-        <div style={{ border: "1px solid black", minWidth: "350px" }}>
+        <div className="project-card">
             <h3>{title}</h3>
             <p>{shortDescription}</p>
-            <div style={{ display: "flex", gap: "4px" }}>
+            <div className="initiator">
+                <p>By: {initiator.name}</p>
+                <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+            </div>
+            <div className="item-wrapper">
                 {genre.map((g) => {
-                    return <p key={g} style={{ border: "grey 1px dashed" }}>{g}</p>
+                    return <p key={g}>{g}</p>
                 })}
             </div>
-            <div style={{ display: "flex", justifyContent: "center", gap: "4px" }}>
+            <div className="item-wrapper">
                 {lookingFor.map((skill) => {
-                    return <p key={skill} style={{ border: "blue 1px dashed" }}>{skill}</p>
+                    return <p key={skill}>{skill}</p>
                 })}
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "5px" }}>
-                <div style={{ textAlign: "left" }}>
-                    <p style={{ margin: "0" }}>{startDate.slice(0, -14)} - {endDate.slice(0, -14)}</p>
-                    <p style={{ margin: "0" }}>{isRemote ? "online" : (city + ", " + country)}</p>
-                </div>
+            <div className="basic-info">
                 <div>
-                    <img src={commentIcon} alt="comment icon" style={{ height: "30px" }} />{comments ? comments.length : "0"}
-                    <img src={contributorsIcon} alt="contributors icon" style={{ height: "30px" }} />{collaborators ? collaborators.length : "0"}
-                    {sample ? <img src={sampleIcon} alt="sample icon" style={{ height: "30px" }} /> : ""}
+                    <p>{startDate.slice(0, -14)} - {endDate.slice(0, -14)}</p>
+                    <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
+                </div>
+                <div className="interaction-wrapper">
+                    <img className="icon" src={commentIcon} alt="comment icon" />{comments ? comments.length : "0"}
+                    <img className="icon" src={contributorsIcon} alt="contributors icon" />{collaborators ? collaborators.length : "0"}
+                    <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
                 </div>
             </div>
         </div>
