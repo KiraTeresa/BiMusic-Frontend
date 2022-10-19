@@ -16,7 +16,7 @@
 }
 
 .initiator {
-    color: #D2691E;
+    color: #63A18F;
 
     img {
         height: 55px;
@@ -36,13 +36,13 @@
     }
 
     .genre {
-        background-color: #FFDEAD;
-        border: #DEB887 1px dashed;
+        background-color: #9bbcb2;
+        border: #63A18F 1px dashed;
     }
 
     .skill {
-        background-color: #B0E0E6;
-        border: #5F9EA0 1px dashed;
+        background-color: #a4e0cf;
+        border: #63A18F 1px dashed;
     }
 }
 
@@ -71,12 +71,54 @@
 .interaction-wrapper {
     display: flex;
     align-items: center;
+}
 
-    .icon {
-        height: 30px;
-    }
+.icon {
+    height: 30px;
+}
 
-    .grayout {
-        filter: grayscale(100%)
+.grayout {
+    filter: grayscale(100%)
+}
+
+.project-detail-wrapper {
+    // display: flex;
+    width: 80vw;
+    max-width: 1200px;
+    margin: auto;
+    height: 600px;
+}
+
+.project-detail {
+    display: grid;
+    grid-template-columns: repeat (5, 1fr);
+}
+
+.participants {
+    grid-column: 1 / 2;
+    background-color: #63A18F;
+    min-width: 150px;
+    color: #fff;
+
+    img {
+        width: 70px;
     }
+}
+
+.main {
+    grid-column: 2/4;
+    padding: 20px 50px;
+    width: auto;
+
+    p {
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+}
+
+.aside {
+    grid-column: 4/6;
+    border: #63A18F solid 2px;
+    width: 100px;
+    min-width: 150px;
 }
