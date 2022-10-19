@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 function ProjectsCreate() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
+    console.log("USER INFO --> ", user)
     const [form, setForm] = useState({
         title: "",
         shortDescription: "",
