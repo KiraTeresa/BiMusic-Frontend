@@ -112,15 +112,22 @@ function ProjectsCreate() {
                     <textarea onChange={handleChange} value={form.longDescription} type="text" name="longDescription" minLength="200" maxLength="1000"></textarea>
                 </label>
                 {/* Genre */}
-                <label>Which genre will your project be?</label>
-                {GENRE_ENUM.map((genre) => {
-                    return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
-                })}
+                <div className="checkbox-wrapper">
+                    <label>Which genre will your project be?</label>
+                    <div>
+                        {GENRE_ENUM.map((genre) => {
+                            return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
+                        })}
+                    </div>
+                </div>
                 {/* Looking For (Skills) */}
-                <label>Who are you looking for?</label>
-                {SKILL_ENUM.map((skill) => {
-                    return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
-                })}
+                <div className="checkbox-wrapper">
+                    <label>Who are you looking for?</label>
+                    <div>
+                        {SKILL_ENUM.map((skill) => {
+                            return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
+                        })}</div>
+                </div>
                 {/* Start Date */}
                 <label>When do you wanna start?
                     <input onChange={handleChange} value={form.startDate} type="date" name="startDate"></input>

@@ -83,10 +83,13 @@ function CreateSample() {
                 <textarea type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
             </label>
             {/* Genre */}
-            <label>Which genre describles the style of this track best?</label>
-            {GENRE_ENUM.map((genre) => {
-                return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
-            })}
+            <div className="checkbox-wrapper">
+                <label>Which genre describles the style of this track best?</label>
+                <div>
+                    {GENRE_ENUM.map((genre) => {
+                        return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
+                    })}</div>
+            </div>
             {/* Year */}
             <label>When did you publish this piece of art?
                 <input type="number" onChange={handleChange} name="year" min="1900" max={currentYear} step="1" value={form.year}></input>
