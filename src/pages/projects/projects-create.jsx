@@ -22,15 +22,17 @@ function ProjectsCreate() {
         startDate: format(new Date(), 'yyyy-MM-dd'),
         endDate: format(new Date(), 'yyyy-MM-dd'),
         isRemote: false,
-        city: "", // <-- dropdown via api like for countries?
-        country: "", // <-- not happy with the current solution, might change it
+        city: "",
+        country: "",
         initiator: user._id,
         addSample: false,
-        // sample: "will be a sample ID", // <-- CHANGES NEED TO BE MADE HERE
     })
     const [genreArr, setGenreArr] = useState([])
     const [skillArr, setSkillArr] = useState([])
-    const [countries, setCountries] = useState([])
+    const [countriesAndCities, setCountriesAndCities] = useState([])
+    const [citiesList, setCitiesList] = useState([])
+    // const [userCountry, setUserCountry] = useState("")
+    // const [userCity, setUserCity] = useState("")
     // const [user, setUser] = useState(undefined)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -38,16 +40,94 @@ function ProjectsCreate() {
 
     useEffect(() => {
         axios
-            .get(`https://restcountries.com/v3.1/all`)
+            .get(`https://countriesnow.space/api/v0.1/countries`)
             .then(response => {
-                setCountries(response.data)
-            })
-            .catch(err => console.log(err)).finally(() => setIsLoading(false));
+                const resArray = response.data.data;
+                setCountriesAndCities(resArray)
+
+                apiClient.get(`/projects/create?userId=${user._id}`).then((result) => {
+                    // console.log("#2 --> ", countriesAndCities)
+                    console.log("Info from backend: ", result);
+                    if (result) {
+                        const { city, country } = result.data;
+                        setForm({ ...form, city, country })
+
+                        const findCountry = resArray.find((element) => element.country === country)
+                        // console.log("C and C ", countriesAndCities)
+                        // console.log("Found Country: ", findCountry)
+                        // const cityArr = findCountry.cities
+                        if (findCountry) {
+                            console.log("CITIIIIEEES--> ", findCountry.cities)
+                            setCitiesList(findCountry.cities)
+                        }
+
+                    } else {
+                        setCitiesList(resArray[0].cities)
+                    }
+                }).then(() => {
+                    // console.log("#3 --> ", countriesAndCities); updateCityOptions()
+                }).catch(console.error)
+
+                setCountriesAndCities(response.data.data)
+                console.log("#1 -> ", countriesAndCities)
+            }).catch(console.error).finally(() => setIsLoading(false));
     }, [])
+
+    // useEffect(() => {
+    //     axios
+    //         .get(`https://countriesnow.space/api/v0.1/countries`)
+    //         .then(response => {
+    //             setCountriesAndCities(response.data.data)
+    //             console.log("#1 -> ", countriesAndCities)
+    //         }).then(() => {
+    //             apiClient.get(`/projects/create?userId=${user._id}`).then((result) => {
+    //                 console.log("#2 --> ", countriesAndCities)
+    //                 console.log("Info from backend: ", result);
+    //                 if (result) {
+    //                     const { city, country } = result.data;
+    //                     setForm({ ...form, city, country })
+    //                     setUserCountry(country)
+    //                     setUserCity(city)
+    //                 }
+    //             })
+    //         }).then(() => {
+    //             console.log("#3 --> ", countriesAndCities); updateCityOptions()
+    //         }).catch(console.error).finally(() => setIsLoading(false));
+    // }, [])
+
+    console.log("FOOOORM #### ", form)
+
+    // useEffect(() => {
+    //     if (form.country) {
+    //         updateCityOptions();
+    //         console.log("#4 ", countriesAndCities)
+    //     }
+    // }, [form.country])
 
     function handleChange(e) {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value })
+        console.log("NEW --> ", name, " ", value)
+    }
+
+    function updateCityOptions() {
+        const findCountry = countriesAndCities.find((element) => element.country === form.country)
+        console.log("C and C ", countriesAndCities)
+        console.log("Found Country: ", findCountry)
+        // const cityArr = findCountry.cities
+        if (findCountry) {
+            console.log("CITIIIIEEES--> ", findCountry.cities)
+            setCitiesList(findCountry.cities)
+        }
+    }
+
+    function handleCountryChange(e) {
+        const { name, value } = e.target;
+
+        const findCountry = countriesAndCities.find((element) => element.country === value)
+        const cityArr = findCountry.cities
+        setCitiesList(cityArr)
+        setForm({ ...form, [name]: value, city: cityArr[0] })
     }
 
     function handleCheckboxChange(e) { // <<<<Function also in CreatSample.jsx
@@ -147,30 +227,27 @@ function ProjectsCreate() {
                     <input onChange={handleCheckboxChange} value={form.isRemote} type="checkbox" name="isRemote"></input>
                 </label>
 
-                {/* TO DO ----> */}
-                {/* City */}
-                <label>Select a city:
-                    <input onChange={handleChange} value={form.city} type="text" name="city" disabled={form.isRemote}></input>
-                </label>
                 {/* Country */}
-                {/* <label>Select the country */}
-                {/* <input onChange={handleChange} value={form.country} type="text" name="country" disabled={form.isRemote}></input> */}
-                {/* </label> */}
-                <select name="country" onChange={handleChange} disabled={form.isRemote}>
-                    <option value="">-- Select the country --</option>
-                    {countries.map(country => {
-                        return <option key={country.name.common} value={country.name.common}>{country.name.common}</option>
+                <label>-- Select the country --</label>
+                <select name="country" onChange={handleCountryChange} disabled={form.isRemote}>
+                    <option value={form.country}> -- {form.country} -- </option>
+                    {countriesAndCities.map((element, index) => {
+                        return <option key={index} value={element.country}>{element.country}</option>
                     })}
                 </select>
-                {/* <---- TO DO */}
-
-                {/* TO DO ----> */}
+                {/* City */}
+                <label>-- Select the city --</label>
+                <select name="city" onChange={handleChange} disabled={form.isRemote} hidden={!form.country}>
+                    {form.city ?
+                        <option value={form.city}> -- {form.city} -- </option> : ""}
+                    {citiesList.map(city => {
+                        return <option key={city} value={city}>{city}</option>
+                    })}
+                </select>
                 {/* Sample */}
                 <label>Do you want to add a sample?
                     <input onChange={handleCheckboxChange} value={form.addSample} type="checkbox" name="addSample"></input>
                 </label>
-                {/* {form.addSample ? <div style={{ backgroundColor: "grey" }}><SampleForm disableSubmit /></div> : ""} */}
-                {/* <---- TO DO */}
 
                 <button type="submit">Create</button>
             </form>

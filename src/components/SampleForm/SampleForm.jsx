@@ -19,6 +19,7 @@ function SampleForm(props) {
         feedback: [],
     });
     const [genreArr, setGenreArr] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     const { disableSubmit, addedToProject } = props;
 
@@ -67,15 +68,20 @@ function SampleForm(props) {
         apiClient.post("/samples/create", { form, addedToProject }).then((res) => navigate('/profile')).catch(console.error)
     }
 
+    // if (isLoading) {
+    //     return <Loading />
+    // }
+
     return (<div style={{ display: "flex", flexDirection: "column" }} >
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
             {/* Title */}
             <label>What did you name this track?
                 <input type="text" onChange={handleChange} name="title" value={form.title}></input>
             </label>
+
             {/* Link */}
             <label>Add the link to your sample:
-                <input type="text" onChange={handleChange} name="link" value={form.link}></input>
+                <input type="url" onChange={handleChange} name="link" value={form.link}></input>
             </label>
             {/* Link Type */}
             <label>Please select the type of link you just pasted:
