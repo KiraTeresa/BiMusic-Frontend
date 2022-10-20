@@ -134,14 +134,13 @@ function ProjectsCreate() {
                             return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
                         })}</div>
                 </div>
-                {/* TO DO: start date cannot be in the past + end date cannot be before start date */}
                 {/* Start Date */}
                 <label>When do you wanna start?
-                    <input onChange={handleChange} value={form.startDate} type="date" name="startDate"></input>
+                    <input onChange={handleChange} value={form.startDate} min="today" type="date" name="startDate"></input>
                 </label>
                 {/* End Date */}
                 <label>Wnen will it be over?
-                    <input onChange={handleChange} value={form.endDate} type="date" name="endDate"></input>
+                    <input onChange={handleChange} value={form.endDate} min={form.startDate} type="date" name="endDate"></input>
                 </label>
                 {/* Remote? */}
                 <label>Will you connect online?
