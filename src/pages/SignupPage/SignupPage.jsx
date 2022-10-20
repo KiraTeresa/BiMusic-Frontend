@@ -2,6 +2,7 @@ import "./SignupPage.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
+import SKILL_ENUM from "../../consts/skillEnum"
 
 function SignupPage() {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [aboutMe, setAboutMe] = useState("");
+  const [skillArr, setSkillArr] = useState([])
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ function SignupPage() {
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    const requestBody = { email, password, name, city, country, aboutMe };
+    const requestBody = { email, password, name, city, country, aboutMe, skillArr };
     console.log(requestBody)
 
     // Send a request to the server using axios
@@ -36,21 +38,40 @@ function SignupPage() {
     //   { headers: { Authorization: `Bearer ${authToken}` },
     // })
     // .then((response) => {})
-  
+
 
     // Or using a service
-    authService
-      .signup(requestBody)
-      .then((response) => {
-        // If the POST request is successful redirect to the login page
-        navigate("/login");
-      })
-      .catch((error) => {
-        // If the request resolves with an error, set the error message in the state
-        const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
-      });
+      authService
+        .signup(requestBody)
+        .then((response) => {
+          // If the POST request is successful redirect to the login page
+          navigate("/login");
+        })
+        .catch((error) => {
+          // If the request resolves with an error, set the error message in the state
+          const errorDescription = error.response.data.message;
+          setErrorMessage(errorDescription);
+        });
   };
+
+
+  function handleCheckboxChange(e) {
+    const { value, checked } = e.target;
+    console.log(value)
+    if (checked) {
+      setSkillArr((prev) => {
+        return [...prev,value] //receiving the previous state value (adding skills to prev state)
+      })
+    }
+    else {
+      setSkillArr(skillArr.filter((skill) => { 
+        return skill !== value //unchecked skills delete from setSkillArr state
+      }))
+    }
+  }
+  console.log(skillArr)
+
+
 
   return (
     <div className="SignupPage">
@@ -80,6 +101,11 @@ function SignupPage() {
 
         <label>About me:</label>
         <input type="text" name="country" value={aboutMe} onChange={handleAboutMe} />
+
+        <label>What kind of musician are you?</label>
+        {SKILL_ENUM.map((skill) => {
+          return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
+        })}
 
         <button type="submit">Sign Up</button>
       </form>

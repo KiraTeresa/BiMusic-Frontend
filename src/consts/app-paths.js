@@ -2,7 +2,7 @@ const APP_PATHS = {
     HOME: '/',
     // User paths:
     PROFILE: '/user/:username',
-    PROFILE_EDIT: '/user/:username/edit',
+    PROFILE_EDIT: '/editprofile',
     ACCOUNT_EDIT: '/user/:username/account-settings',
     // Project paths:
     PROJECTS: '/projects',
