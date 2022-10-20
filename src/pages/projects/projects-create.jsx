@@ -31,9 +31,6 @@ function ProjectsCreate() {
     const [skillArr, setSkillArr] = useState([])
     const [countriesAndCities, setCountriesAndCities] = useState([])
     const [citiesList, setCitiesList] = useState([])
-    // const [userCountry, setUserCountry] = useState("")
-    // const [userCity, setUserCity] = useState("")
-    // const [user, setUser] = useState(undefined)
     const [isLoading, setIsLoading] = useState(true)
 
     const navigate = useNavigate();
@@ -43,66 +40,30 @@ function ProjectsCreate() {
             .get(`https://countriesnow.space/api/v0.1/countries`)
             .then(response => {
                 const resArray = response.data.data;
+                console.log("RES ARRAY ", resArray)
                 setCountriesAndCities(resArray)
 
                 apiClient.get(`/projects/create?userId=${user._id}`).then((result) => {
-                    // console.log("#2 --> ", countriesAndCities)
                     console.log("Info from backend: ", result);
-                    if (result) {
+                    const { data } = result;
+
+                    if (Object.keys(data).length > 0) {
                         const { city, country } = result.data;
                         setForm({ ...form, city, country })
 
                         const findCountry = resArray.find((element) => element.country === country)
-                        // console.log("C and C ", countriesAndCities)
-                        // console.log("Found Country: ", findCountry)
-                        // const cityArr = findCountry.cities
+
                         if (findCountry) {
-                            console.log("CITIIIIEEES--> ", findCountry.cities)
                             setCitiesList(findCountry.cities)
                         }
 
                     } else {
                         setCitiesList(resArray[0].cities)
+                        console.log("First element: ", resArray[0])
                     }
-                }).then(() => {
-                    // console.log("#3 --> ", countriesAndCities); updateCityOptions()
                 }).catch(console.error)
-
-                setCountriesAndCities(response.data.data)
-                console.log("#1 -> ", countriesAndCities)
             }).catch(console.error).finally(() => setIsLoading(false));
     }, [])
-
-    // useEffect(() => {
-    //     axios
-    //         .get(`https://countriesnow.space/api/v0.1/countries`)
-    //         .then(response => {
-    //             setCountriesAndCities(response.data.data)
-    //             console.log("#1 -> ", countriesAndCities)
-    //         }).then(() => {
-    //             apiClient.get(`/projects/create?userId=${user._id}`).then((result) => {
-    //                 console.log("#2 --> ", countriesAndCities)
-    //                 console.log("Info from backend: ", result);
-    //                 if (result) {
-    //                     const { city, country } = result.data;
-    //                     setForm({ ...form, city, country })
-    //                     setUserCountry(country)
-    //                     setUserCity(city)
-    //                 }
-    //             })
-    //         }).then(() => {
-    //             console.log("#3 --> ", countriesAndCities); updateCityOptions()
-    //         }).catch(console.error).finally(() => setIsLoading(false));
-    // }, [])
-
-    console.log("FOOOORM #### ", form)
-
-    // useEffect(() => {
-    //     if (form.country) {
-    //         updateCityOptions();
-    //         console.log("#4 ", countriesAndCities)
-    //     }
-    // }, [form.country])
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -110,22 +71,12 @@ function ProjectsCreate() {
         console.log("NEW --> ", name, " ", value)
     }
 
-    function updateCityOptions() {
-        const findCountry = countriesAndCities.find((element) => element.country === form.country)
-        console.log("C and C ", countriesAndCities)
-        console.log("Found Country: ", findCountry)
-        // const cityArr = findCountry.cities
-        if (findCountry) {
-            console.log("CITIIIIEEES--> ", findCountry.cities)
-            setCitiesList(findCountry.cities)
-        }
-    }
-
     function handleCountryChange(e) {
         const { name, value } = e.target;
 
         const findCountry = countriesAndCities.find((element) => element.country === value)
         const cityArr = findCountry.cities
+
         setCitiesList(cityArr)
         setForm({ ...form, [name]: value, city: cityArr[0] })
     }
@@ -166,8 +117,17 @@ function ProjectsCreate() {
     function handleSubmit(e) {
         e.preventDefault();
         console.log("FORM --> ", form)
+        let finalForm;
 
-        apiClient.post("/projects/create", form).then((res) => {
+        if (form.isRemote) {
+            finalForm = { ...form, city: "", country: "" }
+        } else {
+            finalForm = { ...form }
+        }
+
+        console.log("Final Form: ", finalForm)
+
+        apiClient.post("/projects/create", finalForm).then((res) => {
             console.log("ID of new project: --> ", res.data)
             if (form.addSample) {
                 navigate(`/samples/create`, { state: res.data })
@@ -237,9 +197,8 @@ function ProjectsCreate() {
                 </select>
                 {/* City */}
                 <label>-- Select the city --</label>
-                <select name="city" onChange={handleChange} disabled={form.isRemote} hidden={!form.country}>
-                    {form.city ?
-                        <option value={form.city}> -- {form.city} -- </option> : ""}
+                <select name="city" onChange={handleChange} disabled={form.isRemote}>
+                    <option value={form.city}> -- {form.city} -- </option>
                     {citiesList.map(city => {
                         return <option key={city} value={city}>{city}</option>
                     })}
