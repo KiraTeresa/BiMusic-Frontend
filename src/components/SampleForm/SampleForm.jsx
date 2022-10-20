@@ -1,7 +1,7 @@
 import { useState } from "react"
 import GENRE_ENUM from "../../consts/genreEnum"
 
-function CreateSample() {
+function SampleForm(props) {
     const currentYear = new Date().getFullYear()
     const [form, setForm] = useState({
         title: "",
@@ -15,6 +15,9 @@ function CreateSample() {
         feedback: [],
     });
     const [genreArr, setGenreArr] = useState([])
+
+    const { disableSubmit } = props;
+    console.log("PROP? ", disableSubmit)
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -85,18 +88,16 @@ function CreateSample() {
             {/* Genre */}
             <div className="checkbox-wrapper">
                 <label>Which genre describles the style of this track best?</label>
-                <div>
-                    {GENRE_ENUM.map((genre) => {
-                        return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
-                    })}</div>
-            </div>
+                {GENRE_ENUM.map((genre) => {
+                    return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
+                })}</div>
             {/* Year */}
             <label>When did you publish this piece of art?
                 <input type="number" onChange={handleChange} name="year" min="1900" max={currentYear} step="1" value={form.year}></input>
             </label>
-            <button type="submit">add sample</button>
+            {disableSubmit ? "" : <button type="submit">add sample</button>}
         </form>
     </div>)
 }
 
-export default CreateSample
+export default SampleForm;

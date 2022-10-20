@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import GENRE_ENUM from "../../consts/genreEnum"
-import SKILL_ENUM from "../../consts/skillEnum"
+import { useNavigate } from "react-router-dom";
 import { format } from "date-fns"
 import axios from "axios";
-import CreateSample from "../../components/CreateSample/CreateSample"
+
+import GENRE_ENUM from "../../consts/genreEnum"
+import SKILL_ENUM from "../../consts/skillEnum"
 import apiClient from "../../services/apiClient";
 import { useAuth } from "../../context/auth.context";
 import Loading from "../../components/Loading/Loading";
-import { useNavigate } from "react-router-dom";
+import SampleForm from "../../components/SampleForm/SampleForm"
 
 function ProjectsCreate() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
@@ -87,7 +88,12 @@ function ProjectsCreate() {
         console.log("FORM --> ", form)
 
         apiClient.post("/projects/create", form).then((res) => {
-            navigate(`/projects/${res.data}`)
+            console.log("RES DATA - ", res.data)
+            if (form.addSample) {
+                navigate(`/samples/create`, { state: res.data })
+            } else {
+                navigate(`/projects/${res.data}`)
+            }
         }).catch(console.error)
     }
 
@@ -167,7 +173,7 @@ function ProjectsCreate() {
 
                 <button type="submit">Create</button>
             </form>
-            {form.addSample ? <div style={{ backgroundColor: "grey" }}><CreateSample /></div> : ""}
+            {form.addSample ? <div style={{ backgroundColor: "grey" }}><SampleForm disableSubmit /></div> : ""}
         </div >
     )
 }
