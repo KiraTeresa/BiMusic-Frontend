@@ -12,7 +12,7 @@ import SampleForm from "../../components/SampleForm/SampleForm"
 
 function ProjectsCreate() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
-    console.log("USER INFO --> ", user)
+    // console.log("USER INFO --> ", user)
     const [form, setForm] = useState({
         title: "",
         shortDescription: "",
@@ -88,7 +88,7 @@ function ProjectsCreate() {
         console.log("FORM --> ", form)
 
         apiClient.post("/projects/create", form).then((res) => {
-            console.log("RES DATA - ", res.data)
+            console.log("ID of new project: --> ", res.data)
             if (form.addSample) {
                 navigate(`/samples/create`, { state: res.data })
             } else {
@@ -134,6 +134,7 @@ function ProjectsCreate() {
                             return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
                         })}</div>
                 </div>
+                {/* TO DO: start date cannot be in the past + end date cannot be before start date */}
                 {/* Start Date */}
                 <label>When do you wanna start?
                     <input onChange={handleChange} value={form.startDate} type="date" name="startDate"></input>
@@ -169,11 +170,11 @@ function ProjectsCreate() {
                 <label>Do you want to add a sample?
                     <input onChange={handleCheckboxChange} value={form.addSample} type="checkbox" name="addSample"></input>
                 </label>
+                {/* {form.addSample ? <div style={{ backgroundColor: "grey" }}><SampleForm disableSubmit /></div> : ""} */}
                 {/* <---- TO DO */}
 
                 <button type="submit">Create</button>
             </form>
-            {form.addSample ? <div style={{ backgroundColor: "grey" }}><SampleForm disableSubmit /></div> : ""}
         </div >
     )
 }

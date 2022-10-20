@@ -1,14 +1,18 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 import GENRE_ENUM from "../../consts/genreEnum"
+import { useAuth } from "../../context/auth.context";
+import apiClient from "../../services/apiClient";
 
 function SampleForm(props) {
+    const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
     const currentYear = new Date().getFullYear()
     const [form, setForm] = useState({
         title: "",
         link: "",
         linkType: "",
-        isPublic: true,
-        artist: "This will be changed to the ID of the current user!!!", // <-- CHANGES NEED TO BE MADE HERE
+        public: false,
+        artist: user._id,
         description: "",
         genre: [],
         year: "",
@@ -16,8 +20,9 @@ function SampleForm(props) {
     });
     const [genreArr, setGenreArr] = useState([])
 
-    const { disableSubmit } = props;
-    console.log("PROP? ", disableSubmit)
+    const { disableSubmit, addedToProject } = props;
+
+    const navigate = useNavigate();
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -26,7 +31,18 @@ function SampleForm(props) {
     }
 
     function handleCheckboxChange(e) { // <<<<Function also in projects-create.js
-        setArrayValues(e.target, genreArr, setGenreArr);
+        const { name, checked } = e.target;
+
+        switch (name) {
+            case "genre":
+                setArrayValues(e.target, genreArr, setGenreArr);
+                break;
+            case "public":
+                setForm({ ...form, [name]: checked });
+                break;
+            default:
+                console.log(`No case matching ${name}, sorry.`)
+        }
     }
 
     function setArrayValues(target, arr, setArr) { // <<<<Function also in projects-create.js
@@ -48,12 +64,10 @@ function SampleForm(props) {
 
         console.log("SAMPLE --> ", form)
 
-        // TO DO -->
-        // apiClient.post("/samples/create", form).then(console.log).catch(console.error)
+        apiClient.post("/samples/create", { form, addedToProject }).then((res) => navigate('/profile')).catch(console.error)
     }
 
-    return (<div>
-        <h2>Form to add a new sample</h2>
+    return (<div style={{ display: "flex", flexDirection: "column" }} >
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
             {/* Title */}
             <label>What did you name this track?
@@ -72,14 +86,14 @@ function SampleForm(props) {
                     <input type="radio" onChange={handleChange} name="linkType" value="video"></input> video
                 </label>
             </label>
-            {/* isPublic */}
+            {/* Public */}
             <label>Do you want this sample to be shown on your profile?
                 <label>
-                    <input type="radio" onChange={handleChange} name="isPublic" value="yes"></input> Yes, add sample to my profile
+                    <input type="checkbox" onChange={handleCheckboxChange} name="public"></input> {form.public ? "Yes, add sample to my profile" : "No, show only in project"}
                 </label>
-                <label>
+                {/* <label>
                     <input type="radio" onChange={handleChange} name="isPublic" value="no"></input> No, show only at the project
-                </label>
+                </label> */}
             </label>
             {/* Description */}
             <label>Room to tell everyone more about this track:
