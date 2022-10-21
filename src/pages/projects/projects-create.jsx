@@ -31,6 +31,7 @@ function ProjectsCreate() {
     const [countriesAndCities, setCountriesAndCities] = useState([])
     const [citiesList, setCitiesList] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [errorMessage, setErrorMessage] = useState(undefined)
 
     const navigate = useNavigate();
 
@@ -39,7 +40,7 @@ function ProjectsCreate() {
             .get(`https://countriesnow.space/api/v0.1/countries`)
             .then(response => {
                 const resArray = response.data.data;
-                console.log("RES ARRAY ", resArray)
+                // console.log("RES ARRAY ", resArray)
                 setCountriesAndCities(resArray)
 
                 apiClient.get(`/projects/create?userId=${user._id}`).then((result) => {
@@ -127,13 +128,21 @@ function ProjectsCreate() {
         console.log("Final Form: ", finalForm)
 
         apiClient.post("/projects/create", finalForm).then((res) => {
+            console.log("THE RES --> ", res)
             console.log("ID of new project: --> ", res.data)
+            if (!res.data) {
+                console.log("Missing input.")
+            }
             if (form.addSample) {
                 navigate(`/samples/create`, { state: res.data })
             } else {
                 navigate(`/projects/${res.data}`)
             }
-        }).catch(console.error)
+        }).catch((err) => {
+            console.log("AN ERROR --> ", err)
+            const errorDescription = err.response.data.message;
+            setErrorMessage(errorDescription);
+        })
     }
 
     if (isLoading) {
@@ -146,7 +155,7 @@ function ProjectsCreate() {
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
                 {/* Title */}
                 <label>Title
-                    <input onChange={handleChange} value={form.title} type="text" name="title"></input>
+                    <input onChange={handleChange} value={form.title} type="text" name="title" maxLength="50"></input>
                 </label>
                 {/* Short Description */}
                 <label>Give a briefe description of your idea:
@@ -158,7 +167,7 @@ function ProjectsCreate() {
                 </label>
                 {/* Genre */}
                 <div className="checkbox-wrapper">
-                    <label>Which genre will your project be?</label>
+                    <label>Which genre will your project be?<i> {"(optional)"}</i></label>
                     <div>
                         {GENRE_ENUM.map((genre) => {
                             return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
@@ -209,6 +218,7 @@ function ProjectsCreate() {
 
                 <button type="submit">Create</button>
             </form>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div >
     )
 }

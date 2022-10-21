@@ -106,14 +106,6 @@ function SampleForm(props) {
             </label>
             {/* Public */}
             {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>}
-            {/* <label>Do you want this sample to be shown on your profile?
-                <label>
-                    <input type="radio" onChange={handleChange} name="public" value={true}></input> Yes, add sample to my profile
-                </label>
-                <label>
-                    <input type="radio" onChange={handleChange} name="public" value={false}></input> No, show only at the project
-                </label>
-            </label> */}
             {/* Description */}
             <label>Room to tell everyone more about this track:
                 <textarea type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>

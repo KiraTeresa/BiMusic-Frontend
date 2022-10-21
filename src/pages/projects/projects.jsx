@@ -11,7 +11,7 @@ function Projects() {
 
     useEffect(() => {
         apiClient.get("/projects").then((result) => {
-            console.log("The result: ", result)
+            // console.log("The result: ", result)
             setAllProjects(result.data)
         }).catch((err) => console.log("Error when trying to get projects from server.")).finally(() => setIsLoading(false))
     }, [])

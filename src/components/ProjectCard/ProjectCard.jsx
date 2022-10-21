@@ -11,7 +11,6 @@ function ProjectCard({ project }) {
             <h3>{title}</h3>
             <div>
                 <p>{shortDescription}</p>
-                <h3>{_id}</h3>
                 <Link to={`/projects/${_id}`}><button>more info...</button></Link>
             </div>
             <div className="initiator">
