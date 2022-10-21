@@ -71,6 +71,19 @@ function SampleForm(props) {
         }).catch(console.error)
     }
 
+    function showTogglePrivacy() {
+        return (
+            <label>Do you want this sample to be shown on your profile?
+                <label>
+                    <input type="radio" onChange={handleChange} name="public" value={true}></input> Yes, add sample to my profile
+                </label>
+                <label>
+                    <input type="radio" onChange={handleChange} name="public" value={false}></input> No, show only at the project
+                </label>
+            </label>
+        )
+    }
+
     return (<div style={{ display: "flex", flexDirection: "column" }} >
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
             {/* Title */}
@@ -92,14 +105,15 @@ function SampleForm(props) {
                 </label>
             </label>
             {/* Public */}
-            <label>Do you want this sample to be shown on your profile?
+            {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>}
+            {/* <label>Do you want this sample to be shown on your profile?
                 <label>
                     <input type="radio" onChange={handleChange} name="public" value={true}></input> Yes, add sample to my profile
                 </label>
                 <label>
                     <input type="radio" onChange={handleChange} name="public" value={false}></input> No, show only at the project
                 </label>
-            </label>
+            </label> */}
             {/* Description */}
             <label>Room to tell everyone more about this track:
                 <textarea type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
