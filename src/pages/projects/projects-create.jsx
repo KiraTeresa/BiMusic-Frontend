@@ -8,7 +8,6 @@ import SKILL_ENUM from "../../consts/skillEnum"
 import apiClient from "../../services/apiClient";
 import { useAuth } from "../../context/auth.context";
 import Loading from "../../components/Loading/Loading";
-import SampleForm from "../../components/SampleForm/SampleForm"
 
 function ProjectsCreate() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
@@ -63,7 +62,7 @@ function ProjectsCreate() {
                     }
                 }).catch(console.error)
             }).catch(console.error).finally(() => setIsLoading(false));
-    }, [])
+    }, [user._id])
 
     function handleChange(e) {
         const { name, value } = e.target;

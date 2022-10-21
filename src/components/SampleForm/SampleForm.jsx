@@ -11,7 +11,7 @@ function SampleForm(props) {
         title: "",
         link: "",
         linkType: "",
-        public: false,
+        public: true,
         artist: user._id,
         description: "",
         genre: [],
@@ -19,9 +19,9 @@ function SampleForm(props) {
         feedback: [],
     });
     const [genreArr, setGenreArr] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
 
-    const { disableSubmit, addedToProject } = props;
+    const { disableSubmit, projectId } = props;
+    console.log("Props: ", props)
 
     const navigate = useNavigate();
 
@@ -65,12 +65,11 @@ function SampleForm(props) {
 
         console.log("SAMPLE --> ", form)
 
-        apiClient.post("/samples/create", { form, addedToProject }).then((res) => navigate('/profile')).catch(console.error)
+        apiClient.post("/samples/create", { form, projectId }).then((res) => {
+            console.log("RES FROM BACKEND: ", res)
+            navigate('/profile')
+        }).catch(console.error)
     }
-
-    // if (isLoading) {
-    //     return <Loading />
-    // }
 
     return (<div style={{ display: "flex", flexDirection: "column" }} >
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
@@ -95,11 +94,11 @@ function SampleForm(props) {
             {/* Public */}
             <label>Do you want this sample to be shown on your profile?
                 <label>
-                    <input type="checkbox" onChange={handleCheckboxChange} name="public"></input> {form.public ? "Yes, add sample to my profile" : "No, show only in project"}
+                    <input type="radio" onChange={handleChange} name="public" value={true}></input> Yes, add sample to my profile
                 </label>
-                {/* <label>
-                    <input type="radio" onChange={handleChange} name="isPublic" value="no"></input> No, show only at the project
-                </label> */}
+                <label>
+                    <input type="radio" onChange={handleChange} name="public" value={false}></input> No, show only at the project
+                </label>
             </label>
             {/* Description */}
             <label>Room to tell everyone more about this track:
