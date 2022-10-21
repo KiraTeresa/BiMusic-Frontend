@@ -10,7 +10,7 @@ import { set } from "date-fns";
 
 function ProjectDetail() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
-    console.log("USER INFO --> ", user)
+    // console.log("USER INFO --> ", user)
     const [project, setProject] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const { projectId } = useParams();
@@ -18,28 +18,28 @@ function ProjectDetail() {
     const [alreadyPending, setAlreadyPending] = useState(false)
     const [userIsInitiator, setUserIsInitiator] = useState(false)
 
-    console.log("ID --> ", projectId)
+    // console.log("ID --> ", projectId)
 
     useEffect(() => {
-        apiClient.get(`/projects/${projectId}`).then((result) => {
+        apiClient.get(`/projects/${projectId}`).then(async (result) => {
             console.log("Res from server: ", result)
 
-            const isCollab = result.data.collaborators.find((e) => e === user._id)
+            const isCollab = await result.data.collaborators.find((e) => e._id === user._id)
             if (isCollab) {
-                setAlreadyCollab(true)
+                await setAlreadyCollab(true)
                 console.log("Is collab ", isCollab)
             }
 
-            const isPending = result.data.pendingCollabs.find((e) => e === user._id)
+            const isPending = await result.data.pendingCollabs.find((e) => e._id === user._id)
             if (isPending) {
-                setAlreadyPending(true)
+                await setAlreadyPending(true)
                 console.log("Is pending ", isPending)
             }
 
             if (result.data.initiator._id === user._id) {
-                setUserIsInitiator(true)
+                await setUserIsInitiator(true)
             }
-            setProject(result)
+            setProject(result.data)
         }).catch((err) => console.log("No Project details received ", err)).finally(() => setIsLoading(false))
     }, [projectId])
 
@@ -65,51 +65,56 @@ function ProjectDetail() {
         return <Loading />
     }
 
+    console.log("WHO is WHO *********** ", alreadyCollab, " | ", alreadyPending, " | ", userIsInitiator)
     console.log("Details--> ", project.data)
-    const { _id, title, shortDescription, longDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, collaborators, pendingCollabs, comments, sample } = project.data;
+    // const { _id, title, shortDescription, longDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, collaborators, pendingCollabs, comments, sample } = project.data;
 
     return (
         <div className="project-detail-wrapper">
             <div className="project-detail">
                 <div className="participants">
                     <div>
-                        <h3>{initiator.name}</h3>
-                        <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                        <h3>{project.initiator.name}</h3>
+                        <img src={project.initiator.avatar ? project.initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
                     </div>
 
                     <div className="collaborators">
                         <h4>Collaborators:</h4>
-                        {collaborators.map((collab) => {
-                            // TO DO: populate collabs
+                        {project.collaborators.map((collab) => {
+                            // TO DO: doesn't map again when some one clicked button to join or leve
                             return (<div key={collab._id}>
                                 <h3>{collab.name}</h3>
                                 <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
                             </div>)
                         })}
-                        {pendingCollabs.map((collab) => {
-                            // TO DO: populate pending collabs
-                            // Should only be visible for initiator + buttons to accept or deny
-                            return (<div key={collab._id}>
-                                <h3>{collab.name}</h3>
-                                <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
-                            </div>)
-                        })}
+                        {userIsInitiator ? <div><h4>Pending:</h4>
+                            {project.pendingCollabs.map((collab) => {
+                                // TO DO: doesn't map again when some one clicked button to join or leve
+                                // Should only be visible for initiator + buttons to accept or deny
+                                return (<div key={collab._id}>
+                                    <h3>{collab.name}</h3>
+                                    <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                                    <button>Accept</button>
+                                    <button>Reject</button>
+                                </div>)
+                            })}
+                        </div> : ""}
                         {alreadyCollab ? <button onClick={triggerJoinLeave}>leave collab</button> : ""}
                         {alreadyPending ? <div><p>You are on the pending list</p><button onClick={triggerJoinLeave}>don't care anymore, remove me from that list</button></div> : ""}
                     </div>
                 </div>
                 <div className="main">
                     <div className="description">
-                        <h2>{title}</h2>
-                        <p>{shortDescription}</p>
-                        <p>{longDescription}</p>
+                        <h2>{project.title}</h2>
+                        <p>{project.shortDescription}</p>
+                        <p>{project.longDescription}</p>
                         {alreadyCollab ? "" : alreadyPending ? "" : userIsInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>}
                     </div>
                     <div className="comment-wrapper">
                         <div className="comments">
-                            <img className="icon" src={commentIcon} alt="comment icon" />{comments ? comments.length : "0"}
+                            <img className="icon" src={commentIcon} alt="comment icon" />{project.comments ? project.comments.length : "0"}
                             <div>
-                                {comments.map((comment) => {
+                                {project.comments.map((comment) => {
                                     return (
                                         // TODO: populate comments
                                         // MAYBE OWN COMPONENT ??
@@ -120,28 +125,28 @@ function ProjectDetail() {
                         </div>
                         <div className="sample">
                             {/* TODO: populate sample */}
-                            <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
+                            <img className={`icon ${!project.sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
                         </div>
                     </div>
                 </div>
                 <div className="aside">
                     <div className="item-wrapper">
-                        {genre.map((g) => {
+                        {project.genre.map((g) => {
                             return <p className='genre' key={g}>{g}</p>
                         })}
                     </div>
                     <div className="item-wrapper">
-                        {lookingFor.map((skill) => {
+                        {project.lookingFor.map((skill) => {
                             return <p className='skill' key={skill}>{skill}</p>
                         })}
                     </div>
                     <div>
-                        <p>Start: {startDate.slice(0, -14)}</p>
-                        <p>End: {endDate.slice(0, -14)}</p>
+                        <p>Start: {project.startDate.slice(0, -14)}</p>
+                        <p>End: {project.endDate.slice(0, -14)}</p>
                     </div>
                     <div>
                         <p>Where?</p>
-                        <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
+                        <p className='location'>{project.isRemote ? "online" : (project.city + ", " + project.country)}</p>
                     </div>
                 </div>
             </div>
