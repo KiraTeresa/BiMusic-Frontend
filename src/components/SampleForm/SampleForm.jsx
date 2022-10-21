@@ -19,9 +19,10 @@ function SampleForm(props) {
         feedback: [],
     });
     const [genreArr, setGenreArr] = useState([])
+    const [errorMessage, setErrorMessage] = useState(undefined)
 
     const { disableSubmit, projectId } = props;
-    console.log("Props: ", props)
+    // console.log("Props: ", props)
 
     const navigate = useNavigate();
 
@@ -64,11 +65,16 @@ function SampleForm(props) {
         e.preventDefault();
 
         console.log("SAMPLE --> ", form)
+        const finalForm = { ...form, year: parseInt(form.year) }
 
-        apiClient.post("/samples/create", { form, projectId }).then((res) => {
+        apiClient.post("/samples/create", { finalForm, projectId }).then((res) => {
             console.log("RES FROM BACKEND: ", res)
             navigate('/profile')
-        }).catch(console.error)
+        }).catch((err) => {
+            console.log("AN ERROR --> ", err)
+            const errorDescription = err.response.data.message;
+            setErrorMessage(errorDescription);
+        })
     }
 
     function showTogglePrivacy() {
@@ -107,12 +113,12 @@ function SampleForm(props) {
             {/* Public */}
             {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>}
             {/* Description */}
-            <label>Room to tell everyone more about this track:
+            <label>Room to tell everyone more about this track<i> {"(optional)"}</i>
                 <textarea type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
             </label>
             {/* Genre */}
             <div className="checkbox-wrapper">
-                <label>Which genre describles the style of this track best?</label>
+                <label>Which genre describles the style of this track best?</label><i> {"(optional)"}</i>
                 {GENRE_ENUM.map((genre) => {
                     return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
                 })}</div>
@@ -122,6 +128,7 @@ function SampleForm(props) {
             </label>
             {disableSubmit ? "" : <button type="submit">add sample</button>}
         </form>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>)
 }
 
