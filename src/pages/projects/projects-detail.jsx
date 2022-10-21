@@ -2,22 +2,64 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
+import { useAuth } from "../../context/auth.context";
 import commentIcon from '../../assets/icons/100.png'
 import contributorsIcon from '../../assets/icons/24.png'
 import sampleIcon from '../../assets/icons/71.png'
+import { set } from "date-fns";
 
 function ProjectDetail() {
+    const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
+    console.log("USER INFO --> ", user)
     const [project, setProject] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const { projectId } = useParams();
+    const [alreadyCollab, setAlreadyCollab] = useState(false)
+    const [alreadyPending, setAlreadyPending] = useState(false)
+    const [userIsInitiator, setUserIsInitiator] = useState(false)
 
     console.log("ID --> ", projectId)
 
     useEffect(() => {
         apiClient.get(`/projects/${projectId}`).then((result) => {
+            console.log("Res from server: ", result)
+
+            const isCollab = result.data.collaborators.find((e) => e === user._id)
+            if (isCollab) {
+                setAlreadyCollab(true)
+                console.log("Is collab ", isCollab)
+            }
+
+            const isPending = result.data.pendingCollabs.find((e) => e === user._id)
+            if (isPending) {
+                setAlreadyPending(true)
+                console.log("Is pending ", isPending)
+            }
+
+            if (result.data.initiator._id === user._id) {
+                setUserIsInitiator(true)
+            }
             setProject(result)
         }).catch((err) => console.log("No Project details received ", err)).finally(() => setIsLoading(false))
     }, [projectId])
+
+    async function triggerJoinLeave() {
+        await apiClient.post(`/projects/${projectId}/${user._id}`).then((result) => {
+            console.log("Backend responded: ", result)
+        }).catch((err) => console.log("Error: ", err))
+
+        if (alreadyCollab) {
+            setAlreadyCollab(false)
+        }
+
+        if (alreadyPending) {
+            setAlreadyPending(false)
+        }
+
+        if (!userIsInitiator && !alreadyCollab && !alreadyPending) {
+            setAlreadyPending(true)
+        }
+    }
 
     if (isLoading) {
         return <Loading />
@@ -52,6 +94,8 @@ function ProjectDetail() {
                                 <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
                             </div>)
                         })}
+                        {alreadyCollab ? <button onClick={triggerJoinLeave}>leave collab</button> : ""}
+                        {alreadyPending ? <div><p>You are on the pending list</p><button onClick={triggerJoinLeave}>don't care anymore, remove me from that list</button></div> : ""}
                     </div>
                 </div>
                 <div className="main">
@@ -59,8 +103,7 @@ function ProjectDetail() {
                         <h2>{title}</h2>
                         <p>{shortDescription}</p>
                         <p>{longDescription}</p>
-                        {/* TO DO: path to add user to pending list */}
-                        <Link to=""><button>join</button></Link>
+                        {alreadyCollab ? "" : alreadyPending ? "" : userIsInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>}
                     </div>
                     <div className="comment-wrapper">
                         <div className="comments">
@@ -70,7 +113,7 @@ function ProjectDetail() {
                                     return (
                                         // TODO: populate comments
                                         // MAYBE OWN COMPONENT ??
-                                        <div>{comment.text}</div>
+                                        <div key={comment._id}>{comment.text}</div>
                                     )
                                 })}
                             </div>
