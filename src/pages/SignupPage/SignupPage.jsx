@@ -39,7 +39,6 @@ function SignupPage() {
     // })
     // .then((response) => {})
 
-
     // Or using a service
       authService
         .signup(requestBody)

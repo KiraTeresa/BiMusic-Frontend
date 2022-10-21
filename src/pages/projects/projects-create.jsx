@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
-import GENRE_ENUM from "../../consts/genreEnum"
-import SKILL_ENUM from "../../consts/skillEnum"
+import { useNavigate } from "react-router-dom";
 import { format } from "date-fns"
 import axios from "axios";
-import CreateSample from "../../components/CreateSample/CreateSample"
+
+import GENRE_ENUM from "../../consts/genreEnum"
+import SKILL_ENUM from "../../consts/skillEnum"
+import apiClient from "../../services/apiClient";
+import { useAuth } from "../../context/auth.context";
+import Loading from "../../components/Loading/Loading";
 
 function ProjectsCreate() {
+    const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
+    // console.log("USER INFO --> ", user)
     const [form, setForm] = useState({
         title: "",
         shortDescription: "",
@@ -15,31 +21,64 @@ function ProjectsCreate() {
         startDate: format(new Date(), 'yyyy-MM-dd'),
         endDate: format(new Date(), 'yyyy-MM-dd'),
         isRemote: false,
-        city: "", // <-- dropdown via api like for countries?
+        city: "",
         country: "",
-        initiator: "This will be changed to the ID of the current user!!!", // <-- CHANGES NEED TO BE MADE HERE
+        initiator: user._id,
         addSample: false,
-        sample: "will be a sample ID", // <-- CHANGES NEED TO BE MADE HERE
     })
     const [genreArr, setGenreArr] = useState([])
     const [skillArr, setSkillArr] = useState([])
-    const [countries, setCountries] = useState([])
+    const [countriesAndCities, setCountriesAndCities] = useState([])
+    const [citiesList, setCitiesList] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [errorMessage, setErrorMessage] = useState(undefined)
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios
-            .get(`https://restcountries.com/v3.1/all`)
+            .get(`https://countriesnow.space/api/v0.1/countries`)
             .then(response => {
-                setCountries(response.data)
-                // console.log('Response from API is: ', response);
-                // const countryDetail = response.data[0];
-                // console.log('a single country details: ', countryDetail);
-            })
-            .catch(err => console.log(err));
-    }, [])
+                const resArray = response.data.data;
+                // console.log("RES ARRAY ", resArray)
+                setCountriesAndCities(resArray)
+
+                apiClient.get(`/projects/create?userId=${user._id}`).then((result) => {
+                    console.log("Info from backend: ", result);
+                    const { data } = result;
+
+                    if (Object.keys(data).length > 0) {
+                        const { city, country } = result.data;
+                        setForm({ ...form, city, country })
+
+                        const findCountry = resArray.find((element) => element.country === country)
+
+                        if (findCountry) {
+                            setCitiesList(findCountry.cities)
+                        }
+
+                    } else {
+                        setCitiesList(resArray[0].cities)
+                        console.log("First element: ", resArray[0])
+                    }
+                }).catch(console.error)
+            }).catch(console.error).finally(() => setIsLoading(false));
+    }, [user._id])
 
     function handleChange(e) {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value })
+        console.log("NEW --> ", name, " ", value)
+    }
+
+    function handleCountryChange(e) {
+        const { name, value } = e.target;
+
+        const findCountry = countriesAndCities.find((element) => element.country === value)
+        const cityArr = findCountry.cities
+
+        setCitiesList(cityArr)
+        setForm({ ...form, [name]: value, city: cityArr[0] })
     }
 
     function handleCheckboxChange(e) { // <<<<Function also in CreatSample.jsx
@@ -75,42 +114,39 @@ function ProjectsCreate() {
         }
     }
 
-    // function handleGenreCheckbox(e) {
-    //     const { name, value, checked } = e.target;
-
-    //     if (checked) {
-    //         setGenreArr([...genreArr, value])
-    //         setForm({ ...form, [name]: [...genreArr, value] })
-    //     }
-    //     else {
-    //         const newGenreArr = genreArr.filter(e => e !== value)
-    //         setGenreArr(newGenreArr)
-    //         setForm({ ...form, [name]: newGenreArr })
-    //     }
-    // }
-
-    // function handleSkillCheckbox(e) {
-    //     const { name, value, checked } = e.target;
-
-    //     if (checked) {
-    //         setSkillArr([...skillArr, value])
-    //         setForm({ ...form, [name]: [...skillArr, value] })
-    //     }
-    //     else {
-    //         const newSkillArr = skillArr.filter(e => e !== value)
-    //         setSkillArr(newSkillArr)
-    //         setForm({ ...form, [name]: newSkillArr })
-    //     }
-    // }
-
     function handleSubmit(e) {
         e.preventDefault();
         console.log("FORM --> ", form)
+        let finalForm;
 
-        // TO DO -->
-        // create api-client.js in services, set baseURL etc
-        // 
-        // apiClient.post("/projects/create", form).then(console.log).catch(console.error)
+        if (form.isRemote) {
+            finalForm = { ...form, city: "", country: "" }
+        } else {
+            finalForm = { ...form }
+        }
+
+        console.log("Final Form: ", finalForm)
+
+        apiClient.post("/projects/create", finalForm).then((res) => {
+            console.log("THE RES --> ", res)
+            console.log("ID of new project: --> ", res.data)
+            if (!res.data) {
+                console.log("Missing input.")
+            }
+            if (form.addSample) {
+                navigate(`/samples/create`, { state: res.data })
+            } else {
+                navigate(`/projects/${res.data}`)
+            }
+        }).catch((err) => {
+            console.log("AN ERROR --> ", err)
+            const errorDescription = err.response.data.message;
+            setErrorMessage(errorDescription);
+        })
+    }
+
+    if (isLoading) {
+        return <Loading />
     }
 
     return (
@@ -119,7 +155,7 @@ function ProjectsCreate() {
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
                 {/* Title */}
                 <label>Title
-                    <input onChange={handleChange} value={form.title} type="text" name="title"></input>
+                    <input onChange={handleChange} value={form.title} type="text" name="title" maxLength="50"></input>
                 </label>
                 {/* Short Description */}
                 <label>Give a briefe description of your idea:
@@ -130,39 +166,49 @@ function ProjectsCreate() {
                     <textarea onChange={handleChange} value={form.longDescription} type="text" name="longDescription" minLength="200" maxLength="1000"></textarea>
                 </label>
                 {/* Genre */}
-                <label>Which genre will your project be?</label>
-                {GENRE_ENUM.map((genre) => {
-                    return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
-                })}
+                <div className="checkbox-wrapper">
+                    <label>Which genre will your project be?<i> {"(optional)"}</i></label>
+                    <div>
+                        {GENRE_ENUM.map((genre) => {
+                            return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
+                        })}
+                    </div>
+                </div>
                 {/* Looking For (Skills) */}
-                <label>Who are you looking for?</label>
-                {SKILL_ENUM.map((skill) => {
-                    return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
-                })}
+                <div className="checkbox-wrapper">
+                    <label>Who are you looking for?</label>
+                    <div>
+                        {SKILL_ENUM.map((skill) => {
+                            return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
+                        })}</div>
+                </div>
                 {/* Start Date */}
                 <label>When do you wanna start?
-                    <input onChange={handleChange} value={form.startDate} type="date" name="startDate"></input>
+                    <input onChange={handleChange} value={form.startDate} min="today" type="date" name="startDate"></input>
                 </label>
                 {/* End Date */}
                 <label>Wnen will it be over?
-                    <input onChange={handleChange} value={form.endDate} type="date" name="endDate"></input>
+                    <input onChange={handleChange} value={form.endDate} min={form.startDate} type="date" name="endDate"></input>
                 </label>
                 {/* Remote? */}
                 <label>Will you connect online?
                     <input onChange={handleCheckboxChange} value={form.isRemote} type="checkbox" name="isRemote"></input>
                 </label>
-                {/* City */}
-                <label>Select a city:
-                    <input onChange={handleChange} value={form.city} type="text" name="city" disabled={form.isRemote}></input>
-                </label>
+
                 {/* Country */}
-                {/* <label>Select the country */}
-                {/* <input onChange={handleChange} value={form.country} type="text" name="country" disabled={form.isRemote}></input> */}
-                {/* </label> */}
-                <select name="country" onChange={handleChange} disabled={form.isRemote}>
-                    <option value="">-- Select the country --</option>
-                    {countries.map(country => {
-                        return <option key={country.name.common} value={country.name.common}>{country.name.common}</option>
+                <label>-- Select the country --</label>
+                <select name="country" onChange={handleCountryChange} disabled={form.isRemote}>
+                    <option value={form.country}> -- {form.country} -- </option>
+                    {countriesAndCities.map((element, index) => {
+                        return <option key={index} value={element.country}>{element.country}</option>
+                    })}
+                </select>
+                {/* City */}
+                <label>-- Select the city --</label>
+                <select name="city" onChange={handleChange} disabled={form.isRemote}>
+                    <option value={form.city}> -- {form.city} -- </option>
+                    {citiesList.map(city => {
+                        return <option key={city} value={city}>{city}</option>
                     })}
                 </select>
                 {/* Sample */}
@@ -172,7 +218,7 @@ function ProjectsCreate() {
 
                 <button type="submit">Create</button>
             </form>
-            {form.addSample ? <div style={{ backgroundColor: "grey" }}><CreateSample /></div> : ""}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div >
     )
 }

@@ -23,6 +23,14 @@ function Navbar() {
             {/* <img src="https://picsum.photos/id/402/200/300" style={{ width: 50, height: 50, borderRadius: 25}} alt="profile" /> */}
           </Link>
 
+          <Link to="/projects">
+            <button>Projects</button>
+          </Link>
+
+          <Link to="/samples/create">
+            <button>AddSample</button>
+          </Link>
+
           <span>{user && user.name}</span>
         </>
       )}
