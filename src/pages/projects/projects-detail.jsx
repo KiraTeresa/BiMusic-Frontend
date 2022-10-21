@@ -61,6 +61,14 @@ function ProjectDetail() {
         }
     }
 
+    async function handleUserRequest(e) {
+        console.log("Event ", e.target)
+        const { value, name } = e.target;
+        await apiClient.post(`/projects/${projectId}/${value}/${name}`).then((result) => {
+            console.log("Backend handled the user request: ", result)
+        }).catch((err) => console.log("Error: ", err))
+    }
+
     if (isLoading) {
         return <Loading />
     }
@@ -90,12 +98,11 @@ function ProjectDetail() {
                         {userIsInitiator ? <div><h4>Pending:</h4>
                             {project.pendingCollabs.map((collab) => {
                                 // TO DO: doesn't map again when some one clicked button to join or leve
-                                // Should only be visible for initiator + buttons to accept or deny
                                 return (<div key={collab._id}>
                                     <h3>{collab.name}</h3>
                                     <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
-                                    <button>Accept</button>
-                                    <button>Reject</button>
+                                    <button onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
+                                    <button onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>
                                 </div>)
                             })}
                         </div> : ""}
