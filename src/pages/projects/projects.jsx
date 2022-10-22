@@ -13,16 +13,10 @@ function Projects() {
     const [search, setSearch] = useState({
         title: "",
         genre: "",
-        skill: "",
+        lookingFor: "",
         location: ""
     })
     const [filteredProjects, setFilteredProjects] = useState(undefined)
-    const [searchActive, setSearchActive] = useState(false)
-    // const [titleSearch, setTitleSearch] = useState("")
-    // const [genreSearch, setGenreSearch] = useState("")
-    // const [skillSearch, setSkillSearch] = useState("")
-    // const [locationSearch, setLocationSearch] = useState("")
-
 
     // console.log(allProjects);
 
@@ -40,32 +34,18 @@ function Projects() {
         const newSearch = { ...search, [name]: value }
         setSearch(newSearch)
         // filterProjects(newSearch);
-        let newProjectList;
+        let newProjectList = allProjects.slice();
 
-        // if (newSearch.genre) {
-        //     newProjectList = allProjects.filter((proj) => {
-        //         return proj.genre.includes(newSearch.genre)
-        //     })
-        // }
-
-        // if (newSearch.skill) {
-        //     newProjectList = newProjectList.filter((proj) => {
-        //         return proj.lookingFor.includes(newSearch.skill)
-        //     })
-        // }
-
-        if (!filteredProjects) {
-            console.log("NOT YET FILTERED")
-            newProjectList = allProjects.filter((proj) => {
-                return proj[name].includes(value)
+        if (newSearch.genre) {
+            newProjectList = newProjectList.filter((proj) => {
+                return proj.genre.includes(newSearch.genre)
             })
-            setSearchActive(true)
-        } else {
-            console.log("ALREADY ALMIGHTY")
-            newProjectList = filteredProjects.filter((proj) => {
-                return proj[name].includes(value)
+        }
+
+        if (newSearch.lookingFor) {
+            newProjectList = newProjectList.filter((proj) => {
+                return proj.lookingFor.includes(newSearch.lookingFor)
             })
-            setSearchActive(true)
         }
 
         setFilteredProjects(newProjectList)
@@ -74,7 +54,7 @@ function Projects() {
 
     function resetFilter() {
         setFilteredProjects(undefined)
-        setSearchActive(false)
+        // setSearchActive(false)
     }
 
     console.log("The search: ", search)
@@ -91,25 +71,26 @@ function Projects() {
             </Link>
             <div>
                 <h4>Filter</h4>
-                <select>
+                {/* <select>
                     <option value=""> -- filter by title --</option>
                     {allProjects.map(proj => {
                         return <option key={proj._id}>{proj.title}</option>
                     })}
-                </select>
+                </select> */}
                 <select name="genre" onChange={handleFilterChange}>
-                    <option value="all"> -- filter by genre --</option>
+                    <option value=""> -- filter by genre --</option>
                     {GENRE_ENUM.map(genre => {
                         return <option key={genre} value={genre}>{genre}</option>
                     })}
                 </select>
                 <select name="lookingFor" onChange={handleFilterChange}>
-                    <option value="all"> -- filter by skill --</option>
+                    <option value=""> -- filter by skill --</option>
                     {SKILL_ENUM.map(skill => {
                         return <option key={skill} value={skill}>{skill}</option>
                     })}
                 </select>
                 <button onClick={resetFilter}>Reset</button>
+                <div><strong>{filteredProjects.length}</strong> project{filteredProjects.length > 1 ? "s" : ""} meet{filteredProjects.length === 1 ? "s" : ""} your criteria</div>
             </div>
             {!allProjects && <p>Sorry, there are no projects matching your search. Try another filter</p>}
             <div className="projects-container">
