@@ -7,7 +7,8 @@ import './projects.scss'
 
 function Projects() {
     const [allProjects, setAllProjects] = useState([]);
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
+    console.log(allProjects);
 
     useEffect(() => {
         apiClient.get("/projects").then((result) => {
@@ -27,7 +28,7 @@ function Projects() {
                 <button>Post your project</button>
             </Link>
             <div className="projects-container">
-                {allProjects.map(proj => {
+                {allProjects && allProjects.map(proj => {
                     return <ProjectCard key={proj._id} project={proj} />
                 })}
             </div>
