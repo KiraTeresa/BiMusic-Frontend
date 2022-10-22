@@ -59,6 +59,15 @@ function ProjectDetail() {
         if (!userIsInitiator && !alreadyCollab && !alreadyPending) {
             setAlreadyPending(true)
         }
+
+        dataRefresh()
+    }
+
+    async function dataRefresh() {
+        apiClient.get(`/projects/${projectId}`).then(async (result) => {
+            console.log("Updated data from server: ", result)
+            setProject(result.data)
+        }).catch((err) => console.log("No Project details received ", err))
     }
 
     async function handleUserRequest(e) {
