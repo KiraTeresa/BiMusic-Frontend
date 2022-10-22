@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import { useAuth } from "../../context/auth.context";
@@ -19,6 +19,7 @@ function ProjectDetail() {
     const [isPending, setIsPending] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const { alreadyCollab, alreadyPending, isInitiator } = userStatus;
+    const navigate = useNavigate();
 
     // console.log("ID --> ", projectId)
 
@@ -71,6 +72,13 @@ function ProjectDetail() {
             console.log("Backend handled the user request: ", result);
             setRefresh(!refresh)
         }).catch((err) => console.log("Error: ", err))
+    }
+
+    async function handleProjectDelete(e) {
+        await apiClient.post(`/projects/${projectId}/delete`).then((result) => {
+            console.log("Info from backend regarding deleting a project: ", result)
+            navigate('/projects')
+        }).catch((err) => console.log("An error occured while trying to delete a project >> ", err))
     }
 
     if (isLoading) {
@@ -158,6 +166,7 @@ function ProjectDetail() {
                         <p>Where?</p>
                         <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
                     </div>
+                    {isInitiator ? <button onClick={handleProjectDelete}> -- DELETE -- </button> : ""}
                 </div>
             </div>
         </div>
