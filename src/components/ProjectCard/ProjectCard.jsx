@@ -5,6 +5,7 @@ import sampleIcon from '../../assets/icons/71.png'
 
 function ProjectCard({ project }) {
     const { _id, title, shortDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, collaborators, comments, sample } = project;
+    console.log(initiator);
 
     return (
         <div className="project-card">
@@ -14,8 +15,10 @@ function ProjectCard({ project }) {
                 <Link to={`/projects/${_id}`}><button>more info...</button></Link>
             </div>
             <div className="initiator">
-                <p>By: {initiator.name}</p>
-                <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                <p>By: {initiator && initiator.name}</p>
+{/* added initiator in order to check if exists */}
+                <img src={initiator && initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+{/* added initiator in order to check if exists */}
             </div>
             <div className="item-wrapper">
                 {genre.map((g) => {
