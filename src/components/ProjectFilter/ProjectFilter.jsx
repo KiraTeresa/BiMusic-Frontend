@@ -4,8 +4,10 @@ import SKILL_ENUM from '../../consts/skillEnum';
 
 function ProjectFilter({ allProjects, sendToParent }) {
     const [filteredProjects, setFilteredProjects] = useState(undefined)
-    const [allCountries, setAllCountries] = useState([]);
-    const [allCities, setAllCities] = useState([])
+    const [genreFilter, setGenreFilter] = useState(GENRE_ENUM)
+    const [skillFilter, setSkillFilter] = useState(SKILL_ENUM)
+    const [countryFilter, setCountryFilter] = useState([])
+    const [cityFilter, setCityFilter] = useState([])
     const [search, setSearch] = useState({
         text: "",
         genre: "",
@@ -26,13 +28,39 @@ function ProjectFilter({ allProjects, sendToParent }) {
                 citiesArr.push(proj.city)
             }
         }
-        setAllCountries(countriesArr)
-        setAllCities(citiesArr)
+        setCountryFilter(countriesArr)
+        setCityFilter(citiesArr)
     }, [])
+
+    function updateGenreFilter(filteredProj) {
+        const possibleGenres = []
+        for (const proj of filteredProj) {
+            if (!possibleGenres.includes(proj.genre)) {
+                possibleGenres.push(proj.genre)
+            }
+        }
+        setGenreFilter(possibleGenres)
+    }
+
+    function updateSkillFilter(filteredProj) {
+        const possibleSkills = []
+        for (const proj of filteredProj) {
+            if (!possibleSkills.includes(proj.lookingFor)) {
+                possibleSkills.push(proj.lookingFor)
+            }
+        }
+        setSkillFilter(possibleSkills)
+    }
 
     function handleFilterChange(e) {
         const { name, value } = e.target
-        const newSearch = { ...search, [name]: value }
+        let newSearch;
+
+        if (name === "country" && value === "isRemote") {
+            newSearch = { ...search, [name]: value, city: "" }
+        } else {
+            newSearch = { ...search, [name]: value }
+        }
         setSearch(newSearch)
         let newProjectList = allProjects.slice();
 
@@ -47,12 +75,16 @@ function ProjectFilter({ allProjects, sendToParent }) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.genre.includes(newSearch.genre)
             })
+            // TO DO: other filters should only show possible options
+            // updateSkillFilter(newProjectList)
         }
 
         if (newSearch.lookingFor) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.lookingFor.includes(newSearch.lookingFor)
             })
+            // TO DO: other filters should only show possible options
+            // updateGenreFilter(newProjectList)
         }
 
         if (newSearch.country) {
@@ -70,14 +102,18 @@ function ProjectFilter({ allProjects, sendToParent }) {
                         citiesArr.push(proj.city)
                     }
                 }
-                setAllCities(citiesArr)
+                setCityFilter(citiesArr)
             }
+            // TO DO: other filters should only show possible options
+
         }
 
         if (newSearch.city) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.city === newSearch.city
             })
+            // TO DO: other filters shouls only show possible options
+
         }
 
         setFilteredProjects(newProjectList)
@@ -104,31 +140,31 @@ function ProjectFilter({ allProjects, sendToParent }) {
             </label>
             <select name="genre" onChange={handleFilterChange}>
                 <option value=""> -- filter by genre --</option>
-                {GENRE_ENUM.map(genre => {
+                {genreFilter.map(genre => {
                     return <option key={genre} value={genre}>{genre}</option>
                 })}
             </select>
             <select name="lookingFor" onChange={handleFilterChange}>
                 <option value=""> -- filter by skill --</option>
-                {SKILL_ENUM.map(skill => {
+                {skillFilter.map(skill => {
                     return <option key={skill} value={skill}>{skill}</option>
                 })}
             </select>
             <select name="country" onChange={handleFilterChange}>
                 <option value=""> -- filter by country --</option>
                 <option value="isRemote">{'>>'} online</option>
-                {allCountries.map(country => {
+                {countryFilter.map(country => {
                     return <option key={country} value={country}>{country}</option>
                 })}
             </select>
             <select name="city" onChange={handleFilterChange} disabled={search.country === "isRemote"}>
                 <option value=""> -- filter by city --</option>
-                {allCities.map(city => {
+                {cityFilter.map(city => {
                     return <option key={city} value={city}>{city}</option>
                 })}
             </select>
             <button onClick={resetFilter}>Reset</button>
-            {filteredProjects ? <div><strong>{filteredProjects.length}</strong> project{filteredProjects.length > 1 ? "s" : ""} meet{filteredProjects.length === 1 ? "s" : ""} your criteria</div> : ""}
+
 
             {!allProjects && <p>Sorry, there are no projects matching your search. Try another filter</p>}
         </div>
