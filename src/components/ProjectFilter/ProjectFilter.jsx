@@ -112,7 +112,7 @@ function ProjectFilter({ allProjects, sendToParent }) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.city === newSearch.city
             })
-            // TO DO: other filters shouls only show possible options
+            // TO DO: other filters should only show possible options
 
         }
 

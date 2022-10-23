@@ -32,7 +32,9 @@ function Projects() {
             <Link to="/projects/create">
                 <button>Post your project</button>
             </Link>
+
             <button onClick={toggleFilter} style={{ backgroundColor: "#63A18F" }}>{showFilter ? "hide filter" : "show filter"}</button>
+
             {showFilter ? <ProjectFilter allProjects={allProjects} sendToParent={setFilteredProjects} /> : ""}
 
             <div>{filteredProjects ? <div><strong>{filteredProjects.length}</strong> project{filteredProjects.length > 1 ? "s" : ""} meet{filteredProjects.length === 1 ? "s" : ""} your criteria</div> : ""}</div>
