@@ -11,7 +11,7 @@ function Projects() {
     const [allProjects, setAllProjects] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState({
-        title: "",
+        text: "",
         genre: "",
         lookingFor: "",
         location: ""
@@ -35,6 +35,13 @@ function Projects() {
         setSearch(newSearch)
         // filterProjects(newSearch);
         let newProjectList = allProjects.slice();
+
+        if (newSearch.text) {
+            // checks title, shortDescription and longDescription for the serached word
+            newProjectList = newProjectList.filter((proj) => {
+                return proj.title.toLowerCase().includes(newSearch.text.toLowerCase()) || proj.shortDescription.toLowerCase().includes(newSearch.text.toLowerCase()) || proj.longDescription.toLowerCase().includes(newSearch.text.toLowerCase())
+            })
+        }
 
         if (newSearch.genre) {
             newProjectList = newProjectList.filter((proj) => {
@@ -71,12 +78,9 @@ function Projects() {
             </Link>
             <div>
                 <h4>Filter</h4>
-                {/* <select>
-                    <option value=""> -- filter by title --</option>
-                    {allProjects.map(proj => {
-                        return <option key={proj._id}>{proj.title}</option>
-                    })}
-                </select> */}
+                <label>Text search:
+                    <input type="text" name="text" value={search.text} onChange={handleFilterChange}></input>
+                </label>
                 <select name="genre" onChange={handleFilterChange}>
                     <option value=""> -- filter by genre --</option>
                     {GENRE_ENUM.map(genre => {
@@ -90,7 +94,7 @@ function Projects() {
                     })}
                 </select>
                 <button onClick={resetFilter}>Reset</button>
-                <div><strong>{filteredProjects.length}</strong> project{filteredProjects.length > 1 ? "s" : ""} meet{filteredProjects.length === 1 ? "s" : ""} your criteria</div>
+                {filteredProjects ? <div><strong>{filteredProjects.length}</strong> project{filteredProjects.length > 1 ? "s" : ""} meet{filteredProjects.length === 1 ? "s" : ""} your criteria</div> : ""}
             </div>
             {!allProjects && <p>Sorry, there are no projects matching your search. Try another filter</p>}
             <div className="projects-container">
