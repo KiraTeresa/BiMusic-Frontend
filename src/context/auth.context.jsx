@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import authService from "../services/auth.service";
 
 const AuthContext = React.createContext();
@@ -85,4 +85,8 @@ function AuthProviderWrapper(props) {
   );
 }
 
-export { AuthProviderWrapper, AuthContext };
+function useAuth() {
+  return useContext(AuthContext)
+}
+
+export { AuthProviderWrapper, AuthContext, useAuth };

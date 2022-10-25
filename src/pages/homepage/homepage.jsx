@@ -1,4 +1,4 @@
-import "./HomePage.css";
+import "./homepage.css";
 
 function HomePage() {
   return (
