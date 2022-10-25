@@ -1,8 +1,9 @@
 import "./SignupPage.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
 import SKILL_ENUM from "../../consts/skillEnum"
+import axios from "axios";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,8 @@ function SignupPage() {
   const [name, setName] = useState("");
   const [aboutMe, setAboutMe] = useState("");
   const [skillArr, setSkillArr] = useState([])
+  const [countries,setCountries]= useState(undefined);
+  const [cities,setCities]= useState(undefined);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
@@ -21,7 +24,16 @@ function SignupPage() {
   const handleName = (e) => setName(e.target.value);
   const handleCity = (e) => setCity(e.target.value);
   const handleAboutMe = (e) => setAboutMe(e.target.value);
-  const handleCountry = (e) => setCountry(e.target.value);
+const handleCountry = (e) => {
+    setCountry(e.target.value);
+    const findCountry=countries.find((el)=>{
+      return el.country===e.target.value
+    });
+    if(findCountry){
+      console.log(findCountry.cities);
+      setCities(findCountry.cities);
+    }
+  };
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
@@ -71,7 +83,18 @@ function SignupPage() {
   console.log(skillArr)
 
 
+  useEffect(() => {
+    axios
+        .get(`https://countriesnow.space/api/v0.1/countries`)
+        .then(response => {
+            const resArray = response.data.data;
+            setCountries(resArray);
+          }
+            ).catch((err)=>{console.log(err);})
+  },[])
 
+
+  
   return (
     <div className="SignupPage">
       <h1>Sign Up</h1>
@@ -91,12 +114,27 @@ function SignupPage() {
         <label>Name:</label>
         <input type="text" name="name" value={name} onChange={handleName} />
 
-        <label>City:</label>
-        <input type="text" name="city" value={city} onChange={handleCity} />
+
+        
+        
+        <label>-- Select the country --</label>
+                <select name="country" onChange={handleCountry}>
+                    {countries?countries.map((element, index) => {
+                        return <option key={index} value={element.country}>{element.country}</option>
+                    }):<option >Select a country</option>}
+                </select>
+        
 
 
-        <label>Country:</label>
-        <input type="text" name="country" value={country} onChange={handleCountry} />
+        <label>-- Select the city --</label>
+                <select name="city" onChange={handleCity}>
+                    {cities && cities.map((element, index) => {
+                        return <option key={index} value={element}>{element}</option>
+                    })}
+                </select>
+
+
+
 
         <label>About me:</label>
         <input type="text" name="country" value={aboutMe} onChange={handleAboutMe} />

@@ -10,15 +10,10 @@ import apiClient from "../../services/apiClient";
 const EditUserProfile = () => {
   const [userInfo, setUserInfo] = useState(undefined);
   const [userProject, setUserProject] = useState(undefined);
+  const [userAvatar, setUserAvatar] = useState(undefined);
+  const [countries, setCountries] = useState(undefined);
+  const [cities, setCities] = useState(undefined);
   const { user } = useContext(AuthContext)//this function will give us the user info
-
-  useEffect(() => {
-    axios
-      .post("http://localhost:5005/profile/", {
-        email: user.email
-      })
-      .then(response => setUserInfo(response.data)).catch((err) => { console.log(err) });
-  }, []);
 
   const [city, setCity] = useState(userInfo && userInfo.city);
   const [country, setCountry] = useState(userInfo && userInfo.country);
@@ -27,10 +22,27 @@ const EditUserProfile = () => {
   const [skillArr, setSkillArr] = useState([])
   const [filterSkillArr, setFilterSkillArr] = useState([])
   const [errorMessage, setErrorMessage] = useState(undefined);
+
   const handleName = (e) => setName(e.target.value);
-  const handleCity = (e) => setCity(e.target.value);
+
+  const handleCity = (e) => {
+    console.log(e.target.value);
+    setCity(e.target.value)
+  };
+
   const handleAboutMe = (e) => setAboutMe(e.target.value);
-  const handleCountry = (e) => setCountry(e.target.value);
+
+  const handleCountry = (e) => {
+    setCountry(e.target.value);
+    const findCountry = countries.find((el) => {
+      return el.country === e.target.value
+    });
+    if (findCountry) {
+      console.log(findCountry.cities);
+      setCities(findCountry.cities);
+    }
+  };
+  console.log(cities);
 
   useEffect(() => {
     let skillEnum2 = [...SKILL_ENUM];
@@ -41,8 +53,8 @@ const EditUserProfile = () => {
   }, [userInfo]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5005/profile/addedproject/${user._id}`)
+    apiClient
+      .get(`/profile/addedproject/${user._id}`)
       .then(response => {
         setUserProject(response.data)
       })
@@ -56,9 +68,9 @@ const EditUserProfile = () => {
       e.preventDefault();
       let updatedData = { name, city, country, aboutMe, email: userInfo.email };
       //Updating data to database
-      const response = await axios.put("http://localhost:5005/profile/editinfo", updatedData);
+      const response = await apiClient.put("/profile/editinfo", updatedData);
       //Fetching data again
-      const updatedInfo = await axios.post("http://localhost:5005/profile/", { email: user.email });
+      const updatedInfo = await apiClient.post("/profile/", { email: user.email });
       setUserInfo(updatedInfo.data);
     } catch (err) {
       console.log(err);
@@ -73,9 +85,9 @@ const EditUserProfile = () => {
       console.log(skill);
       let updatedData = { skill, email: userInfo.email };
       //Updating data to database
-      const response = await axios.put("http://localhost:5005/profile/editskill", updatedData);
+      const response = await apiClient.put("/profile/editskill", updatedData);
       //Fetching data again
-      const updatedInfo = await axios.post("http://localhost:5005/profile/", { email: user.email });
+      const updatedInfo = await apiClient.post("/profile/", { email: user.email });
       setUserInfo(updatedInfo.data);
     } catch (err) {
       console.log(err);
@@ -88,9 +100,9 @@ const EditUserProfile = () => {
       e.preventDefault();
       let updatedData = { skill, email: userInfo.email };
       //Updating data to database
-      const response = await axios.put("http://localhost:5005/profile/deleteskill", updatedData);
+      const response = await apiClient.put("/profile/deleteskill", updatedData);
       //Fetching data again
-      const updatedInfo = await axios.post("http://localhost:5005/profile/", { email: user.email });
+      const updatedInfo = await apiClient.post("/profile/", { email: user.email });
       setUserInfo(updatedInfo.data);
     } catch (err) {
       console.log(err);
@@ -104,16 +116,50 @@ const EditUserProfile = () => {
       //Updating data to database
       await apiClient.post(`/projects/${projectId}/delete`);
       //Fetching data again
-      const updatedProject = await axios.get(`http://localhost:5005/profile/addedproject/${user._id}`);
+      const updatedProject = await apiClient.get(`/profile/addedproject/${user._id}`);
       setUserProject(updatedProject.data);
     } catch (error) {
       console.log(error)
     }
   }
 
+  const handleAvatarUpdate = async (e) => {
+    try {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("file", userAvatar);
+      formData.append("upload_preset", "BiMusic")
+      const response = await axios.post(`https://api.cloudinary.com/v1_1/da02iubhb/image/upload`, formData);
+      const avatarData = { avatar: response.data.url, cloudinary_id: response.data.public_id, email: userInfo.email }
+      const uploadedAvatar = await apiClient.put("/profile/uploadavatar", avatarData)
+      //Fetching data again
+      const updatedInfo = await apiClient.post("/profile/", { email: user.email });
+      setUserInfo(updatedInfo.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    axios
+      .get(`https://countriesnow.space/api/v0.1/countries`)
+      .then(response => {
+        const resArray = response.data.data;
+        setCountries(resArray);
+      }
+      ).catch((err) => { console.log(err); })
+  }, [])
+
+  useEffect(() => {
+    apiClient
+      .post("/profile/", {
+        email: user.email
+      })
+      .then(response => setUserInfo(response.data)).catch((err) => { console.log(err) });
+  }, []);
 
   return (
-    <div class="container">
+    <div className="container">
       {userInfo ?
         <>
           {/* Name Field */}
@@ -127,25 +173,41 @@ const EditUserProfile = () => {
               </div>
             </div>
 
-            {/* City */}
-            <div className="row">
-              <div className="col-25">
-                <label>City:</label>
-              </div>
-              <div className="col-75">
-                <input onChange={handleCity} type="text" name="city" defaultValue={userInfo.city} />
-              </div>
-            </div>
-
             {/* Country */}
             <div className="row">
               <div className="col-25">
                 <label>Country:</label>
               </div>
               <div className="col-75">
-                <input onChange={handleCountry} type="text" name="country" defaultValue={userInfo.country} />
+                {/* <input onChange={handleCountry} type="text" name="country" defaultValue={userInfo.country} /> */}
               </div>
             </div>
+
+            <label>-- Select the country --</label>
+            <select name="country" onChange={handleCountry}>
+              <option value={userInfo.country}> -- {userInfo.country} -- </option>
+              {countries ? countries.map((element, index) => {
+                return <option key={index} value={element.country}>{element.country}</option>
+              }) : <option >Select a country</option>}
+            </select>
+
+            {/* City */}
+            <div className="row">
+              <div className="col-25">
+                <label>City:</label>
+              </div>
+              <div className="col-75">
+                {/* <input onChange={handleCity} type="text" name="city" defaultValue={userInfo.city} /> */}
+              </div>
+            </div>
+
+            <label>-- Select the city --</label>
+            <select name="city" onChange={handleCity}>
+              <option value={userInfo.city}> -- {userInfo.city} -- </option>
+              {cities && cities.map((element, index) => {
+                return <option key={index} value={element}>{element}</option>
+              })}
+            </select>
 
             {/* About me */}
             <div className="row">
@@ -191,6 +253,13 @@ const EditUserProfile = () => {
               ))}
             </div>
           </div>
+          <div>
+            <img src={userInfo && userInfo.avatar} alt="avatar" width={"300px"} />
+          </div>
+          <form onSubmit={handleAvatarUpdate}>
+            <input type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
+            <input type="submit" />
+          </form>
 
         </>
         : <div>noData</div>}
