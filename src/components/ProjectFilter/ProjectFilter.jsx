@@ -3,10 +3,10 @@ import GENRE_ENUM from '../../consts/genreEnum';
 import SKILL_ENUM from '../../consts/skillEnum';
 
 function ProjectFilter({ allProjects, sendToParent }) {
-    const [filteredProjects, setFilteredProjects] = useState(undefined)
-    const [genreFilter, setGenreFilter] = useState(GENRE_ENUM)
-    const [skillFilter, setSkillFilter] = useState(SKILL_ENUM)
+    const [genreFilter, setGenreFilter] = useState([])
+    const [skillFilter, setSkillFilter] = useState([])
     const [countryFilter, setCountryFilter] = useState([])
+    const [hasRemoteOption, setHasRemoteOption] = useState(false)
     const [cityFilter, setCityFilter] = useState([])
     const [search, setSearch] = useState({
         text: "",
@@ -15,22 +15,10 @@ function ProjectFilter({ allProjects, sendToParent }) {
         country: "",
         city: "",
     })
-    console.log("The search: ", search)
+    // console.log("The search: ", search)
 
     useEffect(() => {
         resetFilter()
-        // const countriesArr = []
-        // const citiesArr = []
-        // for (const proj of allProjects) {
-        //     if (!countriesArr.includes(proj.country) && !proj.isRemote) {
-        //         countriesArr.push(proj.country)
-        //     }
-        //     if (!citiesArr.includes(proj.city) && !proj.isRemote) {
-        //         citiesArr.push(proj.city)
-        //     }
-        // }
-        // setCountryFilter(countriesArr)
-        // setCityFilter(citiesArr)
     }, [])
 
     function updateGenreFilter(filteredProj) {
@@ -42,7 +30,7 @@ function ProjectFilter({ allProjects, sendToParent }) {
                 }
             }
         }
-        setGenreFilter(possibleGenres)
+        setGenreFilter(possibleGenres.sort())
     }
 
     function updateSkillFilter(filteredProj) {
@@ -54,14 +42,42 @@ function ProjectFilter({ allProjects, sendToParent }) {
                 }
             }
         }
-        setSkillFilter(possibleSkills)
+        setSkillFilter(possibleSkills.sort())
+    }
+
+    function updateCountryFilter(filteredProj) {
+        const possibleCountries = []
+        for (const proj of filteredProj) {
+            if (!possibleCountries.includes(proj.country) && proj.country) {
+                possibleCountries.push(proj.country)
+            }
+        }
+
+        const remoteOption = filteredProj.find((proj) => proj.isRemote)
+        if (remoteOption) {
+            setHasRemoteOption(true)
+        } else {
+            setHasRemoteOption(false)
+        }
+
+        setCountryFilter(possibleCountries.sort())
+    }
+
+    function updateCityFilter(filteredProj) {
+        const possibleCities = []
+        for (const proj of filteredProj) {
+            if (!possibleCities.includes(proj.city) && proj.city) {
+                possibleCities.push(proj.city)
+            }
+        }
+        setCityFilter(possibleCities.sort())
     }
 
     function handleFilterChange(e) {
         const { name, value } = e.target
         let newSearch;
 
-        if (name === "country" && value === "isRemote") {
+        if (name === "country") {
             newSearch = { ...search, [name]: value, city: "" }
         } else {
             newSearch = { ...search, [name]: value }
@@ -80,16 +96,12 @@ function ProjectFilter({ allProjects, sendToParent }) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.genre.includes(newSearch.genre)
             })
-            // TO DO: other filters should only show possible options
-            updateSkillFilter(newProjectList)
         }
 
         if (newSearch.lookingFor) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.lookingFor.includes(newSearch.lookingFor)
             })
-            // TO DO: other filters should only show possible options
-            updateGenreFilter(newProjectList)
         }
 
         if (newSearch.country) {
@@ -101,47 +113,31 @@ function ProjectFilter({ allProjects, sendToParent }) {
                 newProjectList = newProjectList.filter((proj) => {
                     return proj.country === newSearch.country
                 })
-                const citiesArr = []
-                for (const proj of newProjectList) {
-                    if (!citiesArr.includes(proj.city)) {
-                        citiesArr.push(proj.city)
-                    }
-                }
-                setCityFilter(citiesArr)
             }
-            // TO DO: other filters should only show possible options
-
         }
 
         if (newSearch.city) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.city === newSearch.city
             })
-            // TO DO: other filters should only show possible options
-
         }
 
-        setFilteredProjects(newProjectList)
+        // changes filter options to show only possible ones
+        updateSkillFilter(newProjectList)
+        updateGenreFilter(newProjectList)
+        updateCountryFilter(newProjectList)
+        updateCityFilter(newProjectList)
+
+
         sendToParent(newProjectList)
-        console.log("NEW >>> ", newProjectList)
+        // console.log("NEW >>> ", newProjectList)
     }
 
     function resetFilter() {
-        setFilteredProjects(allProjects)
-        const countriesArr = []
-        const citiesArr = []
-        for (const proj of allProjects) {
-            if (!countriesArr.includes(proj.country) && !proj.isRemote) {
-                countriesArr.push(proj.country)
-            }
-            if (!citiesArr.includes(proj.city) && !proj.isRemote) {
-                citiesArr.push(proj.city)
-            }
-        }
-        setCountryFilter(countriesArr)
-        setCityFilter(citiesArr)
-        setSkillFilter(SKILL_ENUM)
-        setGenreFilter(GENRE_ENUM)
+        updateSkillFilter(allProjects)
+        updateGenreFilter(allProjects)
+        updateCountryFilter(allProjects)
+        updateCityFilter(allProjects)
 
         setSearch({
             text: "",
@@ -174,7 +170,7 @@ function ProjectFilter({ allProjects, sendToParent }) {
             </select>
             <select value={search.country} name="country" onChange={handleFilterChange}>
                 <option value=""> -- filter by country --</option>
-                <option value="isRemote">{'>>'} online</option>
+                {hasRemoteOption ? <option value="isRemote">{'>>'} online</option> : ""}
                 {countryFilter.map(country => {
                     return <option key={country} value={country}>{country}</option>
                 })}
