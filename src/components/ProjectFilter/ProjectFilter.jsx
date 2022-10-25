@@ -18,25 +18,28 @@ function ProjectFilter({ allProjects, sendToParent }) {
     console.log("The search: ", search)
 
     useEffect(() => {
-        const countriesArr = []
-        const citiesArr = []
-        for (const proj of allProjects) {
-            if (!countriesArr.includes(proj.country) && !proj.isRemote) {
-                countriesArr.push(proj.country)
-            }
-            if (!citiesArr.includes(proj.city) && !proj.isRemote) {
-                citiesArr.push(proj.city)
-            }
-        }
-        setCountryFilter(countriesArr)
-        setCityFilter(citiesArr)
+        resetFilter()
+        // const countriesArr = []
+        // const citiesArr = []
+        // for (const proj of allProjects) {
+        //     if (!countriesArr.includes(proj.country) && !proj.isRemote) {
+        //         countriesArr.push(proj.country)
+        //     }
+        //     if (!citiesArr.includes(proj.city) && !proj.isRemote) {
+        //         citiesArr.push(proj.city)
+        //     }
+        // }
+        // setCountryFilter(countriesArr)
+        // setCityFilter(citiesArr)
     }, [])
 
     function updateGenreFilter(filteredProj) {
         const possibleGenres = []
         for (const proj of filteredProj) {
-            if (!possibleGenres.includes(proj.genre)) {
-                possibleGenres.push(proj.genre)
+            for (const genre of proj.genre) {
+                if (!possibleGenres.includes(genre)) {
+                    possibleGenres.push(genre)
+                }
             }
         }
         setGenreFilter(possibleGenres)
@@ -45,8 +48,10 @@ function ProjectFilter({ allProjects, sendToParent }) {
     function updateSkillFilter(filteredProj) {
         const possibleSkills = []
         for (const proj of filteredProj) {
-            if (!possibleSkills.includes(proj.lookingFor)) {
-                possibleSkills.push(proj.lookingFor)
+            for (const skill of proj.lookingFor) {
+                if (!possibleSkills.includes(skill)) {
+                    possibleSkills.push(skill)
+                }
             }
         }
         setSkillFilter(possibleSkills)
@@ -76,7 +81,7 @@ function ProjectFilter({ allProjects, sendToParent }) {
                 return proj.genre.includes(newSearch.genre)
             })
             // TO DO: other filters should only show possible options
-            // updateSkillFilter(newProjectList)
+            updateSkillFilter(newProjectList)
         }
 
         if (newSearch.lookingFor) {
@@ -84,7 +89,7 @@ function ProjectFilter({ allProjects, sendToParent }) {
                 return proj.lookingFor.includes(newSearch.lookingFor)
             })
             // TO DO: other filters should only show possible options
-            // updateGenreFilter(newProjectList)
+            updateGenreFilter(newProjectList)
         }
 
         if (newSearch.country) {
@@ -123,6 +128,21 @@ function ProjectFilter({ allProjects, sendToParent }) {
 
     function resetFilter() {
         setFilteredProjects(allProjects)
+        const countriesArr = []
+        const citiesArr = []
+        for (const proj of allProjects) {
+            if (!countriesArr.includes(proj.country) && !proj.isRemote) {
+                countriesArr.push(proj.country)
+            }
+            if (!citiesArr.includes(proj.city) && !proj.isRemote) {
+                citiesArr.push(proj.city)
+            }
+        }
+        setCountryFilter(countriesArr)
+        setCityFilter(citiesArr)
+        setSkillFilter(SKILL_ENUM)
+        setGenreFilter(GENRE_ENUM)
+
         setSearch({
             text: "",
             genre: "",
@@ -130,6 +150,7 @@ function ProjectFilter({ allProjects, sendToParent }) {
             country: "",
             city: ""
         })
+
         sendToParent(allProjects)
     }
 
