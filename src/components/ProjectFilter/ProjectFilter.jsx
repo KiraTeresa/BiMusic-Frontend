@@ -127,7 +127,8 @@ function ProjectFilter({ allProjects, sendToParent }) {
             text: "",
             genre: "",
             lookingFor: "",
-            location: ""
+            country: "",
+            city: ""
         })
         sendToParent(allProjects)
     }
@@ -138,26 +139,26 @@ function ProjectFilter({ allProjects, sendToParent }) {
             <label>Text search:
                 <input type="text" name="text" value={search.text} onChange={handleFilterChange}></input>
             </label>
-            <select name="genre" onChange={handleFilterChange}>
+            <select value={search.genre} name="genre" onChange={handleFilterChange}>
                 <option value=""> -- filter by genre --</option>
                 {genreFilter.map(genre => {
                     return <option key={genre} value={genre}>{genre}</option>
                 })}
             </select>
-            <select name="lookingFor" onChange={handleFilterChange}>
+            <select value={search.lookingFor} name="lookingFor" onChange={handleFilterChange}>
                 <option value=""> -- filter by skill --</option>
                 {skillFilter.map(skill => {
                     return <option key={skill} value={skill}>{skill}</option>
                 })}
             </select>
-            <select name="country" onChange={handleFilterChange}>
+            <select value={search.country} name="country" onChange={handleFilterChange}>
                 <option value=""> -- filter by country --</option>
                 <option value="isRemote">{'>>'} online</option>
                 {countryFilter.map(country => {
                     return <option key={country} value={country}>{country}</option>
                 })}
             </select>
-            <select name="city" onChange={handleFilterChange} disabled={search.country === "isRemote"}>
+            <select value={search.city} name="city" onChange={handleFilterChange} disabled={search.country === "isRemote"}>
                 <option value=""> -- filter by city --</option>
                 {cityFilter.map(city => {
                     return <option key={city} value={city}>{city}</option>
