@@ -3,12 +3,11 @@ import commentIcon from '../../assets/icons/100.png'
 import contributorsIcon from '../../assets/icons/24.png'
 import sampleIcon from '../../assets/icons/71.png'
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, backgroundColor }) {
     const { _id, title, shortDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, collaborators, comments, sample } = project;
-    console.log(initiator);
 
     return (
-        <div className="project-card">
+        <div className="project-card" style={{ backgroundColor }}>
             <h3>{title}</h3>
             <div>
                 <p>{shortDescription}</p>
@@ -16,9 +15,7 @@ function ProjectCard({ project }) {
             </div>
             <div className="initiator">
                 <p>By: {initiator && initiator.name}</p>
-{/* added initiator in order to check if exists */}
                 <img src={initiator && initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
-{/* added initiator in order to check if exists */}
             </div>
             <div className="item-wrapper">
                 {genre.map((g) => {

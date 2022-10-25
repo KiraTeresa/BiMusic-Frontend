@@ -244,8 +244,8 @@ const EditUserProfile = () => {
             <h2>Created projects by you: </h2>
             <div className="borderFrame">
               {userProject && userProject.map((project, index) => (
-                <div>
-                  <Link to={`/projects/${project._id}`} key={index}>
+                <div key={index}>
+                  <Link to={`/projects/${project._id}`}>
                     {project.title}
                   </Link>
                   <button onClick={(e) => { handleDeleteProject(e, project._id) }}>Delete</button>
