@@ -17,6 +17,7 @@ import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 import APP_PATHS from "./consts/app-paths";
+import AccountSettings from "./pages/user-profile/AccountSettings";
 
 
 function App() {
@@ -63,6 +64,14 @@ function App() {
           element={
             <IsPrivate>
               <EditUserProfile />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/account-settings"
+          element={
+            <IsPrivate>
+              <AccountSettings />
             </IsPrivate>
           }
         />
