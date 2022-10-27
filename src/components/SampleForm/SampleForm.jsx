@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import GENRE_ENUM from "../../consts/genreEnum"
 import { useAuth } from "../../context/auth.context";
 import apiClient from "../../services/apiClient";
+import axios from "axios";
 
 function SampleForm(props) {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
@@ -12,12 +13,14 @@ function SampleForm(props) {
         link: "",
         linkType: "",
         public: true,
-        artist: user._id,
+        artist: user && user._id,
         description: "",
         genre: [],
         year: "",
         feedback: [],
+        uploadedLink: ""
     });
+    const [uploadedFile, setUploadedFile] = useState(null);
     const [genreArr, setGenreArr] = useState([])
     const [errorMessage, setErrorMessage] = useState(undefined)
 
@@ -61,20 +64,33 @@ function SampleForm(props) {
         }
     }
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    async function handleSubmit(e) {
+        try {
 
-        console.log("SAMPLE --> ", form)
-        const finalForm = { ...form, year: parseInt(form.year) }
-
-        apiClient.post("/samples/create", { finalForm, projectId }).then((res) => {
-            console.log("RES FROM BACKEND: ", res)
-            navigate('/profile')
-        }).catch((err) => {
-            console.log("AN ERROR --> ", err)
+            e.preventDefault();
+            if (!(uploadedFile === null)) {
+                const formData = new FormData();
+                formData.append("file", uploadedFile);
+                formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+                const response = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData);
+                console.log(response);
+                const finalForm = { ...form, year: parseInt(form.year), uploadedLink: response.data.url }
+                console.log("SAMPLE --> ", finalForm);
+                const res = await apiClient.post("/samples/create", { finalForm, projectId })
+                console.log("RES FROM BACKEND: ", res)
+                navigate('/profile')
+            } else {
+                console.log("SAMPLE --> ", form)
+                const finalForm = { ...form, year: parseInt(form.year) }
+                const res = await apiClient.post("/samples/create", { finalForm, projectId })
+                console.log("RES FROM BACKEND: ", res)
+                navigate('/profile')
+            }
+        } catch (err) {
+            console.log(err);
             const errorDescription = err.response.data.message;
             setErrorMessage(errorDescription);
-        })
+        }
     }
 
     function showTogglePrivacy() {
@@ -90,46 +106,50 @@ function SampleForm(props) {
         )
     }
 
-    return (<div style={{ display: "flex", flexDirection: "column" }} >
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
-            {/* Title */}
-            <label>What did you name this track?
-                <input type="text" onChange={handleChange} name="title" value={form.title}></input>
-            </label>
+    return (
+        <div style={{ display: "flex", flexDirection: "column" }} >
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
+                {/* Title */}
+                <label>What did you name this track?
+                    <input type="text" onChange={handleChange} name="title" value={form.title}></input>
+                </label>
 
-            {/* Link */}
-            <label>Add the link to your sample:
-                <input type="url" onChange={handleChange} name="link" value={form.link}></input>
-            </label>
-            {/* Link Type */}
-            <label>Please select the type of link you just pasted:
-                <label>
-                    <input type="radio" onChange={handleChange} name="linkType" value="audio"></input> audio
+                {/* Link */}
+                <label>Add the link to your sample:
+                    <input type="url" onChange={handleChange} name="link" value={form.link}></input>
                 </label>
-                <label>
-                    <input type="radio" onChange={handleChange} name="linkType" value="video"></input> video
+                {/* Link Type */}
+                <label>Please select the type of link you just pasted:
+                    <label>
+                        <input type="radio" onChange={handleChange} name="linkType" value="audio"></input> audio
+                    </label>
+                    <label>
+                        <input type="radio" onChange={handleChange} name="linkType" value="video"></input> video
+                    </label>
                 </label>
-            </label>
-            {/* Public */}
-            {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>}
-            {/* Description */}
-            <label>Room to tell everyone more about this track<i> {"(optional)"}</i>
-                <textarea type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
-            </label>
-            {/* Genre */}
-            <div className="checkbox-wrapper">
-                <label>Which genre describles the style of this track best?</label><i> {"(optional)"}</i>
-                {GENRE_ENUM.map((genre) => {
-                    return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
-                })}</div>
-            {/* Year */}
-            <label>When did you publish this piece of art?
-                <input type="number" onChange={handleChange} name="year" min="1900" max={currentYear} step="1" value={form.year}></input>
-            </label>
-            {disableSubmit ? "" : <button type="submit">add sample</button>}
-        </form>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-    </div>)
+                {/* Upload Sample */}
+                <input type="file" onChange={(e) => setUploadedFile(e.target.files[0])} />
+                {/* Public */}
+                {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>}
+                {/* Description */}
+                <label>Room to tell everyone more about this track<i> {"(optional)"}</i>
+                    <textarea type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
+                </label>
+                {/* Genre */}
+                <div className="checkbox-wrapper">
+                    <label>Which genre describles the style of this track best?</label><i> {"(optional)"}</i>
+                    {GENRE_ENUM.map((genre) => {
+                        return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
+                    })}</div>
+                {/* Year */}
+                <label>When did you publish this piece of art?
+                    <input type="number" onChange={handleChange} name="year" min="1900" max={currentYear} step="1" value={form.year}></input>
+                </label>
+                {disableSubmit ? "" : <button type="submit">add sample</button>}
+            </form>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+        </div>
+    )
 }
 
 export default SampleForm;

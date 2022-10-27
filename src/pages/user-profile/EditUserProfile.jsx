@@ -6,15 +6,17 @@ import axios from "axios";
 import SKILL_ENUM from "../../consts/skillEnum"
 import { Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
+import Loading from "../../components/Loading/Loading";
 
 const EditUserProfile = () => {
+  const { user } = useContext(AuthContext)//this function will give us the user info
+
   const [userInfo, setUserInfo] = useState(undefined);
   const [userProject, setUserProject] = useState(undefined);
   const [userAvatar, setUserAvatar] = useState(undefined);
   const [countries, setCountries] = useState(undefined);
   const [cities, setCities] = useState(undefined);
-  const { user } = useContext(AuthContext)//this function will give us the user info
-
+  const [isLoading, setIsLoading] = useState(false)
   const [city, setCity] = useState(userInfo && userInfo.city);
   const [country, setCountry] = useState(userInfo && userInfo.country);
   const [name, setName] = useState(userInfo && userInfo.name);
@@ -24,25 +26,17 @@ const EditUserProfile = () => {
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const handleName = (e) => setName(e.target.value);
-
-  const handleCity = (e) => {
-    console.log(e.target.value);
-    setCity(e.target.value)
-  };
-
+  const handleCity = (e) => setCity(e.target.value);
   const handleAboutMe = (e) => setAboutMe(e.target.value);
-
   const handleCountry = (e) => {
     setCountry(e.target.value);
     const findCountry = countries.find((el) => {
       return el.country === e.target.value
     });
     if (findCountry) {
-      console.log(findCountry.cities);
       setCities(findCountry.cities);
     }
   };
-  console.log(cities);
 
   useEffect(() => {
     let skillEnum2 = [...SKILL_ENUM];
@@ -76,8 +70,6 @@ const EditUserProfile = () => {
       console.log(err);
     }
   }
-
-
 
   const handleAddSkills = async (e, skill) => {
     try {
@@ -128,13 +120,17 @@ const EditUserProfile = () => {
       e.preventDefault();
       const formData = new FormData();
       formData.append("file", userAvatar);
-      formData.append("upload_preset", "BiMusic")
-      const response = await axios.post(`https://api.cloudinary.com/v1_1/da02iubhb/image/upload`, formData);
+      formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+      setIsLoading(true);
+      const response = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, formData);
       const avatarData = { avatar: response.data.url, cloudinary_id: response.data.public_id, email: userInfo.email }
       const uploadedAvatar = await apiClient.put("/profile/uploadavatar", avatarData)
       //Fetching data again
       const updatedInfo = await apiClient.post("/profile/", { email: user.email });
-      setUserInfo(updatedInfo.data);
+      if (updatedInfo.status === 200) {
+        setIsLoading(false);
+        setUserInfo(updatedInfo.data);
+      }
     } catch (error) {
       console.log(error)
     }
@@ -158,10 +154,36 @@ const EditUserProfile = () => {
       .then(response => setUserInfo(response.data)).catch((err) => { console.log(err) });
   }, []);
 
+  //----------------------------Sample Projects--------------------------------//
+  const [userSample, setUserSample] = useState([]);
+  useEffect(() => {
+    apiClient.get(`/samples/${user._id}`)
+      .then(response => {
+        console.log(response);
+        setUserSample(response.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }, []);
+  const handleDeleteSample = async (e, id) => {
+    try {
+      e.preventDefault();
+      //Updating data to database
+      const result=await apiClient.delete(`/samples/${id}`);
+      console.log(result);
+      //Fetching data again
+      const updatedSample = await apiClient.get(`/samples/${user._id}`);
+      setUserSample(updatedSample.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="container">
       {userInfo ?
-        <>
+        <div>
           {/* Name Field */}
           <form onSubmit={handleUserProfileUpdate}>
             <div className="row">
@@ -182,8 +204,6 @@ const EditUserProfile = () => {
                 {/* <input onChange={handleCountry} type="text" name="country" defaultValue={userInfo.country} /> */}
               </div>
             </div>
-
-            <label>-- Select the country --</label>
             <select name="country" onChange={handleCountry}>
               <option value={userInfo.country}> -- {userInfo.country} -- </option>
               {countries ? countries.map((element, index) => {
@@ -253,17 +273,35 @@ const EditUserProfile = () => {
               ))}
             </div>
           </div>
-          <div>
-            <img src={userInfo && userInfo.avatar} alt="avatar" width={"300px"} />
-          </div>
+          {isLoading ? <Loading /> :
+            <div>
+              <img src={userInfo && userInfo.avatar} alt="avatar" width={"300px"} />
+            </div>
+          }
           <form onSubmit={handleAvatarUpdate}>
             <input type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
             <input type="submit" />
           </form>
 
-        </>
+
+          {/* Delete Sample from Profile */}
+          <div>
+            <h2>Uploaded Samples by you: </h2>
+            <div className="borderFrame">
+              {userSample && userSample.map((sample, index) => (
+                <div key={index}>
+                  <a href={sample.link} target="_blank">
+                    {sample.title}
+                  </a>
+                  <button onClick={(e) => { handleDeleteSample(e, sample._id) }}>Delete</button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div />
+        </div>
         : <div>noData</div>}
-    </div>
+    </div >
   )
 }
 
