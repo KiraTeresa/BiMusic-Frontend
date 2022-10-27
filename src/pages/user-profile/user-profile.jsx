@@ -11,7 +11,7 @@ function ProfilePage() {
   const { user } = useContext(AuthContext)//this function will give us the user info
 
   useEffect(() => {
-    apiClient.post("/profile/", {
+    apiClient.post("/profile", {
       email: user.email
     })
       .then(response => {
@@ -20,7 +20,7 @@ function ProfilePage() {
       .catch((err) => {
         console.log(err)
       });
-  }, []);
+  }, [user.email]);
 
   useEffect(() => {
     apiClient
@@ -31,7 +31,7 @@ function ProfilePage() {
       .catch((err) => {
         console.log(err)
       });
-  }, []);
+  }, [user._id]);
 
   useEffect(() => {
     apiClient.get(`/samples/${user._id}`)

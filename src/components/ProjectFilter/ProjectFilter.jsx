@@ -3,10 +3,10 @@ import GENRE_ENUM from '../../consts/genreEnum';
 import SKILL_ENUM from '../../consts/skillEnum';
 
 function ProjectFilter({ allProjects, sendToParent }) {
-    const [filteredProjects, setFilteredProjects] = useState(undefined)
-    const [genreFilter, setGenreFilter] = useState(GENRE_ENUM)
-    const [skillFilter, setSkillFilter] = useState(SKILL_ENUM)
+    const [genreFilter, setGenreFilter] = useState([])
+    const [skillFilter, setSkillFilter] = useState([])
     const [countryFilter, setCountryFilter] = useState([])
+    const [hasRemoteOption, setHasRemoteOption] = useState(false)
     const [cityFilter, setCityFilter] = useState([])
     const [search, setSearch] = useState({
         text: "",
@@ -15,48 +15,69 @@ function ProjectFilter({ allProjects, sendToParent }) {
         country: "",
         city: "",
     })
-    console.log("The search: ", search)
+    // console.log("The search: ", search)
 
     useEffect(() => {
-        const countriesArr = []
-        const citiesArr = []
-        for (const proj of allProjects) {
-            if (!countriesArr.includes(proj.country) && !proj.isRemote) {
-                countriesArr.push(proj.country)
-            }
-            if (!citiesArr.includes(proj.city) && !proj.isRemote) {
-                citiesArr.push(proj.city)
-            }
-        }
-        setCountryFilter(countriesArr)
-        setCityFilter(citiesArr)
+        resetFilter()
     }, [])
 
     function updateGenreFilter(filteredProj) {
         const possibleGenres = []
         for (const proj of filteredProj) {
-            if (!possibleGenres.includes(proj.genre)) {
-                possibleGenres.push(proj.genre)
+            for (const genre of proj.genre) {
+                if (!possibleGenres.includes(genre)) {
+                    possibleGenres.push(genre)
+                }
             }
         }
-        setGenreFilter(possibleGenres)
+        setGenreFilter(possibleGenres.sort())
     }
 
     function updateSkillFilter(filteredProj) {
         const possibleSkills = []
         for (const proj of filteredProj) {
-            if (!possibleSkills.includes(proj.lookingFor)) {
-                possibleSkills.push(proj.lookingFor)
+            for (const skill of proj.lookingFor) {
+                if (!possibleSkills.includes(skill)) {
+                    possibleSkills.push(skill)
+                }
             }
         }
-        setSkillFilter(possibleSkills)
+        setSkillFilter(possibleSkills.sort())
+    }
+
+    function updateCountryFilter(filteredProj) {
+        const possibleCountries = []
+        for (const proj of filteredProj) {
+            if (!possibleCountries.includes(proj.country) && proj.country) {
+                possibleCountries.push(proj.country)
+            }
+        }
+
+        const remoteOption = filteredProj.find((proj) => proj.isRemote)
+        if (remoteOption) {
+            setHasRemoteOption(true)
+        } else {
+            setHasRemoteOption(false)
+        }
+
+        setCountryFilter(possibleCountries.sort())
+    }
+
+    function updateCityFilter(filteredProj) {
+        const possibleCities = []
+        for (const proj of filteredProj) {
+            if (!possibleCities.includes(proj.city) && proj.city) {
+                possibleCities.push(proj.city)
+            }
+        }
+        setCityFilter(possibleCities.sort())
     }
 
     function handleFilterChange(e) {
         const { name, value } = e.target
         let newSearch;
 
-        if (name === "country" && value === "isRemote") {
+        if (name === "country") {
             newSearch = { ...search, [name]: value, city: "" }
         } else {
             newSearch = { ...search, [name]: value }
@@ -75,16 +96,12 @@ function ProjectFilter({ allProjects, sendToParent }) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.genre.includes(newSearch.genre)
             })
-            // TO DO: other filters should only show possible options
-            // updateSkillFilter(newProjectList)
         }
 
         if (newSearch.lookingFor) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.lookingFor.includes(newSearch.lookingFor)
             })
-            // TO DO: other filters should only show possible options
-            // updateGenreFilter(newProjectList)
         }
 
         if (newSearch.country) {
@@ -96,39 +113,40 @@ function ProjectFilter({ allProjects, sendToParent }) {
                 newProjectList = newProjectList.filter((proj) => {
                     return proj.country === newSearch.country
                 })
-                const citiesArr = []
-                for (const proj of newProjectList) {
-                    if (!citiesArr.includes(proj.city)) {
-                        citiesArr.push(proj.city)
-                    }
-                }
-                setCityFilter(citiesArr)
             }
-            // TO DO: other filters should only show possible options
-
         }
 
         if (newSearch.city) {
             newProjectList = newProjectList.filter((proj) => {
                 return proj.city === newSearch.city
             })
-            // TO DO: other filters should only show possible options
-
         }
 
-        setFilteredProjects(newProjectList)
+        // changes filter options to show only possible ones
+        updateSkillFilter(newProjectList)
+        updateGenreFilter(newProjectList)
+        updateCountryFilter(newProjectList)
+        updateCityFilter(newProjectList)
+
+
         sendToParent(newProjectList)
-        console.log("NEW >>> ", newProjectList)
+        // console.log("NEW >>> ", newProjectList)
     }
 
     function resetFilter() {
-        setFilteredProjects(allProjects)
+        updateSkillFilter(allProjects)
+        updateGenreFilter(allProjects)
+        updateCountryFilter(allProjects)
+        updateCityFilter(allProjects)
+
         setSearch({
             text: "",
             genre: "",
             lookingFor: "",
-            location: ""
+            country: "",
+            city: ""
         })
+
         sendToParent(allProjects)
     }
 
@@ -138,26 +156,26 @@ function ProjectFilter({ allProjects, sendToParent }) {
             <label>Text search:
                 <input type="text" name="text" value={search.text} onChange={handleFilterChange}></input>
             </label>
-            <select name="genre" onChange={handleFilterChange}>
+            <select value={search.genre} name="genre" onChange={handleFilterChange}>
                 <option value=""> -- filter by genre --</option>
                 {genreFilter.map(genre => {
                     return <option key={genre} value={genre}>{genre}</option>
                 })}
             </select>
-            <select name="lookingFor" onChange={handleFilterChange}>
+            <select value={search.lookingFor} name="lookingFor" onChange={handleFilterChange}>
                 <option value=""> -- filter by skill --</option>
                 {skillFilter.map(skill => {
                     return <option key={skill} value={skill}>{skill}</option>
                 })}
             </select>
-            <select name="country" onChange={handleFilterChange}>
+            <select value={search.country} name="country" onChange={handleFilterChange}>
                 <option value=""> -- filter by country --</option>
-                <option value="isRemote">{'>>'} online</option>
+                {hasRemoteOption ? <option value="isRemote">{'>>'} online</option> : ""}
                 {countryFilter.map(country => {
                     return <option key={country} value={country}>{country}</option>
                 })}
             </select>
-            <select name="city" onChange={handleFilterChange} disabled={search.country === "isRemote"}>
+            <select value={search.city} name="city" onChange={handleFilterChange} disabled={search.country === "isRemote"}>
                 <option value=""> -- filter by city --</option>
                 {cityFilter.map(city => {
                     return <option key={city} value={city}>{city}</option>
