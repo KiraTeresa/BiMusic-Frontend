@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react"
-import GENRE_ENUM from '../../consts/genreEnum';
-import SKILL_ENUM from '../../consts/skillEnum';
 
 function ProjectFilter({ allProjects, sendToParent }) {
     const [genreFilter, setGenreFilter] = useState([])
