@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function ProfilePage() {
   const [userInfo, setUserInfo] = useState(null);
   const [userProject, setUserProject] = useState(null);
-
+  const [userSample, setUserSample] = useState([]);
   const { user } = useContext(AuthContext)//this function will give us the user info
 
   useEffect(() => {
@@ -22,8 +22,6 @@ function ProfilePage() {
       });
   }, [user.email]);
 
-  console.log(userProject);
-
   useEffect(() => {
     apiClient
       .get(`/profile/addedproject/${user._id}`)
@@ -35,12 +33,24 @@ function ProfilePage() {
       });
   }, [user._id]);
 
+  useEffect(() => {
+    apiClient.get(`/samples/${user._id}`)
+      .then(response => {
+        setUserSample(response.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }, []);
+
+
   return (
     <div>
-      <h2>Your profile</h2>
-      {userInfo &&
+      {
+        userInfo &&
         <div>
           <h4>Forum Username:{userInfo.name}</h4>
+          <img src={userInfo.avatar} alt="avatar" width="250px" height="250px" />
           <h4>Email:{userInfo.email}</h4>
           <h5>{userInfo.city} </h5>
           <h5>{userInfo.country} </h5>
@@ -57,14 +67,31 @@ function ProfilePage() {
               </p>
             </Link>
           ))}
-          <h4>My Samples: </h4>
+          <h4>My Samples:
+            {userSample.length > 0 ?
+              <div>{userSample.map((sample, index) => {
+                if (sample.linkType === "audio") {
+                  return <div key={index}>
+                    {sample.title}
+                    <audio controls >
+                      <source src={sample.uploadedLink} />
+                    </audio>
+                  </div>
+                } else {
+                  return <a href={sample.link} target="_blank" style={{ display: "block" }} key={index} rel="noreferrer">{sample.title}</a>
+                }
+
+              })
+              }</div> :
+              <p>No Samples Added</p>}
+          </h4>
           {/* <h1>collabProjects:{user? user.collabProjects:""} </h1>
     <h1>samples:</h1> */}
         </div>
       }
       <Link to='/editprofile'><button>Edit Profile</button></Link>
       <Link to='/account-settings'><button>Account Settings</button></Link>
-    </div>
+    </div >
   );
 }
 
