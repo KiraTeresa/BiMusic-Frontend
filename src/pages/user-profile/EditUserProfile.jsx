@@ -21,9 +21,9 @@ const EditUserProfile = () => {
   const [country, setCountry] = useState(userInfo && userInfo.country);
   const [name, setName] = useState(userInfo && userInfo.name);
   const [aboutMe, setAboutMe] = useState(userInfo && userInfo.aboutMe);
-  const [skillArr, setSkillArr] = useState([])
+  // const [skillArr, setSkillArr] = useState([])
   const [filterSkillArr, setFilterSkillArr] = useState([])
-  const [errorMessage, setErrorMessage] = useState(undefined);
+  // const [errorMessage, setErrorMessage] = useState(undefined);
 
   const handleName = (e) => setName(e.target.value);
   const handleCity = (e) => setCity(e.target.value);
@@ -62,7 +62,7 @@ const EditUserProfile = () => {
       e.preventDefault();
       let updatedData = { name, city, country, aboutMe, email: userInfo.email };
       //Updating data to database
-      const response = await apiClient.put("/profile/editinfo", updatedData);
+      // const response = await apiClient.put("/profile/editinfo", updatedData);
       //Fetching data again
       const updatedInfo = await apiClient.post("/profile/", { email: user.email });
       setUserInfo(updatedInfo.data);
@@ -77,7 +77,7 @@ const EditUserProfile = () => {
       console.log(skill);
       let updatedData = { skill, email: userInfo.email };
       //Updating data to database
-      const response = await apiClient.put("/profile/editskill", updatedData);
+      // const response = await apiClient.put("/profile/editskill", updatedData);
       //Fetching data again
       const updatedInfo = await apiClient.post("/profile/", { email: user.email });
       setUserInfo(updatedInfo.data);
@@ -92,7 +92,7 @@ const EditUserProfile = () => {
       e.preventDefault();
       let updatedData = { skill, email: userInfo.email };
       //Updating data to database
-      const response = await apiClient.put("/profile/deleteskill", updatedData);
+      // const response = await apiClient.put("/profile/deleteskill", updatedData);
       //Fetching data again
       const updatedInfo = await apiClient.post("/profile/", { email: user.email });
       setUserInfo(updatedInfo.data);
@@ -170,7 +170,7 @@ const EditUserProfile = () => {
     try {
       e.preventDefault();
       //Updating data to database
-      const result=await apiClient.delete(`/samples/${id}`);
+      const result = await apiClient.delete(`/samples/${id}`);
       console.log(result);
       //Fetching data again
       const updatedSample = await apiClient.get(`/samples/${user._id}`);

@@ -14,26 +14,18 @@ function SamplesCreate() {
 
         if (location.state) {
             console.log("Gotya")
-            getProjectInfo()
+            apiClient.get(`/samples/create/?projectId=${location.state}`).then((response) => {
+                console.log("RESPONSE FROM SERVER --> ", response.data);
+                setAddedToProject(response.data)
+            }).catch((err) => console.log("ERR: ", err)).finally(() => setIsLoading(false))
         } else {
             console.log("Nah")
-            createWithoutProject()
+            apiClient.get(`/samples/create`).then((response) => {
+                console.log("RESPONSE FROM SERVER --> ", response.data);
+            }).catch((err) => console.log("ERR: ", err)).finally(() => setIsLoading(false))
         }
 
     }, [location.state])
-
-    function getProjectInfo() {
-        apiClient.get(`/samples/create/?projectId=${location.state}`).then((response) => {
-            console.log("RESPONSE FROM SERVER --> ", response.data);
-            setAddedToProject(response.data)
-        }).catch((err) => console.log("ERR: ", err)).finally(() => setIsLoading(false))
-    }
-
-    function createWithoutProject() {
-        apiClient.get(`/samples/create`).then((response) => {
-            console.log("RESPONSE FROM SERVER --> ", response.data);
-        }).catch((err) => console.log("ERR: ", err)).finally(() => setIsLoading(false))
-    }
 
     if (isLoading) {
         return <Loading />
