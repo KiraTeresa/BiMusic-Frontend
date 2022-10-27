@@ -7,6 +7,8 @@ import commentIcon from '../../assets/icons/100.png'
 import contributorsIcon from '../../assets/icons/24.png'
 import sampleIcon from '../../assets/icons/71.png'
 import { set } from "date-fns";
+import CommentForm from "../../components/Comment/CommentForm";
+import CommentCard from "../../components/Comment/CommentCard";
 
 function ProjectDetail() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
@@ -132,11 +134,11 @@ function ProjectDetail() {
                         <div className="comments">
                             <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"}
                             <div>
+                                <CommentForm />
                                 {project.comments.map((comment) => {
                                     return (
                                         // TODO: populate comments
-                                        // MAYBE OWN COMPONENT ??
-                                        <div key={comment._id}>{comment.text}</div>
+                                        <CommentCard key={comment._id} commentInfo={comment} />
                                     )
                                 })}
                             </div>
