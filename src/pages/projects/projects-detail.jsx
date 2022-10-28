@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import { useAuth } from "../../context/auth.context";
 import commentIcon from '../../assets/icons/100.png'
 import sampleIcon from '../../assets/icons/71.png'
-// import { set } from "date-fns";
 import CommentForm from "../../components/Comment/CommentForm";
 import CommentCard from "../../components/Comment/CommentCard";
+import SampleCard from "../../components/SampleCard/SampleCard";
 
 function ProjectDetail() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
@@ -16,53 +16,39 @@ function ProjectDetail() {
     const [userStatus, setUserStatus] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const { projectId } = useParams();
-    const [isCollab, setIsCollab] = useState(false);
-    const [isPending, setIsPending] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const { alreadyCollab, alreadyPending, isInitiator } = userStatus;
     const navigate = useNavigate();
 
     // console.log("ID --> ", projectId)
 
+    const refreshPage = useCallback(() => {
+        setRefresh(!refresh)
+    }, [refresh])
+
     useEffect(() => {
         apiClient.get(`/projects/${projectId}`).then(async (result) => {
             console.log("Res from server: ", result)
-
-            // const isCollab = await result.data.collaborators.find((e) => e._id === user._id)
-            // if (isCollab) {
-            //     await setAlreadyCollab(true)
-            //     console.log("Is collab ", isCollab)
-            // }
-
-            // const isPending = await result.data.pendingCollabs.find((e) => e._id === user._id)
-            // if (isPending) {
-            //     await setAlreadyPending(true)
-            //     console.log("Is pending ", isPending)
-            // }
-
-            // if (result.data.initiator._id === user._id) {
-            //     await setUserIsInitiator(true)
-            // }
             setProject(result.data.project)
             setUserStatus(result.data.aUserStatus)
         }).catch((err) => console.log("No Project details received ", err)).finally(() => setIsLoading(false))
-    }, [projectId, isCollab, isPending, refresh])
+    }, [projectId, alreadyCollab, alreadyPending, refresh])
 
     async function triggerJoinLeave() {
         await apiClient.post(`/projects/${projectId}/${user._id}`).then((result) => {
             console.log("Backend responded: ", result)
         }).catch((err) => console.log("Error: ", err))
 
-        if (isCollab) {
-            setIsCollab(false)
+        if (alreadyCollab) {
+            setUserStatus({ ...userStatus, alreadyCollab: false })
         }
 
-        if (isPending) {
-            setIsPending(false)
+        if (alreadyPending) {
+            setUserStatus({ ...userStatus, alreadyPending: false })
         }
 
-        if (!isInitiator && !isCollab && !isPending) {
-            setIsPending(true)
+        if (!isInitiator && !alreadyCollab && !alreadyPending) {
+            setUserStatus({ ...userStatus, alreadyPending: true })
         }
     }
 
@@ -71,7 +57,7 @@ function ProjectDetail() {
         const { value, name } = e.target;
         await apiClient.post(`/projects/${projectId}/${value}/${name}`).then((result) => {
             console.log("Backend handled the user request: ", result);
-            setRefresh(!refresh)
+            refreshPage()
         }).catch((err) => console.log("Error: ", err))
     }
 
@@ -96,25 +82,29 @@ function ProjectDetail() {
             <div className="project-detail">
                 <div className="participants">
                     <div>
-                        <h3>{initiator.name}</h3>
-                        <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                        <Link to={`/profile/${initiator.name}`}><h3>{initiator.name}</h3>
+                            <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" /></Link>
                     </div>
 
                     <div className="collaborators">
                         <h4>Collaborators:</h4>
                         {project.collaborators.map((collab) => {
                             return (<div key={collab.name}>
-                                <h3>{collab.name}</h3>
-                                <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                                <Link to={`/profile/${collab.name}`}>
+                                    <h3>{collab.name}</h3>
+                                    <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                                </Link>
                             </div>)
                         })}
                         {isInitiator ? <div><h4>Pending:</h4>
                             {pendingCollabs.map((collab) => {
                                 return (<div key={collab._id}>
-                                    <h3>{collab.name}</h3>
-                                    <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
-                                    <button onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
-                                    <button onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>
+                                    <Link to={`/profile/${collab.name}`}>
+                                        <h3>{collab.name}</h3>
+                                        <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                                        <button onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
+                                        <button onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>
+                                    </Link>
                                 </div>)
                             })}
                         </div> : ""}
@@ -132,19 +122,18 @@ function ProjectDetail() {
                     <div className="comment-wrapper">
                         <div className="comments">
                             <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"}
-                            <div>
-                                <CommentForm />
-                                {project.comments.map((comment) => {
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                <CommentForm refreshPage={refreshPage} />
+                                {project.comments.reverse().map((comment) => {
                                     return (
-                                        // TODO: populate comments
                                         <CommentCard key={comment._id} commentInfo={comment} />
                                     )
                                 })}
                             </div>
                         </div>
                         <div className="sample">
-                            {/* TODO: populate sample */}
                             <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
+                            {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
                         </div>
                     </div>
                 </div>
