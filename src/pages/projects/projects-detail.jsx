@@ -7,6 +7,7 @@ import commentIcon from '../../assets/icons/100.png'
 import sampleIcon from '../../assets/icons/71.png'
 import CommentForm from "../../components/Comment/CommentForm";
 import CommentCard from "../../components/Comment/CommentCard";
+import SampleCard from "../../components/SampleCard/SampleCard";
 
 function ProjectDetail() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
@@ -131,8 +132,8 @@ function ProjectDetail() {
                             </div>
                         </div>
                         <div className="sample">
-                            {/* TODO: populate sample */}
                             <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
+                            {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
                         </div>
                     </div>
                 </div>
