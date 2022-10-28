@@ -4,7 +4,6 @@ import Loading from "../Loading/Loading"
 import { formatDistanceToNow } from "date-fns";
 
 function CommentCard({ commentInfo }) {
-    // console.log("C--> ", commentInfo)
     const { author, text, createdAt } = commentInfo
     const [authorName, setAuthorName] = useState({})
     const [isLoading, setIsLoading] = useState(true)

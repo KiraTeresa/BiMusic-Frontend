@@ -15,8 +15,6 @@ function ProjectDetail() {
     const [userStatus, setUserStatus] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const { projectId } = useParams();
-    const [isCollab, setIsCollab] = useState(false);
-    const [isPending, setIsPending] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const { alreadyCollab, alreadyPending, isInitiator } = userStatus;
     const navigate = useNavigate();
@@ -30,42 +28,26 @@ function ProjectDetail() {
     useEffect(() => {
         apiClient.get(`/projects/${projectId}`).then(async (result) => {
             console.log("Res from server: ", result)
-
-            // const isCollab = await result.data.collaborators.find((e) => e._id === user._id)
-            // if (isCollab) {
-            //     await setAlreadyCollab(true)
-            //     console.log("Is collab ", isCollab)
-            // }
-
-            // const isPending = await result.data.pendingCollabs.find((e) => e._id === user._id)
-            // if (isPending) {
-            //     await setAlreadyPending(true)
-            //     console.log("Is pending ", isPending)
-            // }
-
-            // if (result.data.initiator._id === user._id) {
-            //     await setUserIsInitiator(true)
-            // }
             setProject(result.data.project)
             setUserStatus(result.data.aUserStatus)
         }).catch((err) => console.log("No Project details received ", err)).finally(() => setIsLoading(false))
-    }, [projectId, isCollab, isPending, refresh])
+    }, [projectId, alreadyCollab, alreadyPending, refresh])
 
     async function triggerJoinLeave() {
         await apiClient.post(`/projects/${projectId}/${user._id}`).then((result) => {
             console.log("Backend responded: ", result)
         }).catch((err) => console.log("Error: ", err))
 
-        if (isCollab) {
-            setIsCollab(false)
+        if (alreadyCollab) {
+            setUserStatus({ ...userStatus, alreadyCollab: false })
         }
 
-        if (isPending) {
-            setIsPending(false)
+        if (alreadyPending) {
+            setUserStatus({ ...userStatus, alreadyPending: false })
         }
 
-        if (!isInitiator && !isCollab && !isPending) {
-            setIsPending(true)
+        if (!isInitiator && !alreadyCollab && !alreadyPending) {
+            setUserStatus({ ...userStatus, alreadyPending: true })
         }
     }
 
@@ -90,7 +72,7 @@ function ProjectDetail() {
     }
 
 
-    // console.log("WHO is WHO *********** ", alreadyCollab, " | ", alreadyPending, " | ", isInitiator)
+    console.log("WHO is WHO *********** ", alreadyCollab, " | ", alreadyPending, " | ", isInitiator)
     const { title, shortDescription, longDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, pendingCollabs, comments, sample } = project;
 
 
