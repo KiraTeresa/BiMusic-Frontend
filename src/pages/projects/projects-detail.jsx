@@ -5,7 +5,6 @@ import Loading from '../../components/Loading/Loading';
 import { useAuth } from "../../context/auth.context";
 import commentIcon from '../../assets/icons/100.png'
 import sampleIcon from '../../assets/icons/71.png'
-// import { set } from "date-fns";
 import CommentForm from "../../components/Comment/CommentForm";
 import CommentCard from "../../components/Comment/CommentCard";
 
@@ -140,7 +139,7 @@ function ProjectDetail() {
                     <div className="comment-wrapper">
                         <div className="comments">
                             <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"}
-                            <div>
+                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                                 <CommentForm refreshPage={refreshPage} />
                                 {project.comments.reverse().map((comment) => {
                                     return (

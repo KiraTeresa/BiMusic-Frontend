@@ -24,7 +24,7 @@ function CommentForm({ refreshPage }) {
     }
 
     return (
-        <div>
+        <div style={{ width: "50%" }} >
             <form onSubmit={handleSubmit}>
                 <textarea name="text" maxLength={500} value={commentText} onChange={handleChange}></textarea>
                 <button type="submit">comment</button>
