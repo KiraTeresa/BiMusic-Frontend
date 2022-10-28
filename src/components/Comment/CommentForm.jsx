@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useParams } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
-function CommentForm() {
+function CommentForm({ refreshPage }) {
     const [commentText, setCommentText] = useState("")
     const { projectId } = useParams();
 
@@ -17,6 +17,7 @@ function CommentForm() {
         apiClient.post(`/comment/${projectId}`, { commentText }).then((res) => {
             console.log(res)
             setCommentText("")
+            refreshPage()
         }).catch((err) => {
             console.log("Commenting failed ", err)
         })
