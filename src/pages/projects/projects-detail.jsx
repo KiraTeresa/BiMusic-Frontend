@@ -142,7 +142,7 @@ function ProjectDetail() {
                             <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"}
                             <div>
                                 <CommentForm refreshPage={refreshPage} />
-                                {project.comments.map((comment) => {
+                                {project.comments.reverse().map((comment) => {
                                     return (
                                         <CommentCard key={comment._id} commentInfo={comment} />
                                     )
