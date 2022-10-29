@@ -94,6 +94,11 @@ function SampleForm(props) {
             const errorDescription = err.response.data.message;
             setErrorMessage(errorDescription);
         }
+        // } catch (err) {
+        //     console.log(err);
+        //     const errorDescription = err.response.data.message;
+        //     setErrorMessage(errorDescription);
+        // }
     }
 
     function showTogglePrivacy() {
@@ -146,6 +151,7 @@ function SampleForm(props) {
                         <input type="file" onChange={(e) => setUploadedFile(e.target.files[0])} accept="audio/wav, audio/mp3" />
                     }
                 </label>
+
 
 
                 {/* Public */}
