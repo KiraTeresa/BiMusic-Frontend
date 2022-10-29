@@ -59,7 +59,7 @@ function Chat() {
     console.log("Selected proj: ", newChat)
 
     return (
-        <section style={{ display: "flex", justifyContent: "space-between", maxWidth: "1290px", margin: "auto" }}>
+        <section style={{ display: "flex", gap: "50px", maxWidth: "1290px", margin: "auto" }}>
             <div style={{ display: "flex", flexDirection: "column", width: "200px" }}>
                 <h5>Your chatrooms</h5>
                 {usersChats.map((chat) => {
@@ -77,16 +77,13 @@ function Chat() {
                 </form>
             </div>
             {activeChat ?
-                <div>
+                <div style={{ border: "solid green 1px" }}>
                     <h2>Chat</h2>
                     <ChatRoom chatId={activeChat} />
                     <div>
                     </div>
                 </div>
                 : ""}
-            <div style={{ display: "flex", width: "200px" }}>
-                <h5>Chat members</h5>
-            </div>
         </section>
     )
 }

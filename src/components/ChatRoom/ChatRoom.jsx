@@ -59,20 +59,26 @@ function ChatRoom({ chatId }) {
     }
 
     return (
-        <div>
-            <h2>Chatroom: {projectInfo.title}</h2>
-            {dbHistory.length > 0 ? dbHistory.map((element) => {
-                return <p key={element._id} style={{ backgroundColor: element.author.name === user.name ? "#63A18F" : "grey" }}><strong>{element.author.name}:</strong> {element.text}</p>
-            }) : ""}
-            {msgHistory.length > 0 ?
-                msgHistory.map((element, index) => {
-                    return <p key={index} style={{ backgroundColor: element.user === user.name ? "#63A18F" : "grey" }}><strong>{element.user}:</strong> {element.msg}</p>
-                })
-                : <p>... no new messages ...</p>}
-            <form onSubmit={sendMessage}>
-                <input type="text" name="msg" onChange={handleChange} value={message.msg}></input>
-                <button>send msg</button>
-            </form>
+        <div style={{ display: "flex" }}>
+            <div>
+                <h2>Chatroom: {projectInfo.title}</h2>
+                {dbHistory.length > 0 ? dbHistory.map((element) => {
+                    return <p key={element._id} style={{ backgroundColor: element.author.name === user.name ? "#63A18F" : "grey" }}><strong>{element.author.name}:</strong> {element.text}</p>
+                }) : ""}
+                {msgHistory.length > 0 ?
+                    msgHistory.map((element, index) => {
+                        return <p key={index} style={{ backgroundColor: element.user === user.name ? "#63A18F" : "grey" }}><strong>{element.user}:</strong> {element.msg}</p>
+                    })
+                    : <p>... no new messages ...</p>}
+                <form onSubmit={sendMessage}>
+                    <input type="text" name="msg" onChange={handleChange} value={message.msg}></input>
+                    <button>send msg</button>
+                </form>
+            </div>
+            <div>
+                <h4>Chat members</h4>
+                {/* TO DO: map over members and display avatar and username */}
+            </div>
         </div>
     )
 }
