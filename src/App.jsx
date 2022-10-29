@@ -11,6 +11,7 @@ import ProjectsCreate from "./pages/projects/projects-create"
 import EditUserProfile from "./pages/user-profile/EditUserProfile";
 import ProjectDetail from "./pages/projects/projects-detail";
 import SamplesCreate from "./pages/samples/samples-create"
+import InitiatorProfile from "./pages/Initiator/InitiatorProfile";
 
 // Import Components
 import Navbar from "./components/Navbar/Navbar";
@@ -72,6 +73,15 @@ function App() {
           element={
             <IsPrivate>
               <AccountSettings />
+            </IsPrivate>
+          }
+        />
+
+<Route
+          path="/profile/:initiator"
+          element={
+            <IsPrivate>
+              <InitiatorProfile />
             </IsPrivate>
           }
         />

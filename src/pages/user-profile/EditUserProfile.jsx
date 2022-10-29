@@ -62,7 +62,8 @@ const EditUserProfile = () => {
       e.preventDefault();
       let updatedData = { name, city, country, aboutMe, email: userInfo.email };
       //Updating data to database
-      // const response = await apiClient.put("/profile/editinfo", updatedData);
+      const response = await apiClient.put("/profile/editinfo", updatedData);
+      console.log(response)
       //Fetching data again
       const updatedInfo = await apiClient.post("/profile/", { email: user.email });
       setUserInfo(updatedInfo.data);
@@ -77,7 +78,7 @@ const EditUserProfile = () => {
       console.log(skill);
       let updatedData = { skill, email: userInfo.email };
       //Updating data to database
-      // const response = await apiClient.put("/profile/editskill", updatedData);
+      const response = await apiClient.put("/profile/editskill", updatedData);
       //Fetching data again
       const updatedInfo = await apiClient.post("/profile/", { email: user.email });
       setUserInfo(updatedInfo.data);
@@ -92,7 +93,7 @@ const EditUserProfile = () => {
       e.preventDefault();
       let updatedData = { skill, email: userInfo.email };
       //Updating data to database
-      // const response = await apiClient.put("/profile/deleteskill", updatedData);
+      const response = await apiClient.put("/profile/deleteskill", updatedData);
       //Fetching data again
       const updatedInfo = await apiClient.post("/profile/", { email: user.email });
       setUserInfo(updatedInfo.data);
