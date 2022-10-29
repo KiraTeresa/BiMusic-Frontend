@@ -18,6 +18,7 @@ import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 import APP_PATHS from "./consts/app-paths";
 import AccountSettings from "./pages/user-profile/AccountSettings";
+import Chat from "./pages/chat/chat";
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
         <Route path={APP_PATHS.PROJECT_CREATE} element={<ProjectsCreate />}></Route>
         <Route path={APP_PATHS.PROJECT_DETAIL} element={<ProjectDetail />}></Route>
         <Route path={APP_PATHS.SAMPLES_CREATE} element={<SamplesCreate />}></Route>
+        <Route path={APP_PATHS.CHATS} element={<Chat />}></Route>
 
         <Route
           path="/editprofile"
