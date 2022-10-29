@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 function ProjectFilter({ allProjects, sendToParent }) {
     const [genreFilter, setGenreFilter] = useState([])
@@ -15,9 +15,26 @@ function ProjectFilter({ allProjects, sendToParent }) {
     })
     // console.log("The search: ", search)
 
+    const resetFilter = useCallback(() => {
+        updateSkillFilter(allProjects)
+        updateGenreFilter(allProjects)
+        updateCountryFilter(allProjects)
+        updateCityFilter(allProjects)
+
+        setSearch({
+            text: "",
+            genre: "",
+            lookingFor: "",
+            country: "",
+            city: ""
+        })
+
+        sendToParent(allProjects)
+    }, [allProjects, sendToParent])
+
     useEffect(() => {
         resetFilter()
-    }, [])
+    }, [resetFilter])
 
     function updateGenreFilter(filteredProj) {
         const possibleGenres = []
@@ -84,7 +101,7 @@ function ProjectFilter({ allProjects, sendToParent }) {
         let newProjectList = allProjects.slice();
 
         if (newSearch.text) {
-            // checks title, shortDescription and longDescription for the serached word
+            // checks title, shortDescription and longDescription for the searched word
             newProjectList = newProjectList.filter((proj) => {
                 return proj.title.toLowerCase().includes(newSearch.text.toLowerCase()) || proj.shortDescription.toLowerCase().includes(newSearch.text.toLowerCase()) || proj.longDescription.toLowerCase().includes(newSearch.text.toLowerCase())
             })
@@ -131,22 +148,7 @@ function ProjectFilter({ allProjects, sendToParent }) {
         // console.log("NEW >>> ", newProjectList)
     }
 
-    function resetFilter() {
-        updateSkillFilter(allProjects)
-        updateGenreFilter(allProjects)
-        updateCountryFilter(allProjects)
-        updateCityFilter(allProjects)
 
-        setSearch({
-            text: "",
-            genre: "",
-            lookingFor: "",
-            country: "",
-            city: ""
-        })
-
-        sendToParent(allProjects)
-    }
 
     return (
         <div>
