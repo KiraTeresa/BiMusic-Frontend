@@ -65,32 +65,32 @@ function SampleForm(props) {
     }
 
     async function handleSubmit(e) {
-        try {
+        // try {
 
-            e.preventDefault();
-            if (!(uploadedFile === null)) {
-                const formData = new FormData();
-                formData.append("file", uploadedFile);
-                formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
-                const response = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData);
-                console.log(response);
-                const finalForm = { ...form, year: parseInt(form.year), uploadedLink: response.data.url }
-                console.log("SAMPLE --> ", finalForm);
-                const res = await apiClient.post("/samples/create", { finalForm, projectId })
-                console.log("RES FROM BACKEND: ", res)
-                navigate('/profile')
-            } else {
-                console.log("SAMPLE --> ", form)
-                const finalForm = { ...form, year: parseInt(form.year) }
-                const res = await apiClient.post("/samples/create", { finalForm, projectId })
-                console.log("RES FROM BACKEND: ", res)
-                navigate('/profile')
-            }
-        } catch (err) {
-            console.log(err);
-            const errorDescription = err.response.data.message;
-            setErrorMessage(errorDescription);
+        e.preventDefault();
+        if (!(uploadedFile === null)) {
+            const formData = new FormData();
+            formData.append("file", uploadedFile);
+            formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+            const response = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData);
+            console.log(response);
+            const finalForm = { ...form, year: parseInt(form.year), uploadedLink: response.data.url }
+            console.log("SAMPLE --> ", finalForm);
+            const res = await apiClient.post("/samples/create", { finalForm, projectId })
+            console.log("RES FROM BACKEND: ", res)
+            navigate('/profile')
+        } else {
+            console.log("SAMPLE --> ", form)
+            const finalForm = { ...form, year: parseInt(form.year) }
+            const res = await apiClient.post("/samples/create", { finalForm, projectId })
+            console.log("RES FROM BACKEND: ", res)
+            navigate('/profile')
         }
+        // } catch (err) {
+        //     console.log(err);
+        //     const errorDescription = err.response.data.message;
+        //     setErrorMessage(errorDescription);
+        // }
     }
 
     function showTogglePrivacy() {
@@ -105,6 +105,8 @@ function SampleForm(props) {
             </label>
         )
     }
+
+    function upload(e) { setUploadedFile(e.target.files[0]) }
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }} >
@@ -128,7 +130,7 @@ function SampleForm(props) {
                     </label>
                 </label>
                 {/* Upload Sample */}
-                <input type="file" onChange={(e) => setUploadedFile(e.target.files[0])} />
+                <input type="file" onChange={upload} />
                 {/* Public */}
                 {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>}
                 {/* Description */}
