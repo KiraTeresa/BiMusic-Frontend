@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useAuth } from "../../context/auth.context"
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
+import ChatMemberCard from "./ChatMemberCard";
 
 function ChatRoom({ chatId }) {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
@@ -14,6 +15,7 @@ function ChatRoom({ chatId }) {
     // const newMessage = {author: "currentUserId", msg: "", time: new Date()}
 
     console.log("Chat Id: ", chatId)
+    console.log("Project ", projectInfo)
 
     useEffect(() => {
         console.log("Frontend welcomes you in the chat.")
@@ -77,7 +79,9 @@ function ChatRoom({ chatId }) {
             </div>
             <div>
                 <h4>Chat members</h4>
-                {/* TO DO: map over members and display avatar and username */}
+                {projectInfo.collaborators.map((collab) => {
+                    return <ChatMemberCard key={collab._id} userInfo={collab} />
+                })}
             </div>
         </div>
     )

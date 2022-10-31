@@ -6,8 +6,6 @@ import ChatRoom from "../../components/ChatRoom/ChatRoom";
 
 function Chat() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
-    const [message, setMessage] = useState('')
-    const [msgHistory, setMsgHistory] = useState([])
     const [activeChat, setActiveChat] = useState(undefined)
     const [isLoading, setIsLoading] = useState(true);
     const [usersProjects, setUsersProjects] = useState([])
@@ -69,6 +67,7 @@ function Chat() {
                 <p>Create a chat for another project:</p>
                 <form onSubmit={createNewChat}>
                     <select name="project" onChange={handleChange}>
+                        <option value="">-- choose the project --</option>
                         {usersProjects.map((proj) => {
                             return <option key={proj._id} value={proj._id}>{proj.title}</option>
                         })}

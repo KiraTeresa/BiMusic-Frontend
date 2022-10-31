@@ -102,9 +102,9 @@ function ProjectDetail() {
                                     <Link to={`/profile/${collab.name}`}>
                                         <h3>{collab.name}</h3>
                                         <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
-                                        <button onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
-                                        <button onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>
                                     </Link>
+                                    <button onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
+                                    <button onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>
                                 </div>)
                             })}
                         </div> : ""}
