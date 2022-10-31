@@ -2,10 +2,13 @@ import { useEffect, useState, useMemo } from "react";
 import { useAuth } from "../../context/auth.context"
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
-import ChatMemberCard from "./ChatMemberCard";
+import ChatMemberCard from "../../components/Chat/ChatMemberCard";
+import { useParams } from "react-router-dom";
+import ChatList from "../../components/Chat/ChatList";
 
-function ChatRoom({ chatId }) {
+function ChatRoom() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
+    const { chatId } = useParams()
     const [projectInfo, setProjectInfo] = useState({})
     const [dbHistory, setDbHistory] = useState([])
     const [message, setMessage] = useState({ msg: "", user: user.name, userId: user._id, chat: chatId })
@@ -13,7 +16,6 @@ function ChatRoom({ chatId }) {
     const [isLoading, setIsLoading] = useState(true);
     const ws = useMemo(() => new WebSocket("ws://localhost:8082"), [])
     // const newMessage = {author: "currentUserId", msg: "", time: new Date()}
-
     console.log("Chat Id: ", chatId)
     console.log("Project ", projectInfo)
 
@@ -27,13 +29,12 @@ function ChatRoom({ chatId }) {
     }, [ws])
 
     useEffect(() => {
-        // go to the chatroom:
         apiClient.get(`/chats/${chatId}`).then((result) => {
             console.log("Chat room: you are logged in ", result)
             setProjectInfo(result.data.project)
             setDbHistory(result.data.history)
         }).catch(() => console.log("Could not log you in at the chat")).finally(() => setIsLoading(false))
-    }, [])
+    }, [chatId])
 
     function handleChange(e) {
         setMessage({ ...message, msg: e.target.value })
@@ -61,7 +62,10 @@ function ChatRoom({ chatId }) {
     }
 
     return (
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: "100px" }}>
+            <aside>
+                <ChatList />
+            </aside>
             <div>
                 <h2>Chatroom: {projectInfo.title}</h2>
                 {dbHistory.length > 0 ? dbHistory.map((element) => {
@@ -79,6 +83,7 @@ function ChatRoom({ chatId }) {
             </div>
             <div>
                 <h4>Chat members</h4>
+                {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
                 {projectInfo.collaborators.map((collab) => {
                     return <ChatMemberCard key={collab._id} userInfo={collab} />
                 })}
