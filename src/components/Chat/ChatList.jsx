@@ -47,7 +47,7 @@ function ChatList() {
             <hr></hr>
             <p>Create a chat for another project:</p>
             <form onSubmit={createNewChat}>
-                <select name="project" onChange={handleChange}>
+                <select name="project" onChange={handleChange} style={{ maxWidth: "300px" }}>
                     <option value="">-- choose the project --</option>
                     {usersProjects.map((proj) => {
                         return <option key={proj._id} value={proj._id}>{proj.title}</option>

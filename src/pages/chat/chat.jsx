@@ -9,7 +9,7 @@ function Chat() {
     return (
         <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
             <ChatList />
-            {location.state.errorMessage ? <p>{location.state.errorMessage}</p> : ""}
+            {location?.state?.errorMessage ? <p>{location.state.errorMessage}</p> : ""}
         </div>
     )
 }

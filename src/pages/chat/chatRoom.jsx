@@ -12,7 +12,7 @@ function ChatRoom() {
     const { chatId } = useParams()
     const [projectInfo, setProjectInfo] = useState({})
     const [dbHistory, setDbHistory] = useState([])
-    const [message, setMessage] = useState({ msg: "", user: user.name, userId: user._id, chat: chatId })
+    const [message, setMessage] = useState({})
     const [msgHistory, setMsgHistory] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const ws = useMemo(() => new WebSocket("ws://localhost:8082"), [])
@@ -34,6 +34,7 @@ function ChatRoom() {
             console.log("Chat room: you are logged in ", result)
             setProjectInfo(result.data.project)
             setDbHistory(result.data.history)
+            setMessage({ msg: "", user: user.name, userId: user._id, chat: chatId })
         }).catch((err) => {
             const errorDescription = err.response.data.message;
             navigate("/chats", { state: { errorMessage: errorDescription } })
