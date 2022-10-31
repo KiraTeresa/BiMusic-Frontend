@@ -1,13 +1,14 @@
 import { useEffect, useState, useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/auth.context"
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import ChatMemberCard from "../../components/Chat/ChatMemberCard";
-import { useParams } from "react-router-dom";
 import ChatList from "../../components/Chat/ChatList";
 
 function ChatRoom() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
+    const navigate = useNavigate()
     const { chatId } = useParams()
     const [projectInfo, setProjectInfo] = useState({})
     const [dbHistory, setDbHistory] = useState([])
@@ -33,7 +34,10 @@ function ChatRoom() {
             console.log("Chat room: you are logged in ", result)
             setProjectInfo(result.data.project)
             setDbHistory(result.data.history)
-        }).catch(() => console.log("Could not log you in at the chat")).finally(() => setIsLoading(false))
+        }).catch((err) => {
+            const errorDescription = err.response.data.message;
+            navigate("/chats", { state: { errorMessage: errorDescription } })
+        }).finally(() => setIsLoading(false))
     }, [chatId])
 
     function handleChange(e) {
