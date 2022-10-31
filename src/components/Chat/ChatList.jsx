@@ -1,11 +1,9 @@
-import { useEffect, useState, useMemo } from "react";
-import { useAuth } from "../../context/auth.context"
+import { useEffect, useState } from "react";
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import { Link } from "react-router-dom"
 
 function ChatList() {
-    const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
     const [isLoading, setIsLoading] = useState(true);
     const [usersProjects, setUsersProjects] = useState([])
     const [usersChats, setUsersChats] = useState([])
