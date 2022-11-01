@@ -15,6 +15,8 @@ import AccountSettings from "./pages/user-profile/AccountSettings";
 import Chat from "./pages/chat/chat";
 import ChatRoom from "./pages/chat/chatRoom"
 import InitiatorProfile from "./pages/Initiator/InitiatorProfile";
+import Samples from "./pages/samples/samples";
+import SamplesDetail from "./pages/samples/samples-details";
 
 // Import Components
 import Navbar from "./components/Navbar/Navbar";
@@ -60,9 +62,15 @@ function App() {
         <Route path={APP_PATHS.PROJECTS} element={<Projects />}></Route>
         <Route path={APP_PATHS.PROJECT_CREATE} element={<ProjectsCreate />}></Route>
         <Route path={APP_PATHS.PROJECT_DETAIL} element={<ProjectDetail />}></Route>
+
+        <Route path={APP_PATHS.SAMPLES} element={<Samples />}></Route>
         <Route path={APP_PATHS.SAMPLES_CREATE} element={<SamplesCreate />}></Route>
+
+        <Route path={APP_PATHS.SAMPLE_DETAIL} element={<SamplesDetail />}></Route>
+
         <Route path={APP_PATHS.CHAT} element={<Chat />}></Route>
         <Route path={APP_PATHS.CHAT_ROOM} element={<ChatRoom />}></Route>
+
 
         <Route
           path="/editprofile"
