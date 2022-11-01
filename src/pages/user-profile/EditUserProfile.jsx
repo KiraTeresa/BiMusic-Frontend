@@ -182,9 +182,28 @@ const EditUserProfile = () => {
   }
 
   return (
-    <div className="container">
+    <div>
+
       {userInfo ?
         <div>
+
+<div className="container">
+     {/* Upload/Update profile picture */}
+     {isLoading ? <Loading /> :
+            <div>
+              <img src={userInfo && userInfo.avatar} alt="avatar" width={"200px"} />
+            </div>
+          }
+          <form onSubmit={handleAvatarUpdate}>
+            <input  type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
+            <input value="Upload file" type="submit" />
+          </form>
+          </div>
+
+
+
+          <div className="container">
+
           {/* Name Field */}
           <form onSubmit={handleUserProfileUpdate}>
             <div className="row">
@@ -195,6 +214,7 @@ const EditUserProfile = () => {
                 <input onChange={handleName} type="text" name="name" defaultValue={userInfo.name} />
               </div>
             </div>
+           
 
             {/* Country */}
             <div className="row">
@@ -203,14 +223,14 @@ const EditUserProfile = () => {
               </div>
               <div className="col-75">
                 {/* <input onChange={handleCountry} type="text" name="country" defaultValue={userInfo.country} /> */}
-              </div>
-            </div>
             <select name="country" onChange={handleCountry}>
               <option value={userInfo.country}> -- {userInfo.country} -- </option>
               {countries ? countries.map((element, index) => {
                 return <option key={index} value={element.country}>{element.country}</option>
               }) : <option >Select a country</option>}
             </select>
+              </div>
+              </div>
 
             {/* City */}
             <div className="row">
@@ -218,17 +238,16 @@ const EditUserProfile = () => {
                 <label>City:</label>
               </div>
               <div className="col-75">
-                {/* <input onChange={handleCity} type="text" name="city" defaultValue={userInfo.city} /> */}
-              </div>
-            </div>
-
-            <label>-- Select the city --</label>
-            <select name="city" onChange={handleCity}>
+                <select name="city" onChange={handleCity}>
               <option value={userInfo.city}> -- {userInfo.city} -- </option>
               {cities && cities.map((element, index) => {
                 return <option key={index} value={element}>{element}</option>
               })}
             </select>
+              </div>
+            </div>
+
+
 
             {/* About me */}
             <div className="row">
@@ -241,9 +260,13 @@ const EditUserProfile = () => {
             </div>
 
             {/* Update (Name,City,Country,AboutMe) Button */}
-            <button type="submit">Update</button>
+            <button type="submit">Save Changes</button>
           </form>
+          </div>
 
+
+ 
+          <div className="container">
           {/* Update Current Skillset */}
           <h2>Update your current skillset:</h2>
           <div className="borderFrame">
@@ -260,6 +283,11 @@ const EditUserProfile = () => {
               <input onChange={(e) => { handleAddSkills(e, skill) }} type="checkbox" name="lookingFor" value={skill}>
               </input>{skill}</label>
           })}
+   </div>
+
+
+
+
           {/* Update created Projects */}
           <div>
             <h2>Created projects by you: </h2>
@@ -274,15 +302,8 @@ const EditUserProfile = () => {
               ))}
             </div>
           </div>
-          {isLoading ? <Loading /> :
-            <div>
-              <img src={userInfo && userInfo.avatar} alt="avatar" width={"300px"} />
-            </div>
-          }
-          <form onSubmit={handleAvatarUpdate}>
-            <input type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
-            <input type="submit" />
-          </form>
+
+
 
 
           {/* Delete Sample from Profile */}
@@ -302,7 +323,7 @@ const EditUserProfile = () => {
           <div />
         </div>
         : <div>noData</div>}
-    </div >
+    </div>
   )
 }
 
