@@ -12,6 +12,8 @@ import EditUserProfile from "./pages/user-profile/EditUserProfile";
 import ProjectDetail from "./pages/projects/projects-detail";
 import SamplesCreate from "./pages/samples/samples-create"
 import InitiatorProfile from "./pages/Initiator/InitiatorProfile";
+import Samples from "./pages/samples/samples";
+import SamplesDetail from "./pages/samples/samples-details";
 
 // Import Components
 import Navbar from "./components/Navbar/Navbar";
@@ -58,7 +60,10 @@ function App() {
         <Route path={APP_PATHS.PROJECTS} element={<Projects />}></Route>
         <Route path={APP_PATHS.PROJECT_CREATE} element={<ProjectsCreate />}></Route>
         <Route path={APP_PATHS.PROJECT_DETAIL} element={<ProjectDetail />}></Route>
+
+        <Route path={APP_PATHS.SAMPLES} element={<Samples />}></Route>
         <Route path={APP_PATHS.SAMPLES_CREATE} element={<SamplesCreate />}></Route>
+        <Route path={APP_PATHS.SAMPLE_DETAIL} element={<SamplesDetail />}></Route>
 
         <Route
           path="/editprofile"

@@ -27,6 +27,10 @@ function Navbar() {
             <button>Projects</button>
           </Link>
 
+          <Link to="/samples">
+            <button>Samples</button>
+          </Link>
+
           <Link to="/samples/create">
             <button>AddSample</button>
           </Link>
