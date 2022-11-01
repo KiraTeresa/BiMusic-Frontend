@@ -5,6 +5,7 @@ import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import ChatMemberCard from "../../components/Chat/ChatMemberCard";
 import ChatList from "../../components/Chat/ChatList";
+import ChatMessage from "../../components/Chat/ChatMessage";
 
 function ChatRoom() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
@@ -39,10 +40,10 @@ function ChatRoom() {
             const errorDescription = err.response.data.message;
             navigate("/chats", { state: { errorMessage: errorDescription } })
         }).finally(() => setIsLoading(false))
-    }, [chatId, user.name, user._id, navigate])
+    }, [chatId, user._id, user.name, navigate])
 
     function handleChange(e) {
-        setMessage({ ...message, msg: e.target.value })
+        setMessage({ ...message, msg: e.target.value, time: new Date() })
     }
 
     async function sendMessage(e) {
@@ -66,9 +67,9 @@ function ChatRoom() {
         console.log("Leaving the chatroom")
     })
 
-    window.onunload = function () {
-        ws.close()
-    }
+    // window.onunload = function () {
+    //     ws.close()
+    // }
 
     if (isLoading) {
         return <Loading />
@@ -79,16 +80,18 @@ function ChatRoom() {
             <aside>
                 <ChatList />
             </aside>
-            <div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
                 <h2>Chatroom: {projectInfo.title}</h2>
                 {dbHistory.length > 0 ? dbHistory.map((element) => {
-                    return <p key={element._id} style={{ backgroundColor: element.author.name === user.name ? "#63A18F" : "grey" }}><strong>{element.author.name}:</strong> {element.text}</p>
+                    return <ChatMessage key={element._id} msgInfo={{ name: element.author.name, msg: element.text, time: element.createdAt, currentUser: user.name }} />
                 }) : ""}
-                {msgHistory.length > 0 ?
-                    msgHistory.map((element, index) => {
-                        return <p key={index} style={{ backgroundColor: element.user === user.name ? "#63A18F" : "grey" }}><strong>{element.user}:</strong> {element.msg}</p>
-                    })
-                    : <p>... no new messages ...</p>}
+                {
+                    msgHistory.length > 0 ?
+                        msgHistory.map((element, index) => {
+                            return <ChatMessage key={index} msgInfo={{ name: element.user, msg: element.msg, time: element.time, currentUser: user.name }} />
+                        })
+                        : <p>... no new messages ...</p>
+                }
                 <form onSubmit={sendMessage}>
                     <input type="text" name="msg" onChange={handleChange} value={message.msg}></input>
                     <button>send msg</button>
