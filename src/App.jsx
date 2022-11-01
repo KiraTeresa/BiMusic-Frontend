@@ -60,16 +60,13 @@ function App() {
         />
 
         <Route path={APP_PATHS.PROJECTS} element={<Projects />}></Route>
-        <Route path={APP_PATHS.PROJECT_CREATE} element={<ProjectsCreate />}></Route>
-        <Route path={APP_PATHS.PROJECT_DETAIL} element={<ProjectDetail />}></Route>
-
-        <Route path={APP_PATHS.SAMPLES} element={<Samples />}></Route>
-        <Route path={APP_PATHS.SAMPLES_CREATE} element={<SamplesCreate />}></Route>
-
-        <Route path={APP_PATHS.SAMPLE_DETAIL} element={<SamplesDetail />}></Route>
-
-        <Route path={APP_PATHS.CHAT} element={<Chat />}></Route>
-        <Route path={APP_PATHS.CHAT_ROOM} element={<ChatRoom />}></Route>
+        <Route path={APP_PATHS.PROJECT_CREATE} element={<IsPrivate><ProjectsCreate /></IsPrivate>}></Route>
+        <Route path={APP_PATHS.PROJECT_DETAIL} element={<IsPrivate><ProjectDetail /></IsPrivate>}></Route>
+        <Route path={APP_PATHS.SAMPLES_CREATE} element={<IsPrivate><SamplesCreate /></IsPrivate>}></Route>
+        <Route path={APP_PATHS.CHAT} element={<IsPrivate><Chat /></IsPrivate>}></Route>
+        <Route path={APP_PATHS.CHAT_ROOM} element={<IsPrivate><ChatRoom /></IsPrivate>}></Route>
+        <Route path={APP_PATHS.SAMPLES} element={<IsPrivate><Samples /></IsPrivate>}></Route>
+        <Route path={APP_PATHS.SAMPLE_DETAIL} element={<IsPrivate><SamplesDetail /></IsPrivate>}></Route>
 
 
         <Route
@@ -89,7 +86,7 @@ function App() {
           }
         />
 
-<Route
+        <Route
           path="/profile/:initiator"
           element={
             <IsPrivate>

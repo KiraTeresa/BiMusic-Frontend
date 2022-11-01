@@ -9,7 +9,10 @@ function ChatList() {
     const [usersChats, setUsersChats] = useState([])
     const [newChat, setNewChat] = useState({})
     const [errorMessage, setErrorMessage] = useState("")
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
+
+    // console.log("Projects: ", usersProjects)
+    // console.log("Chats: ", usersChats)
 
     useEffect(() => {
         // "login" to the chat:
@@ -31,9 +34,9 @@ function ChatList() {
         e.preventDefault()
 
         await apiClient.post("/chats", { newChat }).then((result) => {
-            console.log("Chat created ", result)
+            setUsersChats([...usersChats, result.data])
             setNewChat({})
-            navigate(`/chats/${result.data._id}`)
+            // navigate(`/chats/${result.data._id}`)
         }).catch((err) => setErrorMessage(err.response.data.message))
 
     }

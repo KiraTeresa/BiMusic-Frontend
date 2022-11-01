@@ -114,11 +114,11 @@ function SampleForm(props) {
         setSampleType(e.target.value);
     }
 
+    function upload(e) { setUploadedFile(e.target.files[0]) }
+
     if (isLoading) {
         return <Loading />
     }
-
-    function upload(e) { setUploadedFile(e.target.files[0]) }
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }} >

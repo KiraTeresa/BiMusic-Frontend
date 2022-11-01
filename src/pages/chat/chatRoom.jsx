@@ -4,8 +4,9 @@ import { useAuth } from "../../context/auth.context"
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import ChatMemberCard from "../../components/Chat/ChatMemberCard";
-// import ChatList from "../../components/Chat/ChatList";
+import ChatList from "../../components/Chat/ChatList";
 import ChatMessage from "../../components/Chat/ChatMessage";
+import './chat.scss'
 
 function ChatRoom() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
@@ -49,8 +50,8 @@ function ChatRoom() {
         setMessage({ ...message, msg: e.target.value, time: new Date() })
     }
 
-    async function sendMessage(e) {
-        e.preventDefault()
+    async function sendMessage() {
+        // e.preventDefault()
         ws.send(JSON.stringify(message))
         console.log("Message sent ", message.msg)
 
@@ -80,15 +81,15 @@ function ChatRoom() {
     }
 
     return (
-        <div>
-            <h2>Chatroom: {projectInfo.title}</h2>
-            <div style={{ display: "flex", justifyContent: "center", gap: "100px" }}>
+        <div className="container">
+            <div className="chat-title"><h2>Chatroom: {projectInfo.title}</h2></div>
+            <div className="chat-container">
                 <aside>
-                    {/* <ChatList /> */}
-                    <Link to="/chats"><button>back</button></Link>
+                    <ChatList />
+                    {/* <Link to="/chats"><button>back</button></Link> */}
                 </aside>
-                <div>
-                    <div id="chat-window" style={{ display: "flex", flexDirection: "column", height: "400px", overflowY: "auto" }}>
+                <main>
+                    <div id="chat-window">
                         {dbHistory.length > 0 ? dbHistory.map((element) => {
                             return <ChatMessage key={element._id} msgInfo={{ name: element.author.name, msg: element.text, time: element.createdAt, currentUser: user.name }} />
                         }) : ""}
@@ -101,19 +102,19 @@ function ChatRoom() {
                         }
                         <div ref={msgRef}></div>
                     </div>
-                    <form onSubmit={sendMessage}>
-                        <input type="text" name="msg" onChange={handleChange} value={message.msg}></input>
-                        <button>send msg</button>
-                    </form>
-                </div>
-                <div>
+                    <div className="chat-form">
+                        <textarea type="text" name="msg" onChange={handleChange} value={message.msg}></textarea>
+                        <button onClick={sendMessage}>send</button>
+                    </div>
+                </main>
+                <aside>
                     <h4>Chat members</h4>
                     <ChatMemberCard userInfo={projectInfo.initiator} />
                     {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
                     {projectInfo.collaborators.map((collab) => {
                         return <ChatMemberCard key={collab._id} userInfo={collab} />
                     })}
-                </div>
+                </aside>
             </div>
         </div>
     )

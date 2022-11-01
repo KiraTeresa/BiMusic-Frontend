@@ -1,0 +1,86 @@
+/* 
+---------------------------------------------
+Chatroom
+--------------------------------------------- 
+*/
+
+.container {
+    border: black solid 1px;
+    max-width: 1232px;
+    margin: 50px auto;
+
+    .chat-title {
+        background-color: #63A18F;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.chat-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    aside {
+        border: pink dashed 1px;
+    }
+
+    main {
+        grid-column: 2 / 5;
+        border: blue dashed 1px;
+    }
+}
+
+#chat-window {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 550px;
+    overflow-y: auto;
+}
+
+.chat-form {
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #3b554e;
+        color: #c1dbd4;
+
+        &:hover {
+            background-color: #73baa5;
+            color: #3b554e;
+        }
+    }
+}
+
+
+/* 
+---------------------------------------------
+Chat message
+--------------------------------------------- 
+*/
+
+.chat-message {
+    max-width: 350px;
+    text-align: start;
+    padding: 5px;
+}
+
+.right {
+    background-color: #73baa5;
+    align-self: flex-end;
+    text-align: end;
+}
+
+.left {
+    background-color: #3b554e;
+    align-self: flex-start;
+    text-align: start;
+}
+
+/* 
+---------------------------------------------
+Chat list
+--------------------------------------------- 
+*/
