@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
-import { Link } from "react-router-dom"
 
 function ChatList() {
     const [isLoading, setIsLoading] = useState(true);
     const [usersProjects, setUsersProjects] = useState([])
     const [usersChats, setUsersChats] = useState([])
     const [newChat, setNewChat] = useState({})
+    const [errorMessage, setErrorMessage] = useState("")
+    const navigate = useNavigate()
 
     useEffect(() => {
         // "login" to the chat:
@@ -25,10 +27,15 @@ function ChatList() {
         setNewChat(value)
     }
 
-    function createNewChat(e) {
+    async function createNewChat(e) {
         e.preventDefault()
 
-        apiClient.post("/chats", { newChat }).then((result) => console.log("Chat created ", result)).catch(() => console.log("uups"))
+        await apiClient.post("/chats", { newChat }).then((result) => {
+            console.log("Chat created ", result)
+            setNewChat({})
+            navigate(`/chats/${result.data._id}`)
+        }).catch((err) => setErrorMessage(err.response.data.message))
+
     }
 
     if (isLoading) {
@@ -55,6 +62,7 @@ function ChatList() {
                 </select>
                 <button type="submit" style={{ backgroundColor: "#63A18F" }}>create new room</button>
             </form>
+            {errorMessage ? <div>{errorMessage}</div> : ""}
         </div>
     )
 }
