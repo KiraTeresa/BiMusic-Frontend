@@ -8,7 +8,6 @@ import ChatList from "../../components/Chat/ChatList";
 
 function ChatRoom() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
-    const navigate = useNavigate()
     const { chatId } = useParams()
     const [projectInfo, setProjectInfo] = useState({})
     const [dbHistory, setDbHistory] = useState([])
@@ -16,6 +15,7 @@ function ChatRoom() {
     const [msgHistory, setMsgHistory] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const ws = useMemo(() => new WebSocket("ws://localhost:8082"), [])
+    const navigate = useNavigate()
     // const newMessage = {author: "currentUserId", msg: "", time: new Date()}
     console.log("Chat Id: ", chatId)
     console.log("Project ", projectInfo)
@@ -39,7 +39,7 @@ function ChatRoom() {
             const errorDescription = err.response.data.message;
             navigate("/chats", { state: { errorMessage: errorDescription } })
         }).finally(() => setIsLoading(false))
-    }, [chatId])
+    }, [chatId, user.name, user._id, navigate])
 
     function handleChange(e) {
         setMessage({ ...message, msg: e.target.value })
@@ -61,6 +61,14 @@ function ChatRoom() {
         console.log("We received a message: ", dataFromServer)
         setMsgHistory([...msgHistory, dataFromServer])
     })
+
+    ws.addEventListener("close", e => {
+        console.log("Leaving the chatroom")
+    })
+
+    window.onunload = function () {
+        ws.close()
+    }
 
     if (isLoading) {
         return <Loading />
@@ -88,6 +96,7 @@ function ChatRoom() {
             </div>
             <div>
                 <h4>Chat members</h4>
+                <ChatMemberCard userInfo={projectInfo.initiator} />
                 {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
                 {projectInfo.collaborators.map((collab) => {
                     return <ChatMemberCard key={collab._id} userInfo={collab} />
