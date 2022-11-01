@@ -4,8 +4,8 @@ function ChatMessage({ msgInfo }) {
     const { name, msg, time, currentUser } = msgInfo
     const today = new Date()
     const date = formatRelative(new Date(time), today)
-    console.log("DATE>>> ", date)
-    console.log("MSG ", msgInfo)
+    // console.log("DATE>>> ", date)
+    // console.log("MSG ", msgInfo)
 
     return (
         <div style={name === currentUser ?

@@ -18,8 +18,8 @@ function ChatRoom() {
     const ws = useMemo(() => new WebSocket("ws://localhost:8082"), [])
     const navigate = useNavigate()
     // const newMessage = {author: "currentUserId", msg: "", time: new Date()}
-    console.log("Chat Id: ", chatId)
-    console.log("Project ", projectInfo)
+    // console.log("Chat Id: ", chatId)
+    // console.log("Project ", projectInfo)
 
     useEffect(() => {
         console.log("Frontend welcomes you in the chat.")
@@ -76,34 +76,38 @@ function ChatRoom() {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", gap: "100px" }}>
-            <aside>
-                <ChatList />
-            </aside>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-                <h2>Chatroom: {projectInfo.title}</h2>
-                {dbHistory.length > 0 ? dbHistory.map((element) => {
-                    return <ChatMessage key={element._id} msgInfo={{ name: element.author.name, msg: element.text, time: element.createdAt, currentUser: user.name }} />
-                }) : ""}
-                {
-                    msgHistory.length > 0 ?
-                        msgHistory.map((element, index) => {
-                            return <ChatMessage key={index} msgInfo={{ name: element.user, msg: element.msg, time: element.time, currentUser: user.name }} />
-                        })
-                        : <p>... no new messages ...</p>
-                }
-                <form onSubmit={sendMessage}>
-                    <input type="text" name="msg" onChange={handleChange} value={message.msg}></input>
-                    <button>send msg</button>
-                </form>
-            </div>
-            <div>
-                <h4>Chat members</h4>
-                <ChatMemberCard userInfo={projectInfo.initiator} />
-                {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
-                {projectInfo.collaborators.map((collab) => {
-                    return <ChatMemberCard key={collab._id} userInfo={collab} />
-                })}
+        <div>
+            <h2>Chatroom: {projectInfo.title}</h2>
+            <div style={{ display: "flex", justifyContent: "center", gap: "100px" }}>
+                <aside>
+                    <ChatList />
+                </aside>
+                <div>
+                    <div style={{ display: "flex", flexDirection: "column", height: "400px", overflowY: "auto" }}>
+                        {dbHistory.length > 0 ? dbHistory.map((element) => {
+                            return <ChatMessage key={element._id} msgInfo={{ name: element.author.name, msg: element.text, time: element.createdAt, currentUser: user.name }} />
+                        }) : ""}
+                        {
+                            msgHistory.length > 0 ?
+                                msgHistory.map((element, index) => {
+                                    return <ChatMessage key={index} msgInfo={{ name: element.user, msg: element.msg, time: element.time, currentUser: user.name }} />
+                                })
+                                : <p>... no new messages ...</p>
+                        }
+                    </div>
+                    <form onSubmit={sendMessage}>
+                        <input type="text" name="msg" onChange={handleChange} value={message.msg}></input>
+                        <button>send msg</button>
+                    </form>
+                </div>
+                <div>
+                    <h4>Chat members</h4>
+                    <ChatMemberCard userInfo={projectInfo.initiator} />
+                    {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
+                    {projectInfo.collaborators.map((collab) => {
+                        return <ChatMemberCard key={collab._id} userInfo={collab} />
+                    })}
+                </div>
             </div>
         </div>
     )

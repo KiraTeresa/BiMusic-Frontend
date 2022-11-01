@@ -14,7 +14,7 @@ function ChatList() {
         apiClient.get("/chats").then((result) => {
             // console.log("You are logged in to the chat room")
             const { allProjects, existingChats } = result.data
-            console.log("Got this result from server: ", result.data)
+            // console.log("Got this result from server: ", result.data)
             setUsersProjects(allProjects)
             setUsersChats(existingChats)
         }).catch(() => console.log("Could not log you in at the chat")).finally(() => setIsLoading(false))
@@ -36,7 +36,7 @@ function ChatList() {
     }
 
     // console.log("Here ", usersProjects)
-    console.log("Selected proj: ", newChat)
+    // console.log("Selected proj: ", newChat)
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
