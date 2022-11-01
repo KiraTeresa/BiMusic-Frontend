@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/auth.context"
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
@@ -84,7 +84,8 @@ function ChatRoom() {
             <h2>Chatroom: {projectInfo.title}</h2>
             <div style={{ display: "flex", justifyContent: "center", gap: "100px" }}>
                 <aside>
-                    <ChatList />
+                    {/* <ChatList /> */}
+                    <Link to="/chats"><button>back</button></Link>
                 </aside>
                 <div>
                     <div id="chat-window" style={{ display: "flex", flexDirection: "column", height: "400px", overflowY: "auto" }}>
