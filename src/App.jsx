@@ -14,6 +14,7 @@ import SamplesCreate from "./pages/samples/samples-create"
 import AccountSettings from "./pages/user-profile/AccountSettings";
 import Chat from "./pages/chat/chat";
 import ChatRoom from "./pages/chat/chatRoom"
+import InitiatorProfile from "./pages/Initiator/InitiatorProfile";
 
 // Import Components
 import Navbar from "./components/Navbar/Navbar";
@@ -76,6 +77,15 @@ function App() {
           element={
             <IsPrivate>
               <AccountSettings />
+            </IsPrivate>
+          }
+        />
+
+<Route
+          path="/profile/:initiator"
+          element={
+            <IsPrivate>
+              <InitiatorProfile />
             </IsPrivate>
           }
         />

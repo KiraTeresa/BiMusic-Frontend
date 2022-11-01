@@ -41,7 +41,7 @@ function ProfilePage() {
       .catch((err) => {
         console.log(err)
       });
-  }, []);
+  }, [user._id]);
 
 
   return (
@@ -56,7 +56,9 @@ function ProfilePage() {
           <h5>{userInfo.country} </h5>
           <h4>About me:{userInfo.aboutMe} </h4>
           <h4>Skills:</h4>
-          {userInfo.skills}
+
+          <b style={{ display: "block" }}>{userInfo.skills}</b>
+    
           <h4>
             My Projects:
           </h4>
@@ -70,7 +72,7 @@ function ProfilePage() {
           <h4>My Samples:
             {userSample.length > 0 ?
               <div>{userSample.map((sample, index) => {
-                if (sample.linkType === "audio") {
+                if (sample.linkType === "upload") {
                   return <div key={index}>
                     {sample.title}
                     <audio controls >
@@ -78,7 +80,7 @@ function ProfilePage() {
                     </audio>
                   </div>
                 } else {
-                  return <a href={sample.link} target="_blank" style={{ display: "block" }} key={index} rel="noreferrer">{sample.title}</a>
+                  return <a href={sample.link} target="_blank" style={{ display: "block" }} key={index} rel="noreferrer"> Link: {sample.title}</a>
                 }
 
               })

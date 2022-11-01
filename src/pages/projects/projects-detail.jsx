@@ -82,7 +82,7 @@ function ProjectDetail() {
             <div className="project-detail">
                 <div className="participants">
                     <div>
-                        <Link to={`/profile/${initiator.name}`}><h3>{initiator.name}</h3>
+                        <Link to={`/profile/${initiator._id}`}><h3>{initiator.name}</h3>
                             <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" /></Link>
                     </div>
 
