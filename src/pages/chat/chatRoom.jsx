@@ -4,7 +4,7 @@ import { useAuth } from "../../context/auth.context"
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import ChatMemberCard from "../../components/Chat/ChatMemberCard";
-import ChatList from "../../components/Chat/ChatList";
+// import ChatList from "../../components/Chat/ChatList";
 import ChatMessage from "../../components/Chat/ChatMessage";
 
 function ChatRoom() {
