@@ -4,6 +4,7 @@ import GENRE_ENUM from "../../consts/genreEnum"
 import { useAuth } from "../../context/auth.context";
 import apiClient from "../../services/apiClient";
 import axios from "axios";
+import Loading from "../../components/Loading/Loading";
 
 function SampleForm(props) {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
@@ -23,6 +24,7 @@ function SampleForm(props) {
     const [uploadedFile, setUploadedFile] = useState(null);
     const [genreArr, setGenreArr] = useState([])
     const [errorMessage, setErrorMessage] = useState(undefined)
+    const [isLoading, setIsLoading] = useState(false);
 
     const { disableSubmit, projectId } = props;
     // console.log("Props: ", props)
@@ -65,32 +67,33 @@ function SampleForm(props) {
     }
 
     async function handleSubmit(e) {
-        // try {
-
-        e.preventDefault();
-        if (!(uploadedFile === null)) {
-            const formData = new FormData();
-            formData.append("file", uploadedFile);
-            formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
-            const response = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData);
-            console.log(response);
-            const finalForm = { ...form, year: parseInt(form.year), uploadedLink: response.data.url }
-            console.log("SAMPLE --> ", finalForm);
-            const res = await apiClient.post("/samples/create", { finalForm, projectId })
-            console.log("RES FROM BACKEND: ", res)
-            navigate('/profile')
-        } else {
-            console.log("SAMPLE --> ", form)
-            const finalForm = { ...form, year: parseInt(form.year) }
-            const res = await apiClient.post("/samples/create", { finalForm, projectId })
-            console.log("RES FROM BACKEND: ", res)
-            navigate('/profile')
+        try {
+            e.preventDefault();
+            if (sampleType === "upload") {
+                const formData = new FormData();
+                formData.append("file", uploadedFile);
+                formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+                setIsLoading(true);
+                const response = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData);
+                console.log(response);
+                const finalForm = { ...form, year: parseInt(form.year), uploadedLink: response.data.url, linkType: "upload" }
+                console.log("SAMPLE --> ", finalForm);
+                const res = await apiClient.post("/samples/create", { finalForm, projectId })
+                console.log("RES FROM BACKEND: ", res)
+                setIsLoading(false);
+                navigate('/profile')
+            } else {
+                console.log("SAMPLE --> ", form)
+                const finalForm = { ...form, year: parseInt(form.year), linkType: "url" }
+                const res = await apiClient.post("/samples/create", { finalForm, projectId })
+                console.log("RES FROM BACKEND: ", res)
+                navigate('/profile')
+            }
+        } catch (err) {
+            console.log(err);
+            const errorDescription = err.response.data.message;
+            setErrorMessage(errorDescription);
         }
-        // } catch (err) {
-        //     console.log(err);
-        //     const errorDescription = err.response.data.message;
-        //     setErrorMessage(errorDescription);
-        // }
     }
 
     function showTogglePrivacy() {
@@ -106,7 +109,16 @@ function SampleForm(props) {
         )
     }
 
+    const [sampleType, setSampleType] = useState("url")
+    const handleSampleType = (e) => {
+        setSampleType(e.target.value);
+    }
+
     function upload(e) { setUploadedFile(e.target.files[0]) }
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }} >
@@ -116,21 +128,29 @@ function SampleForm(props) {
                     <input type="text" onChange={handleChange} name="title" value={form.title}></input>
                 </label>
 
-                {/* Link */}
-                <label>Add the link to your sample:
-                    <input type="url" onChange={handleChange} name="link" value={form.link}></input>
-                </label>
                 {/* Link Type */}
                 <label>Please select the type of link you just pasted:
                     <label>
-                        <input type="radio" onChange={handleChange} name="linkType" value="audio"></input> audio
+                        <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /> URL
                     </label>
                     <label>
-                        <input type="radio" onChange={handleChange} name="linkType" value="video"></input> video
+                        <input type="radio" onChange={handleSampleType} name="linkType" value="upload" /> Upload Sample
                     </label>
                 </label>
+
+                {/* Link */}
                 {/* Upload Sample */}
-                <input type="file" onChange={upload} />
+
+                <label>Add the link to your sample:
+                    {sampleType === "url" ?
+                        <input type="url" onChange={handleChange} name="link" value={form.link} />
+                        :
+                        <input type="file" onChange={upload} accept="audio/wav, audio/mp3" />
+                    }
+                </label>
+
+
+
                 {/* Public */}
                 {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>}
                 {/* Description */}

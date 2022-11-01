@@ -13,6 +13,9 @@ const APP_PATHS = {
     SAMPLES: '/samples',
     SAMPLES_CREATE: '/samples/create',
     USER_SAMPLES: '/samples/:username',
+    // Chat paths:
+    CHAT: "/chats",
+    CHAT_ROOM: "/chats/:chatId"
 }
 
 export default APP_PATHS;

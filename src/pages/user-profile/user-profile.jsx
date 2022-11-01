@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
 import apiClient from '../../services/apiClient';
 import { Link } from "react-router-dom";
+import UserInfo from "../../components/UserProfile/UserInfo";
 
 function ProfilePage() {
   const [userInfo, setUserInfo] = useState(null);
@@ -41,56 +42,18 @@ function ProfilePage() {
       .catch((err) => {
         console.log(err)
       });
-  }, []);
-
+  }, [user._id]);
 
   return (
     <div>
       {
         userInfo &&
-        <div>
-          <h4>Forum Username:{userInfo.name}</h4>
-          <img src={userInfo.avatar} alt="avatar" width="250px" height="250px" />
-          <h4>Email:{userInfo.email}</h4>
-          <h5>{userInfo.city} </h5>
-          <h5>{userInfo.country} </h5>
-          <h4>About me:{userInfo.aboutMe} </h4>
-          <h4>Skills:</h4>
-          {userInfo.skills}
-          <h4>
-            My Projects:
-          </h4>
-          {userProject && userProject.map((project, index) => (
-            <Link to={`/projects/${project._id}`} key={index}>
-              <p>
-                {project.title}
-              </p>
-            </Link>
-          ))}
-          <h4>My Samples:
-            {userSample.length > 0 ?
-              <div>{userSample.map((sample, index) => {
-                if (sample.linkType === "audio") {
-                  return <div key={index}>
-                    {sample.title}
-                    <audio controls >
-                      <source src={sample.uploadedLink} />
-                    </audio>
-                  </div>
-                } else {
-                  return <a href={sample.link} target="_blank" style={{ display: "block" }} key={index} rel="noreferrer">{sample.title}</a>
-                }
-
-              })
-              }</div> :
-              <p>No Samples Added</p>}
-          </h4>
-          {/* <h1>collabProjects:{user? user.collabProjects:""} </h1>
-    <h1>samples:</h1> */}
-        </div>
+        <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} />
       }
-      <Link to='/editprofile'><button>Edit Profile</button></Link>
-      <Link to='/account-settings'><button>Account Settings</button></Link>
+      <div class="profile-btn">
+        <Link to='/editprofile'><button class="chatbtn" id="chatBtn">Profile</button></Link>
+        <Link to='/account-settings'><button class="createbtn" id="Create-post"> Account Settings</button></Link>
+      </div>
     </div >
   );
 }
