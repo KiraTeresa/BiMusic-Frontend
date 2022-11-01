@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo, useRef } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/auth.context"
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
@@ -7,6 +7,7 @@ import ChatMemberCard from "../../components/Chat/ChatMemberCard";
 import ChatList from "../../components/Chat/ChatList";
 import ChatMessage from "../../components/Chat/ChatMessage";
 import './chat.scss'
+import io from "socket.io-client"
 
 function ChatRoom() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
@@ -16,7 +17,7 @@ function ChatRoom() {
     const [message, setMessage] = useState({})
     const [msgHistory, setMsgHistory] = useState([])
     const [isLoading, setIsLoading] = useState(true);
-    const ws = useMemo(() => new WebSocket("ws://localhost:8082"), [])
+    const [chatClient, setChatClient] = useState(null)
     const navigate = useNavigate()
     const msgRef = useRef()
     // const newMessage = {author: "currentUserId", msg: "", time: new Date()}
@@ -26,12 +27,37 @@ function ChatRoom() {
 
     useEffect(() => {
         console.log("Frontend welcomes you in the chat.")
+        console.log("Already ws? ---- ", chatClient?.connected)
 
-        // connect to wsServer:
-        ws.addEventListener("open", () => {
-            console.log("We are connected")
+        // if (!chatClient?.connected) {
+        const socket = io("ws://localhost:5005")
+        socket.on('connect', () => {
+            console.log(">>> Connected to the chat >>>")
+            socket.emit('join', chatId)
         })
-    }, [ws])
+
+        socket.on('send', (data) => {
+            console.log("Look what we got here >> ", data, " <<")
+        })
+
+
+        setChatClient(socket)
+
+        return () => {
+            socket.off('connect');
+            socket.off('disconnect')
+            socket.disconnect()
+
+        }
+        // connect to wsServer:
+        // ws.addEventListener("open", () => {
+        //     console.log("We are connected ", ws)
+        // })
+        // } else {
+        //     console.log(" ---___ already connected ___--- ")
+        // }
+    }, [chatId])
+    console.log("Client: ", chatClient)
 
     useEffect(() => {
         apiClient.get(`/chats/${chatId}`).then((result) => {
@@ -52,7 +78,8 @@ function ChatRoom() {
 
     async function sendMessage() {
         // e.preventDefault()
-        ws.send(JSON.stringify(message))
+        chatClient.emit('send', message)
+        // chatClient.send(JSON.stringify(message))
         console.log("Message sent ", message.msg)
 
         await apiClient.post("/message", message).then(() => console.log("Added your message to collection.")).catch(() => console.log("Couldn't add your msg to collection --- "))
@@ -61,20 +88,25 @@ function ChatRoom() {
         msgRef.current.scrollIntoView({ behavior: "smooth" })
     }
 
+    if (chatClient?.connected) {
 
-    ws.addEventListener("message", e => {
-        const dataFromServer = JSON.parse(e.data)
-        console.log("We received a message: ", dataFromServer)
-        setMsgHistory([...msgHistory, dataFromServer])
-    })
+        // chatClient.addEventListener("message", e => {
+        //     const dataFromServer = JSON.parse(e.data)
+        //     console.log("We received a message: ", dataFromServer)
+        //     setMsgHistory([...msgHistory, dataFromServer])
+        // })
 
-    ws.addEventListener("close", e => {
-        console.log("Leaving the chatroom")
-    })
+        // chatClient.addEventListener("close", e => {
+        //     console.log("Leaving the chatroom")
+        // })
 
-    // window.onunload = function () {
-    //     ws.close()
-    // }
+        chatClient.on('send', (data) => {
+            console.log("Look what we got here >> ", data, " <<")
+            setMsgHistory([...msgHistory, data])
+        })
+
+    }
+
 
     if (isLoading) {
         return <Loading />
