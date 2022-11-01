@@ -11,6 +11,9 @@ import ProjectsCreate from "./pages/projects/projects-create"
 import EditUserProfile from "./pages/user-profile/EditUserProfile";
 import ProjectDetail from "./pages/projects/projects-detail";
 import SamplesCreate from "./pages/samples/samples-create"
+import AccountSettings from "./pages/user-profile/AccountSettings";
+import Chat from "./pages/chat/chat";
+import ChatRoom from "./pages/chat/chatRoom"
 import InitiatorProfile from "./pages/Initiator/InitiatorProfile";
 import Samples from "./pages/samples/samples";
 import SamplesDetail from "./pages/samples/samples-details";
@@ -20,7 +23,6 @@ import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 import APP_PATHS from "./consts/app-paths";
-import AccountSettings from "./pages/user-profile/AccountSettings";
 
 
 function App() {
@@ -63,7 +65,12 @@ function App() {
 
         <Route path={APP_PATHS.SAMPLES} element={<Samples />}></Route>
         <Route path={APP_PATHS.SAMPLES_CREATE} element={<SamplesCreate />}></Route>
+
         <Route path={APP_PATHS.SAMPLE_DETAIL} element={<SamplesDetail />}></Route>
+
+        <Route path={APP_PATHS.CHAT} element={<Chat />}></Route>
+        <Route path={APP_PATHS.CHAT_ROOM} element={<ChatRoom />}></Route>
+
 
         <Route
           path="/editprofile"

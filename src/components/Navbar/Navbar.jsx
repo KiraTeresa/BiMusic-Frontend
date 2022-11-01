@@ -35,6 +35,10 @@ function Navbar() {
             <button>AddSample</button>
           </Link>
 
+          <Link to="/chats">
+            <button>Your Chats</button>
+          </Link>
+
           <span>{user && user.name}</span>
         </>
       )}

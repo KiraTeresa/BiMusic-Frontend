@@ -114,9 +114,11 @@ function SampleForm(props) {
         setSampleType(e.target.value);
     }
 
-    if(isLoading){
-        return <Loading/>
+    if (isLoading) {
+        return <Loading />
     }
+
+    function upload(e) { setUploadedFile(e.target.files[0]) }
 
     return (
         <div style={{ display: "flex", flexDirection: "column" }} >
@@ -143,9 +145,10 @@ function SampleForm(props) {
                     {sampleType === "url" ?
                         <input type="url" onChange={handleChange} name="link" value={form.link} />
                         :
-                        <input type="file" onChange={(e) => setUploadedFile(e.target.files[0])} accept="audio/wav, audio/mp3" />
+                        <input type="file" onChange={upload} accept="audio/wav, audio/mp3" />
                     }
                 </label>
+
 
 
                 {/* Public */}
