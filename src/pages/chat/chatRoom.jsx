@@ -89,24 +89,11 @@ function ChatRoom() {
     }
 
     if (chatClient?.connected) {
-
-        // chatClient.addEventListener("message", e => {
-        //     const dataFromServer = JSON.parse(e.data)
-        //     console.log("We received a message: ", dataFromServer)
-        //     setMsgHistory([...msgHistory, dataFromServer])
-        // })
-
-        // chatClient.addEventListener("close", e => {
-        //     console.log("Leaving the chatroom")
-        // })
-
         chatClient.on('send', (data) => {
             console.log("Look what we got here >> ", data, " <<")
             setMsgHistory([...msgHistory, data])
         })
-
     }
-
 
     if (isLoading) {
         return <Loading />
