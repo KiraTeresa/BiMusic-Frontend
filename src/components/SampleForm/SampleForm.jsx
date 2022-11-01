@@ -94,11 +94,6 @@ function SampleForm(props) {
             const errorDescription = err.response.data.message;
             setErrorMessage(errorDescription);
         }
-        // } catch (err) {
-        //     console.log(err);
-        //     const errorDescription = err.response.data.message;
-        //     setErrorMessage(errorDescription);
-        // }
     }
 
     function showTogglePrivacy() {
