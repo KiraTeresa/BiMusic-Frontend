@@ -9,17 +9,17 @@ function ChatList() {
     const [usersChats, setUsersChats] = useState([])
     const [newChat, setNewChat] = useState({})
     const [errorMessage, setErrorMessage] = useState("")
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
-    console.log("Projects: ", usersProjects)
-    console.log("Chats: ", usersChats)
+    // console.log("Projects: ", usersProjects)
+    // console.log("Chats: ", usersChats)
 
     useEffect(() => {
         // "login" to the chat:
         apiClient.get("/chats").then((result) => {
             // console.log("You are logged in to the chat room")
             const { allProjects, existingChats } = result.data
-            console.log("Got this result from server: ", result.data)
+            // console.log("Got this result from server: ", result.data)
             setUsersProjects(allProjects)
             setUsersChats(existingChats)
         }).catch(() => console.log("Could not log you in at the chat")).finally(() => setIsLoading(false))
@@ -34,10 +34,6 @@ function ChatList() {
         e.preventDefault()
 
         await apiClient.post("/chats", { newChat }).then((result) => {
-            console.log("Chat created ", result)
-            const createdChat = result.data
-            console.log("Created chaaaaat ", createdChat)
-            // const newChatList = { ...usersChats, createdChat }
             setUsersChats([...usersChats, result.data])
             setNewChat({})
             // navigate(`/chats/${result.data._id}`)

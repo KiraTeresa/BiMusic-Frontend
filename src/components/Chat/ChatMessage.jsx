@@ -8,11 +8,8 @@ function ChatMessage({ msgInfo }) {
     // console.log("MSG ", msgInfo)
 
     return (
-        <div style={name === currentUser ?
-            { width: "150px", backgroundColor: "#63A18F", alignSelf: "flex-end", textAlign: "end", padding: "5px" }
-            :
-            { width: "150px", backgroundColor: "grey", alignSelf: "flex-start", textAlign: "start", padding: "5px" }}
-        >
+        <div className={`chat-message ${name === currentUser ?
+            "right" : "left"}`}>
             <p style={{ margin: "0", fontWeight: "bold" }}>{name}</p>
             <p style={{ margin: "0" }}>{msg}</p>
             <p>{date}</p>
