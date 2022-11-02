@@ -134,7 +134,7 @@ function ChatRoom() {
                     </div>
                     <div className="chat-form">
                         <textarea type="text" name="msg" onChange={handleChange} value={message.msg}></textarea>
-                        <button onClick={sendMessage}>send</button>
+                        <button onClick={sendMessage} className="btn-primary">send</button>
                     </div>
                 </main>
                 <aside>

@@ -23,12 +23,18 @@ Chatroom
     grid-template-columns: repeat(5, 1fr);
 
     aside {
-        border: pink dashed 1px;
+        border: #c1dbd4 dashed 1px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
     }
 
     main {
         grid-column: 2 / 5;
-        border: blue dashed 1px;
+    }
+
+    h4 {
+        margin: 10px 0 5px 0;
     }
 }
 
@@ -39,21 +45,6 @@ Chatroom
     height: 550px;
     overflow-y: auto;
 }
-
-.chat-form {
-    button {
-        width: 100%;
-        padding: 10px;
-        background-color: #3b554e;
-        color: #c1dbd4;
-
-        &:hover {
-            background-color: #73baa5;
-            color: #3b554e;
-        }
-    }
-}
-
 
 /* 
 ---------------------------------------------
@@ -66,6 +57,11 @@ Chat message
     text-align: start;
     padding: 5px;
     word-break: break-word;
+
+    .msg-date {
+        font-size: 12px;
+        font-style: italic;
+    }
 }
 
 .right {
@@ -85,3 +81,89 @@ Chat message
 Chat list
 --------------------------------------------- 
 */
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .chat-link {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        text-align: start;
+        padding: 5px;
+        border: #3b554e solid 1px;
+
+        &:hover {
+            background-color: #c1dbd4;
+            cursor: pointer;
+        }
+    }
+}
+
+/* 
+---------------------------------------------
+Chat member
+--------------------------------------------- 
+*/
+
+.chat-member {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    border: #3b554e solid 1px;
+
+    .avatar-wrapper {
+        height: 50px;
+        width: 50px;
+
+        img {
+            height: 100%;
+            max-width: 100%;
+        }
+    }
+
+    &:hover {
+        background-color: #c1dbd4;
+        cursor: pointer;
+    }
+}
+
+/* 
+---------------------------------------------
+General styles
+--------------------------------------------- 
+*/
+
+.error-message {
+    border: #c6200a dashed 1px;
+    background-color: #efaabb;
+    color: #c6200a;
+    font-size: 14px;
+    padding: 5px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    background-color: #3b554e;
+    color: #c1dbd4;
+
+    &:hover {
+        background-color: #73baa5;
+        color: #3b554e;
+    }
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 10px;
+    background-color: #73baa5;
+    color: #3b554e;
+
+    &:hover {
+        background-color: #9db3ad;
+    }
+}

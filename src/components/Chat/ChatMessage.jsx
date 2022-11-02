@@ -10,9 +10,9 @@ function ChatMessage({ msgInfo }) {
     return (
         <div className={`chat-message ${name === currentUser ?
             "right" : "left"}`}>
-            <p style={{ margin: "0", fontWeight: "bold" }}>{name}</p>
-            <p style={{ margin: "0" }}>{msg}</p>
-            <p>{date}</p>
+            <p className="msg-author" style={{ margin: "0", fontWeight: "bold" }}>{name}</p>
+            <p className="msg-text" style={{ margin: "0" }}>{msg}</p>
+            <p className="msg-date">{date}</p>
         </div>
     )
 }
