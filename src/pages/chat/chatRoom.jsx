@@ -33,12 +33,12 @@ function ChatRoom() {
         const socket = io("ws://localhost:5005")
         socket.on('connect', () => {
             console.log(">>> Connected to the chat >>>")
-            socket.emit('join', chatId)
+            socket.emit('join', `room-${chatId}`)
         })
 
-        socket.on('send', (data) => {
-            console.log("Look what we got here >> ", data, " <<")
-        })
+        // socket.on('send', (data) => {
+        //     console.log("Look what we got here >> ", data, " <<")
+        // })
 
 
         setChatClient(socket)
@@ -64,6 +64,7 @@ function ChatRoom() {
             console.log("Chat room: you are logged in ", result)
             setProjectInfo(result.data.project)
             setDbHistory(result.data.history)
+            setMsgHistory([])
             setMessage({ msg: "", user: user.name, userId: user._id, chat: chatId })
         }).catch((err) => {
             const errorDescription = err.response.data.message;
@@ -91,7 +92,9 @@ function ChatRoom() {
     if (chatClient?.connected) {
         chatClient.on('send', (data) => {
             console.log("Look what we got here >> ", data, " <<")
-            setMsgHistory([...msgHistory, data])
+            if (chatId === data.chat) {
+                setMsgHistory([...msgHistory, data])
+            }
         })
     }
 
