@@ -30,7 +30,7 @@ function ChatRoom() {
         console.log("Already ws? ---- ", chatClient?.connected)
 
         // if (!chatClient?.connected) {
-        const socket = io("ws://localhost:5005")
+        const socket = io(process.env.REACT_APP_BACKEND_URL)
         socket.on('connect', () => {
             console.log(">>> Connected to the chat >>>")
             socket.emit('join', `room-${chatId}`)
