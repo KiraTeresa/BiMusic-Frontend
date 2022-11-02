@@ -64,7 +64,7 @@ function ChatRoom() {
             console.log("Chat room: you are logged in ", result)
             setProjectInfo(result.data.project)
             setDbHistory(result.data.history)
-            setMsgHistory([])
+            setMsgHistory([]) // necessary, otherwise msg would be shown in every room user jumps in afterwards (untill page refresh)
             setMessage({ msg: "", user: user.name, userId: user._id, chat: chatId })
         }).catch((err) => {
             const errorDescription = err.response.data.message;
@@ -72,6 +72,14 @@ function ChatRoom() {
             msgRef.current.scrollIntoView({ behavior: "smooth" }) // TO DO: div doesn't exist at first render, that's why messages aren't scrolled <<<< fix??
         }).finally(() => setIsLoading(false))
     }, [chatId, user._id, user.name, navigate])
+
+
+    useEffect(() => {
+        if (chatClient?.connected) {
+            // auto scrolls to latest msg on first render and after every new message
+            msgRef.current.scrollIntoView({ behavior: "smooth" })
+        }
+    }, [msgHistory])
 
     function handleChange(e) {
         setMessage({ ...message, msg: e.target.value, time: new Date() })
@@ -122,7 +130,7 @@ function ChatRoom() {
                                 })
                                 : <p>... no new messages ...</p>
                         }
-                        <div ref={msgRef}></div>
+                        <div ref={msgRef} style={{ height: "20px" }}></div>
                     </div>
                     <div className="chat-form">
                         <textarea type="text" name="msg" onChange={handleChange} value={message.msg}></textarea>
