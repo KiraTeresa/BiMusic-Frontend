@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../services/apiClient";
 import authService from "../services/auth.service";
 
 const AuthContext = React.createContext();
@@ -59,7 +60,10 @@ function AuthProviderWrapper(props) {
     localStorage.removeItem("authToken");
   };
 
-  const logOutUser = () => {
+  const logOutUser = async () => {
+    // TO DO >>>> would rather call this route 'user' instead of 'initiator'
+    // update date of last login
+    await apiClient.put(`/initiator/${user._id}`).then(() => console.log('updated last login')).catch((err) => console.log("Error, couldn't update login date ", err))
     // Upon logout, remove the token from the localStorage
     removeToken();
     authenticateUser();
