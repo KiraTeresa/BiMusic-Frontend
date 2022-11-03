@@ -23,11 +23,11 @@ function ChatRoom() {
     // const newMessage = {author: "currentUserId", msg: "", time: new Date()}
     // console.log("Chat Id: ", chatId)
     // console.log("Project ", projectInfo)
-    console.log("ref- ", msgRef)
+    // console.log("ref- ", msgRef)
 
     useEffect(() => {
-        console.log("Frontend welcomes you in the chat.")
-        console.log("Already ws? ---- ", chatClient?.connected)
+        // console.log("Frontend welcomes you in the chat.")
+        // console.log("Already ws? ---- ", chatClient?.connected)
 
         // connect to socket server:
         if (!chatClient?.connected) {
@@ -43,14 +43,13 @@ function ChatRoom() {
                 socket.off('connect');
                 socket.off('disconnect')
                 socket.disconnect()
-
             }
 
         } else {
             console.log(" --- already connected --- ")
         }
     }, [chatId])
-    console.log("Client: ", chatClient)
+    // console.log("Client: ", chatClient)
 
     useEffect(() => {
         apiClient.get(`/chats/${chatId}`).then((result) => {
@@ -62,10 +61,14 @@ function ChatRoom() {
         }).catch((err) => {
             const errorDescription = err.response.data.message;
             navigate("/chats", { state: { errorMessage: errorDescription } })
-            msgRef.current.scrollIntoView({ behavior: "smooth" }) // TO DO: div doesn't exist at first render, that's why messages aren't scrolled <<<< fix??
+            msgRef.current.scrollIntoView({ behavior: "smooth" })
         }).finally(() => setIsLoading(false))
     }, [chatId, user._id, user.name, navigate])
 
+    useEffect(() => {
+        // set all messages of this chat as "read"
+        apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log("Answer from backend: ", result.data)).catch((err) => console.error(err))
+    }, [chatId])
 
     useEffect(() => {
         if (chatClient?.connected) {
@@ -79,21 +82,28 @@ function ChatRoom() {
     }
 
     async function sendMessage() {
-        chatClient.emit('send', message)
-        console.log("Message sent ", message.msg)
 
-        await apiClient.post("/message", message).then(() => console.log("Added your message to collection.")).catch(() => console.log("Couldn't add your msg to collection --- "))
+        await apiClient.post("/message", message).then((result) => {
+            console.log("Added your message to collection.", result.data._id)
+
+            chatClient.emit('send', { ...message, msgId: result.data._id })
+            console.log("Message sent ", message.msg)
+
+        }).catch(() => console.log("Couldn't add your msg to collection --- "))
 
         setMessage({ ...message, msg: "" })
         msgRef.current.scrollIntoView({ behavior: "smooth" })
     }
 
     if (chatClient?.connected) {
-        chatClient.on('send', (data) => {
-            console.log("Look what we got here >> ", data, " <<")
+        chatClient.on('send', async (data) => {
+            // console.log("Look what we got here >> ", data, " <<")
             if (chatId === data.chat) {
                 setMsgHistory([...msgHistory, data])
             }
+
+            // set new message as read for all users who are currently in this chatroom
+            await apiClient.put(`/message/read-one/${data.msgId}`).then(() => console.log("Newly received message was set as read.")).catch((err) => console.error(err))
         })
     }
 

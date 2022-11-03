@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
-import Loading from '../../components/Loading/Loading';
+import Loading from "../Loading/Loading"
+import ChatLinkCard from "./ChatLinkCard";
 
 function ChatList() {
     const [isLoading, setIsLoading] = useState(true);
@@ -9,7 +9,6 @@ function ChatList() {
     const [usersChats, setUsersChats] = useState([])
     const [newChat, setNewChat] = useState({})
     const [errorMessage, setErrorMessage] = useState("")
-    const navigate = useNavigate()
 
     useEffect(() => {
         // "login" to the chat:
@@ -35,10 +34,6 @@ function ChatList() {
         }).catch((err) => setErrorMessage(err.response.data.message))
     }
 
-    function goToChatroom(chat) {
-        navigate(`/chats/${chat}`)
-    }
-
     if (isLoading) {
         return <Loading />
     }
@@ -50,7 +45,7 @@ function ChatList() {
         <div className="chat-list">
             <div className="chat-link-wrapper">
                 {usersChats.map((chat) => {
-                    return <div className="chat-link" onClick={() => goToChatroom(chat._id)} key={chat._id}>{chat.project.title}</div>
+                    return <ChatLinkCard key={chat._id} chatInfo={chat} />
                 })}
             </div>
             <form onSubmit={createNewChat}>
