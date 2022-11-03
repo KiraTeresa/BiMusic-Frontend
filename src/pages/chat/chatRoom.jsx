@@ -18,6 +18,7 @@ function ChatRoom() {
     const [msgHistory, setMsgHistory] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [chatClient, setChatClient] = useState(null)
+    const [allUnreadMessages, setAllUnreadMessages] = useState([])
     const navigate = useNavigate()
     const msgRef = useRef()
     // const newMessage = {author: "currentUserId", msg: "", time: new Date()}
@@ -26,9 +27,13 @@ function ChatRoom() {
     // console.log("ref- ", msgRef)
 
     useEffect(() => {
-        // console.log("Frontend welcomes you in the chat.")
-        // console.log("Already ws? ---- ", chatClient?.connected)
+        apiClient.get('/message/unread').then((result) => {
+            console.log("Unreaaaaaad --> ", result.data)
+            setAllUnreadMessages(result.data)
+        }).catch((err) => console.log(err))
+    }, [])
 
+    useEffect(() => {
         // connect to socket server:
         if (!chatClient?.connected) {
             const socket = io(process.env.REACT_APP_BACKEND_URL)
@@ -49,15 +54,19 @@ function ChatRoom() {
             console.log(" --- already connected --- ")
         }
     }, [chatId])
-    // console.log("Client: ", chatClient)
+
 
     useEffect(() => {
+        // get chat info:
         apiClient.get(`/chats/${chatId}`).then((result) => {
-            console.log("Chat room: you are logged in ", result)
+            // console.log("Chat room: you are logged in ", result)
+            const { initiator, collaborators } = result.data.project
+            const collabs = collaborators.map((collab) => { return collab._id })
+            const chatMembers = [initiator._id, ...collabs]
             setProjectInfo(result.data.project)
             setDbHistory(result.data.history)
             setMsgHistory([]) // necessary, otherwise msg would be shown in every room user jumps in afterwards (untill page refresh)
-            setMessage({ msg: "", user: user.name, userId: user._id, chat: chatId })
+            setMessage({ msg: "", user: user.name, userId: user._id, chat: chatId, sendTo: chatMembers })
         }).catch((err) => {
             const errorDescription = err.response.data.message;
             navigate("/chats", { state: { errorMessage: errorDescription } })
@@ -65,10 +74,12 @@ function ChatRoom() {
         }).finally(() => setIsLoading(false))
     }, [chatId, user._id, user.name, navigate])
 
+
     useEffect(() => {
-        // set all messages of this chat as "read"
+        // set all messages of this chat as "read" for the current user
         apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log("Answer from backend: ", result.data)).catch((err) => console.error(err))
     }, [chatId])
+
 
     useEffect(() => {
         if (chatClient?.connected) {
@@ -76,6 +87,7 @@ function ChatRoom() {
             msgRef.current.scrollIntoView({ behavior: "smooth" })
         }
     }, [msgHistory])
+
 
     function handleChange(e) {
         setMessage({ ...message, msg: e.target.value, time: new Date() })
@@ -114,7 +126,7 @@ function ChatRoom() {
     return (
         <div className="container">
             <div className="chat-title">
-                <h4>Your chatrooms</h4>
+                <h4>Your chatrooms {allUnreadMessages.length}</h4>
                 <h2>Chatroom: {projectInfo.title}</h2>
                 <h4>Chat members</h4>
             </div>

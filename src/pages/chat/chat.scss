@@ -103,9 +103,10 @@ Chat list
     }
 
     .chat-link {
-        height: 50px;
+        min-height: 50px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         text-align: start;
         padding: 5px;
         border: #3b554e solid 1px;
@@ -114,6 +115,19 @@ Chat list
             background-color: #c1dbd4;
             cursor: pointer;
         }
+    }
+
+    .msg-counter {
+        border-radius: 25% 10%;
+        padding: 5px;
+    }
+
+    .noMsg {
+        background-color: grey;
+    }
+
+    .newMsg {
+        background-color: red;
     }
 }
 

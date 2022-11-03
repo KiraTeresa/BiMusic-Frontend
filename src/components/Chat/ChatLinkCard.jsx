@@ -9,7 +9,7 @@ function ChatLinkCard({ chatInfo }) {
 
     useEffect(() => {
         apiClient.get(`/message/unread/${_id}`).then((unreadMsgArr) => {
-            console.log("Unread messages: ", unreadMsgArr.data)
+            console.log("Unread: ", unreadMsgArr)
             setUnreadMsg(unreadMsgArr.data)
         }).catch((err) => console.log("Getting unread messages failed. ", err))
     }, [])
@@ -25,7 +25,7 @@ function ChatLinkCard({ chatInfo }) {
             <div>
                 {project.title}
             </div>
-            <div style={{ backgroundColor: "red", borderRadius: "25% 10%", padding: "5px" }}>{unreadMsg.length}</div>
+            <div className={`msg-counter ${unreadMsg.length > 0 ? "newMsg" : "noMsg"}`}>{unreadMsg.length}</div>
         </div>
     )
 }
