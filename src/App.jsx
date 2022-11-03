@@ -89,7 +89,7 @@ function App() {
           }
         />
 
-<Route
+        <Route
           path="/profile/:initiator"
           element={
             <IsPrivate>

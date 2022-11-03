@@ -42,7 +42,6 @@ function SamplesCreate() {
 
     return (
         <div>
-            <h2>Form to add a new sample</h2>
             <SampleForm />
         </div>
     )

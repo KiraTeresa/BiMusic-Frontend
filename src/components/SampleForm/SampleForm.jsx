@@ -1,3 +1,4 @@
+import "./SampleForm.css";
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import GENRE_ENUM from "../../consts/genreEnum"
@@ -121,55 +122,74 @@ function SampleForm(props) {
     function upload(e) { setUploadedFile(e.target.files[0]) }
 
     return (
+        <div className="upload__form__c">
+          <div className="up__f__c">
+          <div className="upload__title">Upload Track</div>
+
+
         <div style={{ display: "flex", flexDirection: "column" }} >
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
+
+                
                 {/* Title */}
-                <label>What did you name this track?
-                    <input type="text" onChange={handleChange} name="title" value={form.title}></input>
+                <label className= "label-title">Title<span class="required">*</span>
+                    <input className="upload__inputs" placeholder="Name your track" type="text" onChange={handleChange} name="title" value={form.title}></input>
+                    </label>
+                {/* Description */}
+                <label className= "label-title">Description<i> {"(optional)"}</i>
+                    <textarea className="textarea__input" placeholder="Describe your track" type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
                 </label>
+                {/* Year */}
+                <label className= "label-title">Publication year<span class="required">*</span>: 
+                    <input placeholder="Select release year" className="year__input" type="number" onChange={handleChange} name="year" min="1960" max={currentYear} step="1" value={form.year}></input>
+                </label>
+                {/* Genre */}
+                    <label className= "label-title">Add tags to describe genre of your track:
+                    <div class="container">
+                <div className="checkbox-wrapper">
+                    <p>{GENRE_ENUM.map((genre) => {
+                        return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
+                    })}</p></div>
+                    </div>
+                    </label>
 
                 {/* Link Type */}
-                <label>Please select the type of link you just pasted:
-                    <label>
-                        <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /> URL
+                <label className= "label-title">Select upload type<span class="required">*</span>:     <label>
+                        <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /><i>URL</i>
                     </label>
                     <label>
-                        <input type="radio" onChange={handleSampleType} name="linkType" value="upload" /> Upload Sample
+                        <input type="radio" onChange={handleSampleType} name="linkType" value="upload" /> <i>Upload audio file</i>
                     </label>
-                </label>
+            
 
                 {/* Link */}
                 {/* Upload Sample */}
 
-                <label>Add the link to your sample:
+
                     {sampleType === "url" ?
-                        <input type="url" onChange={handleChange} name="link" value={form.link} />
+                        <input className="upload_referenceLink"  placeholder="Paste reference link here" type="url" onChange={handleChange} name="link" value={form.link} />
                         :
                         <input type="file" onChange={upload} accept="audio/wav, audio/mp3" />
                     }
-                </label>
+        </label>
+
+        <div>
+
+             {/* Public */}
+             {/* {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>} */}
+        </div>
 
 
-
-                {/* Public */}
-                {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>}
-                {/* Description */}
-                <label>Room to tell everyone more about this track<i> {"(optional)"}</i>
-                    <textarea type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
-                </label>
-                {/* Genre */}
-                <div className="checkbox-wrapper">
-                    <label>Which genre describles the style of this track best?</label><i> {"(optional)"}</i>
-                    {GENRE_ENUM.map((genre) => {
-                        return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
-                    })}</div>
-                {/* Year */}
-                <label>When did you publish this piece of art?
-                    <input type="number" onChange={handleChange} name="year" min="1900" max={currentYear} step="1" value={form.year}></input>
-                </label>
-                {disableSubmit ? "" : <button type="submit">add sample</button>}
+                {disableSubmit ? "" : <button className="uploadBtn" type="submit">Submit </button>}
             </form>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
+            
+            
+            <p className="required-fields">
+    <span class="required">*</span>Required fields
+  </p>
+        </div>
+        </div>
         </div>
     )
 }
