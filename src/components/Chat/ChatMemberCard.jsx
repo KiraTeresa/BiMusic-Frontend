@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 function ChatMemberCard({ userInfo }) {
-    const { _id, name, avatar, skills } = userInfo
+    const { _id, name, avatar, skills, status } = userInfo
     const navigate = useNavigate()
 
     const goToUserProfile = () => {
@@ -9,12 +9,15 @@ function ChatMemberCard({ userInfo }) {
     }
 
     return (
-        <div onClick={goToUserProfile} className="test-member-wrapper">
+        <div onClick={goToUserProfile} className="chat-member-item">
             <div className="chat-member">
                 <div className="avatar-wrapper">
                     <img src={avatar ? avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
                 </div>
-                <p>{name}</p>
+                <div className="name-wrapper">
+                    <div className={`user-status ${status}`}></div>
+                    <p>{name}</p>
+                </div>
             </div>
             <div className="skills">
                 {skills.map((skill) => {

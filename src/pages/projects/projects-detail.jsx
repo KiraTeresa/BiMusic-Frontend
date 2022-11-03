@@ -82,7 +82,9 @@ function ProjectDetail() {
             <div className="project-detail">
                 <div className="participants">
                     <div>
-                        <Link to={`/profile/${initiator._id}`}><h3>{initiator.name}</h3>
+                        <Link to={`/profile/${initiator._id}`}>
+                            <div className={`user-status ${initiator.status}`}></div>
+                            <h3>{initiator.name}</h3>
                             <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" /></Link>
                     </div>
 
@@ -91,6 +93,7 @@ function ProjectDetail() {
                         {project.collaborators.map((collab) => {
                             return (<div key={collab.name}>
                                 <Link to={`/profile/${collab.name}`}>
+                                    <div className={`user-status ${collab.status}`}></div>
                                     <h3>{collab.name}</h3>
                                     <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
                                 </Link>
@@ -100,6 +103,7 @@ function ProjectDetail() {
                             {pendingCollabs.map((collab) => {
                                 return (<div key={collab._id}>
                                     <Link to={`/profile/${collab.name}`}>
+                                        <div className={`user-status ${collab.status}`}></div>
                                         <h3>{collab.name}</h3>
                                         <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
                                     </Link>
