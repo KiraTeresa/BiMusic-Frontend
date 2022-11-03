@@ -1,4 +1,4 @@
-function SampleCard({ sampleInfo }) {
+function SampleCard({ sampleInfo, backgroundColor }) {
     const { linkType, title, uploadedLink, link } = sampleInfo;
     let sample;
 
@@ -21,8 +21,9 @@ function SampleCard({ sampleInfo }) {
 
     return (
         <div>
+                  <h4>{sample.genre}</h4>
             <h4>{title}</h4>
-            <div>
+            <div style={{ backgroundColor: backgroundColor }}>
                 {sample()}
             </div>
         </div>

@@ -50,9 +50,9 @@ function ProfilePage() {
         userInfo &&
         <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} />
       }
-      <div class="profile-btn">
-        <Link to='/editprofile'><button class="chatbtn" id="chatBtn">Profile</button></Link>
-        <Link to='/account-settings'><button class="createbtn" id="Create-post"> Account Settings</button></Link>
+      <div className="profile-btn">
+        <Link to='/editprofile'><button className="chatbtn" id="chatBtn">Profile</button></Link>
+        <Link to='/account-settings'><button className="createbtn" id="Create-post"> Account Settings</button></Link>
       </div>
     </div >
   );
