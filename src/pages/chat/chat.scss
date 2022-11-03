@@ -126,30 +126,48 @@ Chat member
 .chat-member-wrapper {
     height: 100%;
     overflow-y: scroll;
-}
 
-.chat-member {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 5px;
-    border: #3b554e solid 1px;
+    .chat-member {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px;
 
-    .avatar-wrapper {
-        height: 50px;
-        width: 50px;
+        .avatar-wrapper {
+            height: 50px;
+            width: 50px;
 
-        img {
-            height: 100%;
-            max-width: 100%;
+            img {
+                height: 100%;
+                max-width: 100%;
+            }
+        }
+
+        &:hover {
+            background-color: #c1dbd4;
+            cursor: pointer;
         }
     }
 
-    &:hover {
-        background-color: #c1dbd4;
-        cursor: pointer;
+    .skills {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2.5px;
+
+        .skill {
+            background-color: #c5e1f1;
+            border: #9db3ad dashed 1px;
+            padding: 2.5px;
+            font-size: 12px;
+        }
     }
 }
+
+.test-member-wrapper {
+    border: #3b554e solid 1px;
+}
+
 
 /* 
 ---------------------------------------------
