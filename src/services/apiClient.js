@@ -9,7 +9,6 @@ apiClient.interceptors.request.use((config)=>{
 
     if (token){
         config.headers = {...config.headers, Authorization: `Bearer ${token}`}
-        console.log("Token --> ", token)
     }
     
     return config;
