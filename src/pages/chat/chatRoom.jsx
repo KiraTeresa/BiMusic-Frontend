@@ -64,7 +64,17 @@ function ChatRoom() {
             const collabs = collaborators.map((collab) => { return collab._id })
             const chatMembers = [initiator._id, ...collabs]
             setProjectInfo(result.data.project)
-            setDbHistory(result.data.history)
+
+            const { history } = result.data
+            const clearedHistory = []
+            for (const msg of history) {
+                if (msg.author) {
+                    clearedHistory.push(msg)
+                } else {
+                    clearedHistory.push({ ...msg, author: { name: "deleted user" } })
+                }
+            }
+            setDbHistory(clearedHistory)
             setMsgHistory([]) // necessary, otherwise msg would be shown in every room user jumps in afterwards (untill page refresh)
             setMessage({ msg: "", user: user.name, userId: user._id, chat: chatId, sendTo: chatMembers })
         }).catch((err) => {

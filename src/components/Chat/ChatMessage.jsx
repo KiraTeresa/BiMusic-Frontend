@@ -9,8 +9,8 @@ function ChatMessage({ msgInfo }) {
 
     return (
         <div className={`chat-message ${name === currentUser ?
-            "right" : "left"}`}>
-            <p className="msg-author" style={{ margin: "0", fontWeight: "bold" }}>{name}</p>
+            "right" : name === "deleted user" ? "left deleted" : "left"}`}>
+            <p className="msg-author" style={{ margin: "0", fontWeight: "bold" }}>{name ? name : "deleted user"}</p>
             <p className="msg-text" style={{ margin: "0" }}>{msg}</p>
             <p className="msg-date">{date}</p>
         </div>

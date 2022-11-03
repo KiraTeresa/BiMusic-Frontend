@@ -81,6 +81,10 @@ Chat message
     background-color: #3b554e;
     align-self: flex-start;
     text-align: start;
+
+    &.deleted {
+        background-color: #c6200a;
+    }
 }
 
 /* 
