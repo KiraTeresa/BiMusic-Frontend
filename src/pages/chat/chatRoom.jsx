@@ -79,9 +79,7 @@ function ChatRoom() {
     }
 
     async function sendMessage() {
-        // e.preventDefault()
         chatClient.emit('send', message)
-        // chatClient.send(JSON.stringify(message))
         console.log("Message sent ", message.msg)
 
         await apiClient.post("/message", message).then(() => console.log("Added your message to collection.")).catch(() => console.log("Couldn't add your msg to collection --- "))
@@ -105,14 +103,17 @@ function ChatRoom() {
 
     return (
         <div className="container">
-            <div className="chat-title"><h2>Chatroom: {projectInfo.title}</h2></div>
+            <div className="chat-title">
+                <h4>Your chatrooms</h4>
+                <h2>Chatroom: {projectInfo.title}</h2>
+                <h4>Chat members</h4>
+            </div>
             <div className="chat-container">
                 <aside>
                     <ChatList />
-                    {/* <Link to="/chats"><button>back</button></Link> */}
                 </aside>
                 <main>
-                    <div id="chat-window">
+                    <div className="chat-window">
                         {dbHistory.length > 0 ? dbHistory.map((element) => {
                             return <ChatMessage key={element._id} msgInfo={{ name: element.author.name, msg: element.text, time: element.createdAt, currentUser: user.name }} />
                         }) : ""}
@@ -131,12 +132,13 @@ function ChatRoom() {
                     </div>
                 </main>
                 <aside>
-                    <h4>Chat members</h4>
-                    <ChatMemberCard userInfo={projectInfo.initiator} />
-                    {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
-                    {projectInfo.collaborators.map((collab) => {
-                        return <ChatMemberCard key={collab._id} userInfo={collab} />
-                    })}
+                    <div className="chat-member-wrapper">
+                        <ChatMemberCard userInfo={projectInfo.initiator} />
+                        {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
+                        {projectInfo.collaborators.map((collab) => {
+                            return <ChatMemberCard key={collab._id} userInfo={collab} />
+                        })}
+                    </div>
                 </aside>
             </div>
         </div>

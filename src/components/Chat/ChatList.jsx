@@ -11,13 +11,9 @@ function ChatList() {
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
 
-    // console.log("Projects: ", usersProjects)
-    // console.log("Chats: ", usersChats)
-
     useEffect(() => {
         // "login" to the chat:
         apiClient.get("/chats").then((result) => {
-            // console.log("You are logged in to the chat room")
             const { allProjects, existingChats } = result.data
             // console.log("Got this result from server: ", result.data)
             setUsersProjects(allProjects)
@@ -52,12 +48,11 @@ function ChatList() {
 
     return (
         <div className="chat-list">
-            <h4>Your chatrooms</h4>
-            {usersChats.map((chat) => {
-                return <div className="chat-link" onClick={() => goToChatroom(chat._id)} key={chat._id}>{chat.project.title}</div>
-            })}
-            <hr></hr>
-            <h4>Create a chat</h4>
+            <div className="chat-link-wrapper">
+                {usersChats.map((chat) => {
+                    return <div className="chat-link" onClick={() => goToChatroom(chat._id)} key={chat._id}>{chat.project.title}</div>
+                })}
+            </div>
             <form onSubmit={createNewChat}>
                 <select name="project" onChange={handleChange} style={{ maxWidth: "300px" }}>
                     <option value="">-- choose the project --</option>
