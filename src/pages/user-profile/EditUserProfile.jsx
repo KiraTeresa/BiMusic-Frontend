@@ -187,7 +187,10 @@ const EditUserProfile = () => {
       {userInfo ?
         <div>
 
-<div className="container">
+<div className="parent-wrapper">
+
+<div className="container-upload-profile-picture">
+  <h3>Upload profile picture</h3>
      {/* Upload/Update profile picture */}
      {isLoading ? <Loading /> :
             <div>
@@ -196,15 +199,18 @@ const EditUserProfile = () => {
           }
           <form onSubmit={handleAvatarUpdate}>
             <input  type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
-            <input value="Upload file" type="submit" />
+            <div className="upload-file-btn">
+            <p><input value="Upload file" type="submit" /></p>
+            </div>
           </form>
           </div>
 
 
 
-          <div className="container">
+          <div className="container-personal-information">
 
           {/* Name Field */}
+          <h3>Personal Information</h3>
           <form onSubmit={handleUserProfileUpdate}>
             <div className="row">
               <div className="col-25">
@@ -238,7 +244,7 @@ const EditUserProfile = () => {
                 <label>City:</label>
               </div>
               <div className="col-75">
-                <select name="city" onChange={handleCity}>
+                <select className="city" onChange={handleCity}>
               <option value={userInfo.city}> -- {userInfo.city} -- </option>
               {cities && cities.map((element, index) => {
                 return <option key={index} value={element}>{element}</option>
@@ -255,7 +261,7 @@ const EditUserProfile = () => {
                 <label>About me:</label>
               </div>
               <div className="col-75">
-                <textarea style={{ height: "150px" }} onChange={handleAboutMe} type="text" name="country" defaultValue={userInfo.aboutMe} />
+                <textarea style={{ height: "100px" }} onChange={handleAboutMe} type="text" className="country" defaultValue={userInfo.aboutMe} />
               </div>
             </div>
 
@@ -263,12 +269,12 @@ const EditUserProfile = () => {
             <button type="submit">Save Changes</button>
           </form>
           </div>
-
+          </div>
 
  
           <div className="container">
           {/* Update Current Skillset */}
-          <h2>Update your current skillset:</h2>
+          <h3>Edit skillset:</h3>
           <div className="borderFrame">
             {userInfo && userInfo.skills.map((skill, index) => (
               <div key={index}>
@@ -277,20 +283,21 @@ const EditUserProfile = () => {
               </div>
             ))}
           </div>
-          <h2>Add new skills to your profile:</h2>
+          <h3>Add new skills:</h3>
           {filterSkillArr && filterSkillArr.map((skill) => {
             return <label key={skill}>
-              <input onChange={(e) => { handleAddSkills(e, skill) }} type="checkbox" name="lookingFor" value={skill}>
+              <input onChange={(e) => { handleAddSkills(e, skill) }} type="checkbox" className="lookingFor" value={skill}>
               </input>{skill}</label>
           })}
    </div>
 
 
-
+   <div className="parent-wrapper">
 
           {/* Update created Projects */}
+   <div className="container">
           <div>
-            <h2>Created projects by you: </h2>
+            <h3>Created projects: </h3>
             <div className="borderFrame">
               {userProject && userProject.map((project, index) => (
                 <div key={index}>
@@ -302,13 +309,12 @@ const EditUserProfile = () => {
               ))}
             </div>
           </div>
-
-
-
+          </div>
 
           {/* Delete Sample from Profile */}
+          <div className="container">
           <div>
-            <h2>Uploaded Samples by you: </h2>
+            <h3>Uploaded Samples: </h3>
             <div className="borderFrame">
               {userSample && userSample.map((sample, index) => (
                 <div key={index}>
@@ -320,7 +326,8 @@ const EditUserProfile = () => {
               ))}
             </div>
           </div>
-          <div />
+          </div>
+        </div>
         </div>
         : <div>noData</div>}
     </div>
