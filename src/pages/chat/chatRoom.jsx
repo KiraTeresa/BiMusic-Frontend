@@ -29,33 +29,26 @@ function ChatRoom() {
         console.log("Frontend welcomes you in the chat.")
         console.log("Already ws? ---- ", chatClient?.connected)
 
-        // if (!chatClient?.connected) {
-        const socket = io(process.env.REACT_APP_BACKEND_URL)
-        socket.on('connect', () => {
-            console.log(">>> Connected to the chat >>>")
-            socket.emit('join', `room-${chatId}`)
-        })
+        // connect to socket server:
+        if (!chatClient?.connected) {
+            const socket = io(process.env.REACT_APP_BACKEND_URL)
+            socket.on('connect', () => {
+                console.log(">>> Connected to the chat >>>")
+                socket.emit('join', `room-${chatId}`)
+            })
 
-        // socket.on('send', (data) => {
-        //     console.log("Look what we got here >> ", data, " <<")
-        // })
+            setChatClient(socket)
 
+            return () => {
+                socket.off('connect');
+                socket.off('disconnect')
+                socket.disconnect()
 
-        setChatClient(socket)
+            }
 
-        return () => {
-            socket.off('connect');
-            socket.off('disconnect')
-            socket.disconnect()
-
+        } else {
+            console.log(" --- already connected --- ")
         }
-        // connect to wsServer:
-        // ws.addEventListener("open", () => {
-        //     console.log("We are connected ", ws)
-        // })
-        // } else {
-        //     console.log(" ---___ already connected ___--- ")
-        // }
     }, [chatId])
     console.log("Client: ", chatClient)
 

@@ -63,7 +63,7 @@ function ProjectsCreate() {
                     }
                 }).catch(console.error)
             }).catch(console.error).finally(() => setIsLoading(false));
-    }, [user._id])
+    }, [user._id, form])
 
     function handleChange(e) {
         const { name, value } = e.target;

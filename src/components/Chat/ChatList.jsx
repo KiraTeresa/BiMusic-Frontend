@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 
