@@ -12,15 +12,26 @@ Chatroom
     .chat-title {
         background-color: #63A18F;
         height: 80px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        margin-bottom: 5px;
+
+        h2 {
+            grid-column: 2 / 5;
+            align-self: center;
+        }
+
+        h4 {
+            align-self: flex-end;
+            margin-bottom: 5px;
+        }
     }
 }
 
 .chat-container {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
 
     aside {
         border: #c1dbd4 dashed 1px;
@@ -32,13 +43,9 @@ Chatroom
     main {
         grid-column: 2 / 5;
     }
-
-    h4 {
-        margin: 10px 0 5px 0;
-    }
 }
 
-#chat-window {
+.chat-window {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -74,6 +81,10 @@ Chat message
     background-color: #3b554e;
     align-self: flex-start;
     text-align: start;
+
+    &.deleted {
+        background-color: #c6200a;
+    }
 }
 
 /* 
@@ -85,12 +96,21 @@ Chat list
 .chat-list {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 5px;
+    height: 100%;
+
+    .chat-link-wrapper {
+        border: blue solid 1px;
+        height: 550px;
+        overflow-y: scroll;
+    }
 
     .chat-link {
-        height: 50px;
+        min-height: 50px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         text-align: start;
         padding: 5px;
         border: #3b554e solid 1px;
@@ -100,6 +120,19 @@ Chat list
             cursor: pointer;
         }
     }
+
+    .msg-counter {
+        border-radius: 25% 10%;
+        padding: 5px;
+    }
+
+    .noMsg {
+        background-color: grey;
+    }
+
+    .newMsg {
+        background-color: red;
+    }
 }
 
 /* 
@@ -108,28 +141,60 @@ Chat member
 --------------------------------------------- 
 */
 
-.chat-member {
+.chat-member-wrapper {
+    height: 100%;
+    overflow-y: scroll;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 5px;
-    padding: 5px;
-    border: #3b554e solid 1px;
 
-    .avatar-wrapper {
-        height: 50px;
-        width: 50px;
+    .chat-member {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px;
 
-        img {
+        .avatar-wrapper {
+            height: 50px;
+            width: 50px;
+
+            img {
+                height: 100%;
+                max-width: 100%;
+            }
+        }
+
+        .name-wrapper {
             height: 100%;
-            max-width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        &:hover {
+            background-color: #c1dbd4;
+            cursor: pointer;
         }
     }
 
-    &:hover {
-        background-color: #c1dbd4;
-        cursor: pointer;
+    .skills {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2.5px;
+
+        .skill {
+            background-color: #c5e1f1;
+            border: #9db3ad dashed 1px;
+            padding: 2.5px;
+            font-size: 12px;
+        }
     }
 }
+
+.chat-member-item {
+    border: #3b554e solid 1px;
+}
+
 
 /* 
 ---------------------------------------------
@@ -165,5 +230,19 @@ General styles
 
     &:hover {
         background-color: #9db3ad;
+    }
+}
+
+.user-status {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+
+    &.online {
+        background-color: #2eca57;
+    }
+
+    &.offline {
+        background-color: #e45723;
     }
 }
