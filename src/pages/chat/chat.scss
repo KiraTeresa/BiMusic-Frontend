@@ -1,0 +1,169 @@
+/* 
+---------------------------------------------
+Chatroom
+--------------------------------------------- 
+*/
+
+.container {
+    border: black solid 1px;
+    max-width: 1232px;
+    margin: 50px auto;
+
+    .chat-title {
+        background-color: #63A18F;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.chat-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    aside {
+        border: #c1dbd4 dashed 1px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    main {
+        grid-column: 2 / 5;
+    }
+
+    h4 {
+        margin: 10px 0 5px 0;
+    }
+}
+
+#chat-window {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 550px;
+    overflow-y: auto;
+}
+
+/* 
+---------------------------------------------
+Chat message
+--------------------------------------------- 
+*/
+
+.chat-message {
+    max-width: 350px;
+    text-align: start;
+    padding: 5px;
+    word-break: break-word;
+
+    .msg-date {
+        font-size: 12px;
+        font-style: italic;
+    }
+}
+
+.right {
+    background-color: #73baa5;
+    align-self: flex-end;
+    text-align: end;
+}
+
+.left {
+    background-color: #3b554e;
+    align-self: flex-start;
+    text-align: start;
+}
+
+/* 
+---------------------------------------------
+Chat list
+--------------------------------------------- 
+*/
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .chat-link {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        text-align: start;
+        padding: 5px;
+        border: #3b554e solid 1px;
+
+        &:hover {
+            background-color: #c1dbd4;
+            cursor: pointer;
+        }
+    }
+}
+
+/* 
+---------------------------------------------
+Chat member
+--------------------------------------------- 
+*/
+
+.chat-member {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    border: #3b554e solid 1px;
+
+    .avatar-wrapper {
+        height: 50px;
+        width: 50px;
+
+        img {
+            height: 100%;
+            max-width: 100%;
+        }
+    }
+
+    &:hover {
+        background-color: #c1dbd4;
+        cursor: pointer;
+    }
+}
+
+/* 
+---------------------------------------------
+General styles
+--------------------------------------------- 
+*/
+
+.error-message {
+    border: #c6200a dashed 1px;
+    background-color: #efaabb;
+    color: #c6200a;
+    font-size: 14px;
+    padding: 5px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    background-color: #3b554e;
+    color: #c1dbd4;
+
+    &:hover {
+        background-color: #73baa5;
+        color: #3b554e;
+    }
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 10px;
+    background-color: #73baa5;
+    color: #3b554e;
+
+    &:hover {
+        background-color: #9db3ad;
+    }
+}

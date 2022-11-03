@@ -115,11 +115,11 @@ function SampleForm(props) {
         setSampleType(e.target.value);
     }
 
+    function upload(e) { setUploadedFile(e.target.files[0]) }
+
     if (isLoading) {
         return <Loading />
     }
-
-    function upload(e) { setUploadedFile(e.target.files[0]) }
 
     return (
         <div className="upload__form__c">
@@ -154,7 +154,8 @@ function SampleForm(props) {
                     </label>
 
                 {/* Link Type */}
-                <label className= "label-title">Select upload type<span class="required">*</span>:     <label>
+                <label className= "label-title">Select upload type<span class="required">*</span>:  
+                <label>
                         <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /><i>URL</i>
                     </label>
                     <label>

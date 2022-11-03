@@ -11,6 +11,9 @@ function ChatList() {
     const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
 
+    // console.log("Projects: ", usersProjects)
+    // console.log("Chats: ", usersChats)
+
     useEffect(() => {
         // "login" to the chat:
         apiClient.get("/chats").then((result) => {
@@ -31,11 +34,13 @@ function ChatList() {
         e.preventDefault()
 
         await apiClient.post("/chats", { newChat }).then((result) => {
-            console.log("Chat created ", result)
+            setUsersChats([...usersChats, result.data])
             setNewChat({})
-            navigate(`/chats/${result.data._id}`)
         }).catch((err) => setErrorMessage(err.response.data.message))
+    }
 
+    function goToChatroom(chat) {
+        navigate(`/chats/${chat}`)
     }
 
     if (isLoading) {
@@ -46,13 +51,13 @@ function ChatList() {
     // console.log("Selected proj: ", newChat)
 
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-            <h5>Your chatrooms</h5>
+        <div className="chat-list">
+            <h4>Your chatrooms</h4>
             {usersChats.map((chat) => {
-                return <Link to={`/chats/${chat._id}`} key={chat._id}><button>{chat.project.title}</button></Link>
+                return <div className="chat-link" onClick={() => goToChatroom(chat._id)} key={chat._id}>{chat.project.title}</div>
             })}
             <hr></hr>
-            <p>Create a chat for another project:</p>
+            <h4>Create a chat</h4>
             <form onSubmit={createNewChat}>
                 <select name="project" onChange={handleChange} style={{ maxWidth: "300px" }}>
                     <option value="">-- choose the project --</option>
@@ -60,9 +65,9 @@ function ChatList() {
                         return <option key={proj._id} value={proj._id}>{proj.title}</option>
                     })}
                 </select>
-                <button type="submit" style={{ backgroundColor: "#63A18F" }}>create new room</button>
+                <button className="btn-secondary" type="submit">create new room</button>
             </form>
-            {errorMessage ? <div>{errorMessage}</div> : ""}
+            {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
         </div>
     )
 }
