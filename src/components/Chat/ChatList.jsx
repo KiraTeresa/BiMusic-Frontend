@@ -51,7 +51,7 @@ function ChatList({ currentChat }) {
                         return <option key={proj._id} value={proj._id}>{proj.title}</option>
                     })}
                 </select>
-                <button className="btn-secondary" type="submit">create new room</button>
+                <button className="btn secondary" type="submit">create new room</button>
             </form>
             {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
         </div>
