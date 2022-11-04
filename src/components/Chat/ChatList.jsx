@@ -1,29 +1,23 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
-import Loading from '../../components/Loading/Loading';
+import Loading from "../Loading/Loading"
+import ChatLinkCard from "./ChatLinkCard";
 
-function ChatList() {
+function ChatList({ currentChat }) {
     const [isLoading, setIsLoading] = useState(true);
     const [usersProjects, setUsersProjects] = useState([])
     const [usersChats, setUsersChats] = useState([])
     const [newChat, setNewChat] = useState({})
     const [errorMessage, setErrorMessage] = useState("")
-    const navigate = useNavigate()
-
-    // console.log("Projects: ", usersProjects)
-    // console.log("Chats: ", usersChats)
 
     useEffect(() => {
-        // "login" to the chat:
         apiClient.get("/chats").then((result) => {
-            // console.log("You are logged in to the chat room")
             const { allProjects, existingChats } = result.data
-            // console.log("Got this result from server: ", result.data)
             setUsersProjects(allProjects)
             setUsersChats(existingChats)
+            setErrorMessage("")
         }).catch(() => console.log("Could not log you in at the chat")).finally(() => setIsLoading(false))
-    }, [])
+    }, [currentChat]) // needs this dependency to trigger update of unread messages
 
     function handleChange(e) {
         const { value } = e.target
@@ -39,25 +33,17 @@ function ChatList() {
         }).catch((err) => setErrorMessage(err.response.data.message))
     }
 
-    function goToChatroom(chat) {
-        navigate(`/chats/${chat}`)
-    }
-
     if (isLoading) {
         return <Loading />
     }
 
-    // console.log("Here ", usersProjects)
-    // console.log("Selected proj: ", newChat)
-
     return (
         <div className="chat-list">
-            <h4>Your chatrooms</h4>
-            {usersChats.map((chat) => {
-                return <div className="chat-link" onClick={() => goToChatroom(chat._id)} key={chat._id}>{chat.project.title}</div>
-            })}
-            <hr></hr>
-            <h4>Create a chat</h4>
+            <div className="chat-link-wrapper">
+                {usersChats.map((chat) => {
+                    return <ChatLinkCard key={chat._id} chatInfo={{ chat, currentChat }} />
+                })}
+            </div>
             <form onSubmit={createNewChat}>
                 <select name="project" onChange={handleChange} style={{ maxWidth: "300px" }}>
                     <option value="">-- choose the project --</option>

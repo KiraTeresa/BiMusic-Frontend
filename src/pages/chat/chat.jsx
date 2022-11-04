@@ -3,8 +3,6 @@ import ChatList from "../../components/Chat/ChatList";
 
 function Chat() {
     const location = useLocation();
-    // console.log("Location : ", location.state)
-    // const { errorMessage } = location.state
 
     return (
         <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>

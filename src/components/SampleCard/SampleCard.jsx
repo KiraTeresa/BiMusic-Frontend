@@ -21,11 +21,11 @@ function SampleCard({ sampleInfo, backgroundColor }) {
 
     return (
         <div>
-                  <h4>{sample.genre}</h4>
+            {/* <h4>{sample.genre}</h4> */}
             <h4>{title}</h4>
-            <div style={{ backgroundColor: backgroundColor }}>
+            {/* <div style={{ backgroundColor: backgroundColor }}>
                 {sample()}
-            </div>
+            </div> */}
         </div>
     )
 }
