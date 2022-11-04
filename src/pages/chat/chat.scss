@@ -45,12 +45,17 @@ Chatroom
     }
 }
 
-.chat-window {
+.chat-window-wrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
     height: 550px;
     overflow-y: auto;
+
+    .chat-window {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 /* 
@@ -69,23 +74,29 @@ Chat message
         font-size: 12px;
         font-style: italic;
     }
-}
 
-.right {
-    background-color: #73baa5;
-    align-self: flex-end;
-    text-align: end;
-}
+    &.right {
+        background-color: #73baa5;
+        align-self: flex-end;
+        text-align: end;
+    }
 
-.left {
-    background-color: #3b554e;
-    align-self: flex-start;
-    text-align: start;
+    &.left {
+        background-color: #3b554e;
+        align-self: flex-start;
+        text-align: start;
 
-    &.deleted {
-        background-color: #c6200a;
+        &.deleted {
+            background-color: #c6200a;
+        }
+    }
+
+    &.unreadMsg {
+        border: #c6200a dashed 2px;
     }
 }
+
+
 
 /* 
 ---------------------------------------------
@@ -101,7 +112,6 @@ Chat list
     height: 100%;
 
     .chat-link-wrapper {
-        border: blue solid 1px;
         height: 550px;
         overflow-y: scroll;
     }
@@ -121,18 +131,19 @@ Chat list
         }
     }
 
-    .msg-counter {
-        border-radius: 25% 10%;
-        padding: 5px;
-    }
+}
 
-    .noMsg {
-        background-color: grey;
-    }
+.msg-counter {
+    border-radius: 25% 10%;
+    padding: 5px;
+}
 
-    .newMsg {
-        background-color: red;
-    }
+.noMsg {
+    background-color: grey;
+}
+
+.newMsg {
+    background-color: red;
 }
 
 /* 

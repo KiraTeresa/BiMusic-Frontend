@@ -5,9 +5,10 @@ import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import ChatMemberCard from "../../components/Chat/ChatMemberCard";
 import ChatList from "../../components/Chat/ChatList";
-import ChatMessage from "../../components/Chat/ChatMessage";
+// import ChatMessage from "../../components/Chat/ChatMessage";
 import './chat.scss'
 import io from "socket.io-client"
+import ChatWindow from "../../components/Chat/ChatWindow";
 
 function ChatRoom() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name)
@@ -31,7 +32,7 @@ function ChatRoom() {
             console.log("Unreaaaaaad --> ", result.data)
             setAllUnreadMessages(result.data)
         }).catch((err) => console.log(err))
-    }, [])
+    }, [chatId])
 
     useEffect(() => {
         // connect to socket server:
@@ -59,7 +60,6 @@ function ChatRoom() {
     useEffect(() => {
         // get chat info:
         apiClient.get(`/chats/${chatId}`).then((result) => {
-            // console.log("Chat room: you are logged in ", result)
             const { initiator, collaborators } = result.data.project
             const collabs = collaborators.map((collab) => { return collab._id })
             const chatMembers = [initiator._id, ...collabs]
@@ -83,13 +83,6 @@ function ChatRoom() {
             msgRef.current.scrollIntoView({ behavior: "smooth" })
         }).finally(() => setIsLoading(false))
     }, [chatId, user._id, user.name, navigate])
-
-
-    useEffect(() => {
-        // set all messages of this chat as "read" for the current user
-        apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log("Answer from backend: ", result.data)).catch((err) => console.error(err))
-    }, [chatId])
-
 
     useEffect(() => {
         if (chatClient?.connected) {
@@ -133,29 +126,27 @@ function ChatRoom() {
         return <Loading />
     }
 
+    setTimeout(() => {
+        // set all messages of this chat as "read" for the current user
+        // timeout needed, in order to highlight unread messages
+        apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log("Answer from backend: ", result.data)).catch((err) => console.error(err))
+    }, 2000)
+
+
     return (
         <div className="container">
             <div className="chat-title">
-                <h4>Your chatrooms {allUnreadMessages.length}</h4>
+                <h4>Your chatrooms {allUnreadMessages.length === 0 ? "" : <span className='msg-counter newMsg'>{allUnreadMessages.length}</span>}</h4>
                 <h2>Chatroom: {projectInfo.title}</h2>
                 <h4>Chat members</h4>
             </div>
             <div className="chat-container">
                 <aside>
-                    <ChatList />
+                    <ChatList currentChat={chatId} />
                 </aside>
                 <main>
-                    <div className="chat-window">
-                        {dbHistory.length > 0 ? dbHistory.map((element) => {
-                            return <ChatMessage key={element._id} msgInfo={{ name: element.author.name, msg: element.text, time: element.createdAt, currentUser: user.name }} />
-                        }) : ""}
-                        {
-                            msgHistory.length > 0 ?
-                                msgHistory.map((element, index) => {
-                                    return <ChatMessage key={index} msgInfo={{ name: element.user, msg: element.msg, time: element.time, currentUser: user.name }} />
-                                })
-                                : <p>... no new messages ...</p>
-                        }
+                    <div className="chat-window-wrapper">
+                        <ChatWindow chatInfo={{ dbHistory, msgHistory }} />
                         <div ref={msgRef} style={{ height: "20px" }}></div>
                     </div>
                     <div className="chat-form">

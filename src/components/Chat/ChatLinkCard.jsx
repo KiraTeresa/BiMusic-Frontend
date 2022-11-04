@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 
 function ChatLinkCard({ chatInfo }) {
-    const { _id, project } = chatInfo
+    const { chat, currentChat } = chatInfo
+    const { _id, project } = chat
     const [unreadMsg, setUnreadMsg] = useState([])
     const navigate = useNavigate()
 
@@ -12,13 +13,11 @@ function ChatLinkCard({ chatInfo }) {
             console.log("Unread: ", unreadMsgArr)
             setUnreadMsg(unreadMsgArr.data)
         }).catch((err) => console.log("Getting unread messages failed. ", err))
-    }, [])
+    }, [_id, currentChat])
 
     function goToChatroom() {
         navigate(`/chats/${_id}`)
     }
-
-    // console.log("Chat info --> ", chatInfo)
 
     return (
         <div className="chat-link" onClick={goToChatroom}>
