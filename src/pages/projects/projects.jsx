@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import apiClient from '../../services/apiClient'
-import ProjectCard from '../../components/ProjectCard/ProjectCard'
-import ProjectFilter from '../../components/ProjectFilter/ProjectFilter';
+import ProjectCard from '../../components/Project/ProjectCard'
+import ProjectFilter from '../../components/Project/ProjectFilter';
 import Loading from '../../components/Loading/Loading';
 import './projects.scss'
 

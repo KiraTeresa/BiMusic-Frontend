@@ -95,10 +95,12 @@ function ChatRoom() {
     }
 
     async function sendMessage() {
-        await apiClient.post("/message", message).then((result) => {
-            chatClient.emit('send', { ...message, msgId: result.data._id })
-        }).catch(() => console.log("Couldn't add your msg to collection --- "))
-        setMessage({ ...message, msg: "" })
+        if (message.msg) {
+            await apiClient.post("/message", message).then((result) => {
+                chatClient.emit('send', { ...message, msgId: result.data._id })
+            }).catch(() => console.log("Couldn't add your msg to collection --- "))
+            setMessage({ ...message, msg: "" })
+        }
     }
 
     // receiving data (new message) from socket server
@@ -142,7 +144,7 @@ function ChatRoom() {
                     </div>
                     <div className="chat-form">
                         <textarea type="text" name="msg" onChange={handleChange} value={message.msg}></textarea>
-                        <button onClick={sendMessage} className="btn-primary">send</button>
+                        <button onClick={sendMessage} className="btn primary">send</button>
                     </div>
                 </main>
                 <aside>
