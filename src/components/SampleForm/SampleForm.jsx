@@ -132,29 +132,32 @@ function SampleForm(props) {
 
                 
                 {/* Title */}
-                <label className= "label-title">Title<span class="required">*</span>
+                <label className= "label-title"><b>Title</b><span class="required">*</span>
                     <input className="upload__inputs" placeholder="Name your track" type="text" onChange={handleChange} name="title" value={form.title}></input>
                     </label>
                 {/* Description */}
-                <label className= "label-title">Description<i> {"(optional)"}</i>
+                <label className= "label-title"><b>Description</b><i> {"(optional)"}</i>
                     <textarea className="textarea__input" placeholder="Describe your track" type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
                 </label>
                 {/* Year */}
-                <label className= "label-title">Publication year<span class="required">*</span>: 
+                <label className= "label-title"><b>Publication year</b><span class="required">*</span>: 
                     <input placeholder="Select release year" className="year__input" type="number" onChange={handleChange} name="year" min="1960" max={currentYear} step="1" value={form.year}></input>
                 </label>
                 {/* Genre */}
-                    <label className= "label-title">Add tags to describe genre of your track:
-                    <div class="container">
-                <div className="checkbox-wrapper">
+                    <label className= "tags-title-label"><b>Add tags to characterise the genre of your song:</b><i> {"(optional)"}</i>
+                    <div class="container-genres">
+                <div className="checkbox-genres-wrapper">
                     <p>{GENRE_ENUM.map((genre) => {
-                        return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
+                        return <label key={genre}>
+                        <input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}
+                    </label>
+                    
                     })}</p></div>
                     </div>
                     </label>
 
                 {/* Link Type */}
-                <label className= "label-title">Select upload type<span class="required">*</span>:  
+                <label className= "label-title"><b>Select upload type:   </b><span class="required">*</span>  
                 <label>
                         <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /><i>URL</i>
                     </label>
