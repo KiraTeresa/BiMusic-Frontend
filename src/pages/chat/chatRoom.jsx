@@ -55,28 +55,21 @@ function ChatRoom() {
     // get chat info
     useEffect(() => {
         apiClient.get(`/chats/${chatId}`).then((result) => {
+            const { chatFound, usersHistory } = result.data
+
             // set info of related project:
-            setProjectInfo(result.data.project)
+            setProjectInfo(chatFound.project)
+
+            // set users history for this chat:
+            setDbHistory(usersHistory)
 
             // get all chat members, to make messages be send to them:
-            const { initiator, collaborators } = result.data.project
+            const { initiator, collaborators } = chatFound.project
             const collabs = collaborators.map((collab) => { return collab._id })
             const chatMembers = [initiator._id, ...collabs]
 
             // set message structure:
             setMessage({ msg: "", user: user.name, userId: user._id, chat: chatId, sendTo: chatMembers })
-
-            // store chat history from db and set info for deleted users:
-            const { history } = result.data
-            const clearedHistory = []
-            for (const msg of history) {
-                if (msg.author) {
-                    clearedHistory.push(msg)
-                } else {
-                    clearedHistory.push({ ...msg, author: { name: "deleted user" } })
-                }
-            }
-            setDbHistory(clearedHistory)
 
             // clear socket related history when switching rooms, otherwise msg from former room will also be visible here:
             setMsgHistory([])
