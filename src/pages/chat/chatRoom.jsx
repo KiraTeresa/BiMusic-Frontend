@@ -49,7 +49,7 @@ function ChatRoom() {
         } else {
             console.log(" --- already connected --- ")
         }
-    }, [chatId])
+    }, [chatId, chatClient?.connected])
 
 
     // get chat info
@@ -87,7 +87,7 @@ function ChatRoom() {
         if (chatClient?.connected) {
             msgRef.current.scrollIntoView({ behavior: "smooth" })
         }
-    }, [msgHistory])
+    }, [msgHistory, chatClient?.connected])
 
 
     function handleChange(e) {
@@ -120,7 +120,7 @@ function ChatRoom() {
     setTimeout(() => {
         // set all messages of this chat as "read" for the current user
         // timeout needed, in order to highlight unread messages
-        apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log("Answer from backend: ", result.data)).catch((err) => console.error(err))
+        apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log(result.data)).catch((err) => console.error(err))
     }, 2000)
 
 
