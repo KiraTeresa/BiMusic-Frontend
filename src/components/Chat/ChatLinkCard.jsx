@@ -10,7 +10,6 @@ function ChatLinkCard({ chatInfo }) {
 
     useEffect(() => {
         apiClient.get(`/message/unread/${_id}`).then((unreadMsgArr) => {
-            console.log("Unread: ", unreadMsgArr)
             setUnreadMsg(unreadMsgArr.data)
         }).catch((err) => console.log("Getting unread messages failed. ", err))
     }, [_id, currentChat])
