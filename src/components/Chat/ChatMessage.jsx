@@ -2,12 +2,10 @@ import { formatRelative } from "date-fns"
 import { useAuth } from "../../context/auth.context"
 
 function ChatMessage({ msgInfo }) {
-    console.log("INFO ", msgInfo)
     const { user } = useAuth()
     const { name, msg, time, msgRead } = msgInfo
     const today = new Date()
     const date = formatRelative(new Date(time), today)
-    console.log("Read? ", msgRead)
 
     return (
         <div className={`chat-message 

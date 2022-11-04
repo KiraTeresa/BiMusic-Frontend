@@ -11,7 +11,6 @@ function ChatList({ currentChat }) {
     const [errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => {
-        // "login" to the chat:
         apiClient.get("/chats").then((result) => {
             const { allProjects, existingChats } = result.data
             setUsersProjects(allProjects)

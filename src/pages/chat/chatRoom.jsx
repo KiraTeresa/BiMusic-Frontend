@@ -5,7 +5,6 @@ import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import ChatMemberCard from "../../components/Chat/ChatMemberCard";
 import ChatList from "../../components/Chat/ChatList";
-// import ChatMessage from "../../components/Chat/ChatMessage";
 import './chat.scss'
 import io from "socket.io-client"
 import ChatWindow from "../../components/Chat/ChatWindow";
@@ -22,20 +21,16 @@ function ChatRoom() {
     const [allUnreadMessages, setAllUnreadMessages] = useState([])
     const navigate = useNavigate()
     const msgRef = useRef()
-    // const newMessage = {author: "currentUserId", msg: "", time: new Date()}
-    // console.log("Chat Id: ", chatId)
-    // console.log("Project ", projectInfo)
-    // console.log("ref- ", msgRef)
 
+    // get num of all unread messages for this user
     useEffect(() => {
         apiClient.get('/message/unread').then((result) => {
-            console.log("Unreaaaaaad --> ", result.data)
             setAllUnreadMessages(result.data)
         }).catch((err) => console.log(err))
     }, [chatId])
 
+    // connect to socket server
     useEffect(() => {
-        // connect to socket server:
         if (!chatClient?.connected) {
             const socket = io(process.env.REACT_APP_BACKEND_URL)
             socket.on('connect', () => {
@@ -57,14 +52,21 @@ function ChatRoom() {
     }, [chatId])
 
 
+    // get chat info
     useEffect(() => {
-        // get chat info:
         apiClient.get(`/chats/${chatId}`).then((result) => {
+            // set info of related project:
+            setProjectInfo(result.data.project)
+
+            // get all chat members, to make messages be send to them:
             const { initiator, collaborators } = result.data.project
             const collabs = collaborators.map((collab) => { return collab._id })
             const chatMembers = [initiator._id, ...collabs]
-            setProjectInfo(result.data.project)
 
+            // set message structure:
+            setMessage({ msg: "", user: user.name, userId: user._id, chat: chatId, sendTo: chatMembers })
+
+            // store chat history from db and set info for deleted users:
             const { history } = result.data
             const clearedHistory = []
             for (const msg of history) {
@@ -75,8 +77,10 @@ function ChatRoom() {
                 }
             }
             setDbHistory(clearedHistory)
-            setMsgHistory([]) // necessary, otherwise msg would be shown in every room user jumps in afterwards (untill page refresh)
-            setMessage({ msg: "", user: user.name, userId: user._id, chat: chatId, sendTo: chatMembers })
+
+            // clear socket related history when switching rooms, otherwise msg from former room will also be visible here:
+            setMsgHistory([])
+
         }).catch((err) => {
             const errorDescription = err.response.data.message;
             navigate("/chats", { state: { errorMessage: errorDescription } })
@@ -84,9 +88,10 @@ function ChatRoom() {
         }).finally(() => setIsLoading(false))
     }, [chatId, user._id, user.name, navigate])
 
+
+    // auto scroll to latest msg on first render and after every new message
     useEffect(() => {
         if (chatClient?.connected) {
-            // auto scrolls to latest msg on first render and after every new message
             msgRef.current.scrollIntoView({ behavior: "smooth" })
         }
     }, [msgHistory])
@@ -97,27 +102,20 @@ function ChatRoom() {
     }
 
     async function sendMessage() {
-
         await apiClient.post("/message", message).then((result) => {
-            console.log("Added your message to collection.", result.data._id)
-
             chatClient.emit('send', { ...message, msgId: result.data._id })
-            console.log("Message sent ", message.msg)
-
         }).catch(() => console.log("Couldn't add your msg to collection --- "))
-
         setMessage({ ...message, msg: "" })
-        msgRef.current.scrollIntoView({ behavior: "smooth" })
     }
 
+    // receiving data (new message) from socket server
     if (chatClient?.connected) {
         chatClient.on('send', async (data) => {
-            // console.log("Look what we got here >> ", data, " <<")
             if (chatId === data.chat) {
                 setMsgHistory([...msgHistory, data])
             }
 
-            // set new message as read for all users who are currently in this chatroom
+            // set new message as read for all users who are currently in this chatroom:
             await apiClient.put(`/message/read-one/${data.msgId}`).then(() => console.log("Newly received message was set as read.")).catch((err) => console.error(err))
         })
     }

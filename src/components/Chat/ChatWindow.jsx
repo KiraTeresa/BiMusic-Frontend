@@ -4,8 +4,6 @@ import { useAuth } from "../../context/auth.context"
 function ChatWindow({ chatInfo }) {
     const { user } = useAuth()
     const { dbHistory, msgHistory } = chatInfo
-    console.log("History db: ", dbHistory)
-    console.log("History msg: ", msgHistory)
 
     return (
         <div className="chat-window">
