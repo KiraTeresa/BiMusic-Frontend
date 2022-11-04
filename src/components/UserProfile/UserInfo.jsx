@@ -3,51 +3,51 @@ import UserSkillProjectSample from './UserSkillProjectSample';
 
 const UserInfo = ({ userInfo, userProject, userSample }) => {
   return (
-    <div class="container">
-      <div class="profile-header">
-        <div class="profile-img">
+    <div className="container">
+      <div className="profile-header">
+        <div className="profile-img">
           {userInfo.avatar ?
             <img src={userInfo.avatar} alt="avatar" width="250px" height="250px" />
             : <img src="https://i.stack.imgur.com/frlIf.png" alt="avatar" width="250px" height="250px" />}
         </div>
-        <div class="profile-nav-info">
-          <h3 class="user-name">{userInfo.name}</h3>
-          <div class="address">
-            <p id="state" class="state">{userInfo.city},</p>
-            <span id="country" class="country">{userInfo.country}.</span>
+        <div className="profile-nav-info">
+          <h3 className="user-name">{userInfo.name}</h3>
+          <div className="address">
+            <p id="state" className="state">{userInfo.city},</p>
+            <span id="country" className="country">{userInfo.country}.</span>
           </div>
         </div>
-        <div class="profile-option">
-          <div class="notification">
-            <i class="fa fa-bell"></i>
-            <span class="alert-message">3</span>
+        <div className="profile-option">
+          <div className="notification">
+            <i className="fa fa-bell"></i>
+            <span className="alert-message">3</span>
           </div>
         </div>
       </div>
-      <div class="main-bd">
-        <div class="left-side">
-          <div class="profile-side">
-            <p class="mobile-no"><i class="fa fa-phone"></i> placeholder</p>
-            <p class="user-mail"><i class="fa fa-envelope"></i> {userInfo.email}</p>
-            <div class="user-bio">
+      <div className="main-bd">
+        <div className="left-side">
+          <div className="profile-side">
+            <p className="mobile-no"><i className="fa fa-phone"></i> placeholder</p>
+            <p className="user-mail"><i className="fa fa-envelope"></i> {userInfo.email}</p>
+            <div className="user-bio">
               <h3> About me</h3>
-              <p class="bio">
+              <p className="bio">
                 {userInfo.aboutMe}
               </p>
             </div>
-            <div class="user-rating">
-              <h3 class="rating">ph</h3>
-              <div class="rate">
-                <div class="star-outer">
-                  <div class="star-inner">
+            <div className="user-rating">
+              <h3 className="rating">ph</h3>
+              <div className="rate">
+                <div className="star-outer">
+                  <div className="star-inner">
                   </div>
                 </div>
-                <span class="no-of-user-rate"></span><span>placeholder</span><span>&nbsp;&nbsp;placeholer</span>
+                <span className="no-of-user-rate"></span><span>placeholder</span><span>&nbsp;&nbsp;placeholer</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="right-side">
+        <div className="right-side">
           <UserSkillProjectSample skills={userInfo.skills} projects={userProject} samples={userSample} />
         </div>
       </div>

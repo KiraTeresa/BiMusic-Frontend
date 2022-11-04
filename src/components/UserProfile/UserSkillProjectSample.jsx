@@ -9,14 +9,14 @@ const UserSkillProjectSample = ({ skills, projects, samples }) => {
   const [radioTab, setRadioTab] = useState("skills");
   return (
     <div>
-      <div class="nav">
+      <div className="nav">
         <ul>
           <li className={radioTab === "skills" ? "user-post active" : "user-post"} onClick={(e) => { setRadioTab("skills") }}>Skills</li>
           <li className={radioTab === "projects" ? "user-review active" : "user-review"} onClick={(e) => { setRadioTab("projects") }}>Projects</li>
-          <li class="user-setting" onClick={(e) => { setRadioTab("samples") }}>Samples</li>
+          <li className="user-setting" onClick={(e) => { setRadioTab("samples") }}>Samples</li>
         </ul>
       </div>
-      <div class="profile-body"></div>
+      <div className="profile-body"></div>
       {radioTab === "skills" &&
         <Skills skillArr={skills} />
       }

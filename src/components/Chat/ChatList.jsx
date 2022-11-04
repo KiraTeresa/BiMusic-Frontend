@@ -3,7 +3,7 @@ import apiClient from "../../services/apiClient";
 import Loading from "../Loading/Loading"
 import ChatLinkCard from "./ChatLinkCard";
 
-function ChatList() {
+function ChatList({ currentChat }) {
     const [isLoading, setIsLoading] = useState(true);
     const [usersProjects, setUsersProjects] = useState([])
     const [usersChats, setUsersChats] = useState([])
@@ -11,14 +11,12 @@ function ChatList() {
     const [errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => {
-        // "login" to the chat:
         apiClient.get("/chats").then((result) => {
             const { allProjects, existingChats } = result.data
-            // console.log("Got this result from server: ", result.data)
             setUsersProjects(allProjects)
             setUsersChats(existingChats)
         }).catch(() => console.log("Could not log you in at the chat")).finally(() => setIsLoading(false))
-    }, [])
+    }, [currentChat]) // needs this dependency to trigger update of unread messages
 
     function handleChange(e) {
         const { value } = e.target
@@ -38,14 +36,11 @@ function ChatList() {
         return <Loading />
     }
 
-    // console.log("Here ", usersProjects)
-    // console.log("Selected proj: ", newChat)
-
     return (
         <div className="chat-list">
             <div className="chat-link-wrapper">
                 {usersChats.map((chat) => {
-                    return <ChatLinkCard key={chat._id} chatInfo={chat} />
+                    return <ChatLinkCard key={chat._id} chatInfo={{ chat, currentChat }} />
                 })}
             </div>
             <form onSubmit={createNewChat}>
