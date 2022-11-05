@@ -12,7 +12,7 @@ function ChatMessage({ msgInfo }) {
             ${name === user.name ? "right" : name === "deleted user" ? "left deleted" : "left"}
             ${msgRead ? "" : "unreadMsg"}
             `}>
-            <p className="msg-author" style={{ margin: "0", fontWeight: "bold" }}>{name ? name : "deleted user"}</p>
+            <p className="msg-author" style={{ margin: "0", fontWeight: "bold" }}>{name}</p>
             <p className="msg-text" style={{ margin: "0" }}>{msg}</p>
             <p className="msg-date">{date}</p>
         </div>

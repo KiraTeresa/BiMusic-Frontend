@@ -153,21 +153,29 @@ function ProjectFilter({ allProjects, sendToParent }) {
     return (
         <div>
             <h4>Filter</h4>
+
+            {/* Text */}
             <label>Text search:
                 <input type="text" name="text" value={search.text} onChange={handleFilterChange}></input>
             </label>
+
+            {/* Genre */}
             <select value={search.genre} name="genre" onChange={handleFilterChange}>
                 <option value=""> -- filter by genre --</option>
                 {genreFilter.map(genre => {
                     return <option key={genre} value={genre}>{genre}</option>
                 })}
             </select>
+
+            {/* Skill */}
             <select value={search.lookingFor} name="lookingFor" onChange={handleFilterChange}>
                 <option value=""> -- filter by skill --</option>
                 {skillFilter.map(skill => {
                     return <option key={skill} value={skill}>{skill}</option>
                 })}
             </select>
+
+            {/* Country */}
             <select value={search.country} name="country" onChange={handleFilterChange}>
                 <option value=""> -- filter by country --</option>
                 {hasRemoteOption ? <option value="isRemote">{'>>'} online</option> : ""}
@@ -175,12 +183,16 @@ function ProjectFilter({ allProjects, sendToParent }) {
                     return <option key={country} value={country}>{country}</option>
                 })}
             </select>
+
+            {/* City */}
             <select value={search.city} name="city" onChange={handleFilterChange} disabled={search.country === "isRemote"}>
                 <option value=""> -- filter by city --</option>
                 {cityFilter.map(city => {
                     return <option key={city} value={city}>{city}</option>
                 })}
             </select>
+
+            {/* Reset */}
             <button onClick={resetFilter}>Reset</button>
 
 

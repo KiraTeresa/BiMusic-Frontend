@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
 import SKILL_ENUM from "../../consts/skillEnum"
 import axios from "axios";
+import Loading from "../../components/Loading/Loading";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
@@ -13,9 +14,10 @@ function SignupPage() {
   const [name, setName] = useState("");
   const [aboutMe, setAboutMe] = useState("");
   const [skillArr, setSkillArr] = useState([])
-  const [countries,setCountries]= useState(undefined);
-  const [cities,setCities]= useState(undefined);
+  const [countries, setCountries] = useState(undefined);
+  const [cities, setCities] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true)
 
   const navigate = useNavigate();
 
@@ -24,14 +26,16 @@ function SignupPage() {
   const handleName = (e) => setName(e.target.value);
   const handleCity = (e) => setCity(e.target.value);
   const handleAboutMe = (e) => setAboutMe(e.target.value);
-const handleCountry = (e) => {
+  const handleCountry = (e) => {
     setCountry(e.target.value);
-    const findCountry=countries.find((el)=>{
-      return el.country===e.target.value
+    const findCountry = countries.find((el) => {
+      return el.country === e.target.value
     });
-    if(findCountry){
-      console.log(findCountry.cities);
+    if (findCountry) {
+      // console.log("Here", findCountry.cities);
       setCities(findCountry.cities);
+    } else {
+      setCities("")
     }
   };
 
@@ -39,7 +43,7 @@ const handleCountry = (e) => {
     e.preventDefault();
     // Create an object representing the request body
     const requestBody = { email, password, name, city, country, aboutMe, skillArr };
-    console.log(requestBody)
+    // console.log("RequestBody: ", requestBody)
 
     // Send a request to the server using axios
 
@@ -52,49 +56,51 @@ const handleCountry = (e) => {
     // .then((response) => {})
 
     // Or using a service
-      authService
-        .signup(requestBody)
-        .then((response) => {
-          // If the POST request is successful redirect to the login page
-          navigate("/login");
-        })
-        .catch((error) => {
-          // If the request resolves with an error, set the error message in the state
-          const errorDescription = error.response.data.message;
-          setErrorMessage(errorDescription);
-        });
+    authService
+      .signup(requestBody)
+      .then((response) => {
+        // If the POST request is successful redirect to the login page
+        navigate("/login");
+      })
+      .catch((error) => {
+        // If the request resolves with an error, set the error message in the state
+        const errorDescription = error.response.data.message;
+        setErrorMessage(errorDescription);
+      });
   };
 
 
   function handleCheckboxChange(e) {
     const { value, checked } = e.target;
-    console.log(value)
+    // console.log("handle checkbox change: ", value)
     if (checked) {
       setSkillArr((prev) => {
-        return [...prev,value] //receiving the previous state value (adding skills to prev state)
+        return [...prev, value] //receiving the previous state value (adding skills to prev state)
       })
     }
     else {
-      setSkillArr(skillArr.filter((skill) => { 
+      setSkillArr(skillArr.filter((skill) => {
         return skill !== value //unchecked skills delete from setSkillArr state
       }))
     }
   }
-  console.log(skillArr)
+  // console.log("Skill array: ", skillArr)
 
 
   useEffect(() => {
     axios
-        .get(`https://countriesnow.space/api/v0.1/countries`)
-        .then(response => {
-            const resArray = response.data.data;
-            setCountries(resArray);
-          }
-            ).catch((err)=>{console.log(err);})
-  },[])
+      .get(`https://countriesnow.space/api/v0.1/countries`)
+      .then(response => {
+        const resArray = response.data.data;
+        setCountries(resArray);
+      }
+      ).catch((err) => { console.log(err); }).finally(() => setIsLoading(false));
+  }, [])
 
+  if (isLoading) {
+    return <Loading />
+  }
 
-  
   return (
     <div className="SignupPage">
       <h1>Sign Up</h1>
@@ -111,33 +117,35 @@ const handleCountry = (e) => {
           onChange={handlePassword}
         />
 
-        <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleName} />
-
-
-        
-        
-        <label>-- Select the country --</label>
-                <select name="country" onChange={handleCountry}>
-                    {countries?countries.map((element, index) => {
-                        return <option key={index} value={element.country}>{element.country}</option>
-                    }):<option >Select a country</option>}
-                </select>
-        
-
-
-        <label>-- Select the city --</label>
-                <select name="city" onChange={handleCity}>
-                    {cities && cities.map((element, index) => {
-                        return <option key={index} value={element}>{element}</option>
-                    })}
-                </select>
+        <label>Username:</label>
+        <input type="text" name="name" value={name} onChange={handleName} placeholder="Choose a username" />
 
 
 
 
-        <label>About me:</label>
-        <input type="text" name="country" value={aboutMe} onChange={handleAboutMe} />
+        <label>Where do you live?</label>
+        <select name="country" onChange={handleCountry}>
+          <option value=""> -- Select the country --</option>
+          {countries.map((element, index) => {
+            return <option key={index} value={element.country}>{element.country}</option>
+          })}
+        </select>
+
+
+
+        <label>Pick the city closest to you</label>
+        <select name="city" onChange={handleCity} disabled={!country}>
+          <option value="">-- Select the city --</option>
+          {cities && cities.map((element, index) => {
+            return <option key={index} value={element}>{element}</option>
+          })}
+        </select>
+
+
+
+
+        <label>Tell a little bit about yourself:</label>
+        <input type="text" name="country" value={aboutMe} onChange={handleAboutMe} placeholder="What inspires you? What drives you?..." />
 
         <label>What kind of musician are you?</label>
         {SKILL_ENUM.map((skill) => {
