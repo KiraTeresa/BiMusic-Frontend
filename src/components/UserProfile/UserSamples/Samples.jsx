@@ -1,24 +1,29 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Samples = ({ sampleArr }) => {
   console.log(sampleArr)
   return (
     <div>
       {sampleArr.length > 0 ?
-        <div>{sampleArr.map((sample, index) => {
-          if (sample.linkType === "upload") {
-            return <div key={index}>
-              {sample.title}
-              <audio controls >
-                <source src={sample.uploadedLink} />
-              </audio>
-            </div>
-          } else {
-            return <a href={sample.link} target="_blank" style={{ display: "block" }} key={index} rel="noreferrer"> Link: {sample.title}</a>
-          }
-        })
-        }</div> :
-        <p>No Samples Added</p>}
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Obligation Year</th>
+          </tr>
+          {sampleArr && sampleArr.map(samp => {
+            return (<tr>
+              <td><Link to={`/samples/${samp._id}`}>
+                {samp.title}
+              </Link>
+              </td>
+              <td>{samp.genre}</td>
+              <td>{samp.year}</td>
+            </tr>)
+          })}
+        </table> : <p>Add Some Sample</p>
+      }
     </div>
   )
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import UserSkillProjectSample from './UserSkillProjectSample';
 
-const UserInfo = ({ userInfo, userProject, userSample }) => {
+const UserInfo = ({ userInfo, userProject, userSample,userCollabProject }) => {
   return (
     <div className="container">
       <div className="profile-header">
@@ -48,7 +48,7 @@ const UserInfo = ({ userInfo, userProject, userSample }) => {
           </div>
         </div>
         <div className="right-side">
-          <UserSkillProjectSample skills={userInfo.skills} projects={userProject} samples={userSample} />
+          <UserSkillProjectSample skills={userInfo.skills} projects={userProject} samples={userSample} collabProjects={userCollabProject}/>
         </div>
       </div>
     </div >
