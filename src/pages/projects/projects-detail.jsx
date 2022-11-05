@@ -5,22 +5,19 @@ import Loading from '../../components/Loading/Loading';
 import { useAuth } from "../../context/auth.context";
 import commentIcon from '../../assets/icons/100.png'
 import sampleIcon from '../../assets/icons/71.png'
-import CommentForm from "../../components/Comment/CommentForm";
-import CommentCard from "../../components/Comment/CommentCard";
+import CommentForm from "../../components/CommentFeedback/CommentFeedbackForm";
+import CommentCard from "../../components/CommentFeedback/CommentFeedbackCard";
 import SampleCard from "../../components/SampleCard/SampleCard";
 
 function ProjectDetail() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
-    // console.log("USER INFO --> ", user)
     const [project, setProject] = useState({});
     const [userStatus, setUserStatus] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const { projectId } = useParams();
+    const { id: projectId } = useParams();
     const [refresh, setRefresh] = useState(false);
     const { alreadyCollab, alreadyPending, isInitiator } = userStatus;
     const navigate = useNavigate();
-
-    // console.log("ID --> ", projectId)
 
     const refreshPage = useCallback(() => {
         setRefresh(!refresh)
@@ -28,7 +25,7 @@ function ProjectDetail() {
 
     useEffect(() => {
         apiClient.get(`/projects/${projectId}`).then(async (result) => {
-            console.log("Res from server: ", result)
+            // console.log("Res from server: ", result)
             setProject(result.data.project)
             setUserStatus(result.data.aUserStatus)
         }).catch((err) => console.log("No Project details received ", err)).finally(() => setIsLoading(false))
@@ -36,7 +33,7 @@ function ProjectDetail() {
 
     async function triggerJoinLeave() {
         await apiClient.post(`/projects/${projectId}/${user._id}`).then((result) => {
-            console.log("Backend responded: ", result)
+            // console.log("Backend responded: ", result)
         }).catch((err) => console.log("Error: ", err))
 
         if (alreadyCollab) {
@@ -53,17 +50,17 @@ function ProjectDetail() {
     }
 
     async function handleUserRequest(e) {
-        console.log("Event ", e.target)
+        // console.log("Event ", e.target)
         const { value, name } = e.target;
         await apiClient.post(`/projects/${projectId}/${value}/${name}`).then((result) => {
-            console.log("Backend handled the user request: ", result);
+            // console.log("Backend handled the user request: ", result);
             refreshPage()
         }).catch((err) => console.log("Error: ", err))
     }
 
     async function handleProjectDelete(e) {
         await apiClient.post(`/projects/${projectId}/delete`).then((result) => {
-            console.log("Info from backend regarding deleting a project: ", result)
+            // console.log("Info from backend regarding deleting a project: ", result)
             navigate('/projects')
         }).catch((err) => console.log("An error occured while trying to delete a project >> ", err))
     }
@@ -73,7 +70,7 @@ function ProjectDetail() {
     }
 
 
-    console.log("WHO is WHO *********** ", alreadyCollab, " | ", alreadyPending, " | ", isInitiator)
+    // console.log("WHO is WHO *********** ", alreadyCollab, " | ", alreadyPending, " | ", isInitiator)
     const { title, shortDescription, longDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, pendingCollabs, comments, sample } = project;
 
 
@@ -127,7 +124,7 @@ function ProjectDetail() {
                         <div className="comments">
                             <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"}
                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                <CommentForm refreshPage={refreshPage} />
+                                <CommentForm props={{ refreshPage, type: "comment" }} />
                                 {project.comments.reverse().map((comment) => {
                                     return (
                                         <CommentCard key={comment._id} commentInfo={comment} />
@@ -135,10 +132,10 @@ function ProjectDetail() {
                                 })}
                             </div>
                         </div>
-                        <div className="sample">
-                            <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
-                            {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
-                        </div>
+                    </div>
+                    <div className="sample">
+                        <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
+                        {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
                     </div>
                 </div>
                 <div className="aside">

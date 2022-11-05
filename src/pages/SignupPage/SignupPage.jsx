@@ -93,6 +93,7 @@ function SignupPage() {
       .then(response => {
         const resArray = response.data.data;
         setCountries(resArray);
+        setErrorMessage(undefined)
       }
       ).catch((err) => { console.log(err); }).finally(() => setIsLoading(false));
   }, [])
