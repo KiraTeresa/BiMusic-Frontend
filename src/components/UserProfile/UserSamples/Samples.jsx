@@ -7,21 +7,27 @@ const Samples = ({ sampleArr }) => {
     <div>
       {sampleArr.length > 0 ?
         <table>
-          <tr>
-            <th>Title</th>
-            <th>Genre</th>
-            <th>Obligation Year</th>
-          </tr>
-          {sampleArr && sampleArr.map(samp => {
-            return (<tr>
-              <td><Link to={`/samples/${samp._id}`}>
-                {samp.title}
-              </Link>
-              </td>
-              <td>{samp.genre}</td>
-              <td>{samp.year}</td>
-            </tr>)
-          })}
+          <thead>
+
+            <tr>
+              <th>Title</th>
+              <th>Genre</th>
+              <th>Obligation Year</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {sampleArr && sampleArr.map(samp => {
+              return (<tr key={samp._id}>
+                <td><Link to={`/samples/sample/${samp._id}`}>
+                  {samp.title}
+                </Link>
+                </td>
+                <td>{samp.genre}</td>
+                <td>{samp.year}</td>
+              </tr>)
+            })}
+          </tbody>
         </table> : <p>Add Some Sample</p>
       }
     </div>

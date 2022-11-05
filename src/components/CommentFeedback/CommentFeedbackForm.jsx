@@ -21,7 +21,7 @@ function CommentFeedbackForm({ props }) {
 
         apiClient.post(`/${type}/${id}`, { form }).then((res) => {
             console.log(res)
-            setForm("")
+            setForm({ title: "", text: "" })
             refreshPage()
         }).catch((err) => {
             const errorDescription = err.response.data.message;
@@ -32,7 +32,9 @@ function CommentFeedbackForm({ props }) {
     return (
         <div style={{ width: "50%" }} >
             <form onSubmit={handleSubmit}>
-                {type === "feedback" ? <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Title"></input> : ""}
+                {type === "feedback" ?
+                    <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Title"></input>
+                    : ""}
                 <textarea name="text" maxLength={500} value={form.text} onChange={handleChange}></textarea>
                 <button type="submit">post {type}</button>
             </form>

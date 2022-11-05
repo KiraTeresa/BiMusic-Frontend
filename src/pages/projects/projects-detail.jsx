@@ -82,7 +82,7 @@ function ProjectDetail() {
                         <Link to={`/profile/${initiator._id}`}>
                             <div className={`user-status ${initiator.status}`}></div>
                             <h3>{initiator.name}</h3>
-                            <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" /></Link>
+                            <img src={initiator.avatar} alt="user avatar" /></Link>
                     </div>
 
                     <div className="collaborators">
@@ -92,7 +92,7 @@ function ProjectDetail() {
                                 <Link to={`/profile/${collab.name}`}>
                                     <div className={`user-status ${collab.status}`}></div>
                                     <h3>{collab.name}</h3>
-                                    <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                                    <img src={collab.avatar} alt="user avatar" />
                                 </Link>
                             </div>)
                         })}
@@ -102,7 +102,7 @@ function ProjectDetail() {
                                     <Link to={`/profile/${collab.name}`}>
                                         <div className={`user-status ${collab.status}`}></div>
                                         <h3>{collab.name}</h3>
-                                        <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                                        <img src={collab.avatar} alt="user avatar" />
                                     </Link>
                                     <button onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
                                     <button onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>

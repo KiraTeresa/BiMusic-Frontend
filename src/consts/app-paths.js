@@ -1,9 +1,9 @@
 const APP_PATHS = {
     HOME: '/',
     // User paths:
-    PROFILE: '/user/:username',
-    PROFILE_EDIT: '/editprofile',
-    ACCOUNT_EDIT: '/user/:username/account-settings',
+    PROFILE: '/profile/:username',
+    PROFILE_EDIT: '/profile/edit',
+    ACCOUNT_EDIT: '/account-settings',
     // Project paths:
     PROJECTS: '/projects',
     PROJECT_DETAIL: '/projects/:id',
@@ -11,7 +11,7 @@ const APP_PATHS = {
     USER_PROJECTS: '/Projects/:username',
     // Sample paths:
     SAMPLES: '/samples',
-    SAMPLES_DETAIL: '/samples/:id',
+    SAMPLES_DETAIL: '/samples/sample/:id',
     SAMPLES_CREATE: '/samples/create',
     USER_SAMPLES: '/samples/:username',
     // Chat paths:

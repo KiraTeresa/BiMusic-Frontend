@@ -11,7 +11,7 @@ function SignupPage() {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [aboutMe, setAboutMe] = useState("");
   const [skillArr, setSkillArr] = useState([])
   const [countries, setCountries] = useState(undefined);
@@ -23,7 +23,7 @@ function SignupPage() {
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
-  const handleName = (e) => setName(e.target.value);
+  const handleName = (e) => setUserName(e.target.value.toLowerCase());
   const handleCity = (e) => setCity(e.target.value);
   const handleAboutMe = (e) => setAboutMe(e.target.value);
   const handleCountry = (e) => {
@@ -42,7 +42,7 @@ function SignupPage() {
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    const requestBody = { email, password, name, city, country, aboutMe, skillArr };
+    const requestBody = { email, password, username, city, country, aboutMe, skillArr };
     // console.log("RequestBody: ", requestBody)
 
     // Send a request to the server using axios
@@ -119,7 +119,7 @@ function SignupPage() {
         />
 
         <label>Username:</label>
-        <input type="text" name="name" value={name} onChange={handleName} placeholder="Choose a username" />
+        <input type="text" name="username" value={username} onChange={handleName} placeholder="Choose a username" />
 
 
 

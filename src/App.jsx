@@ -14,7 +14,6 @@ import SamplesCreate from "./pages/samples/samples-create"
 import AccountSettings from "./pages/user-profile/AccountSettings";
 import Chat from "./pages/chat/chat";
 import ChatRoom from "./pages/chat/chatRoom"
-import InitiatorProfile from "./pages/Initiator/InitiatorProfile";
 import Samples from "./pages/samples/samples";
 import SamplesDetail from "./pages/samples/samples-details";
 
@@ -34,7 +33,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
 
         <Route
-          path="/profile"
+          path={APP_PATHS.PROFILE}
           element={
             <IsPrivate>
               <ProfilePage />
@@ -71,7 +70,7 @@ function App() {
 
 
         <Route
-          path="/editprofile"
+          path={APP_PATHS.PROFILE_EDIT}
           element={
             <IsPrivate>
               <EditUserProfile />
@@ -79,23 +78,13 @@ function App() {
           }
         />
         <Route
-          path="/account-settings"
+          path={APP_PATHS.ACCOUNT_EDIT}
           element={
             <IsPrivate>
               <AccountSettings />
             </IsPrivate>
           }
         />
-
-        <Route
-          path="/profile/:initiator"
-          element={
-            <IsPrivate>
-              <InitiatorProfile />
-            </IsPrivate>
-          }
-        />
-
       </Routes>
     </div>
   );

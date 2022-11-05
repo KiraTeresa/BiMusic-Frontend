@@ -40,46 +40,46 @@ function Samples() {
 
             <div className="samples-container">
                 <table className="styled-table">
-                <thead>
-                    <tr>
-                        <th>Initiator</th>
-                        <th>Title</th>
-                        <th>Genre</th>
-                        <th>Publication Year</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Initiator</th>
+                            <th>Title</th>
+                            <th>Genre</th>
+                            <th>Publication Year</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {filteredSamples && filteredSamples.map(samp => {
-                        return (
-                        <tr>
-                            <td>
-                                <Link to={`/profile/${samp.artist}`}>
-                                    {samp.artist}
+                        {filteredSamples && filteredSamples.map(samp => {
+                            return (
+                                <tr key={samp._id}>
+                                    <td>
+                                        <Link to={`/profile/${samp.artist.name}`}>
+                                            {samp.artist.name}
+                                        </Link>
+                                    </td>
+                                    <td><Link to={`/samples/sample/${samp._id}`}>
+                                        {samp.title}
+                                    </Link>
+                                    </td>
+                                    <td>{samp.genre}</td>
+                                    <td>{samp.year}</td>
+                                </tr>)
+                        })}
+                        {!filteredSamples && allSamples.map(samp => {
+                            return (<tr key={samp._id}>
+                                <td><Link to={`/profile/${samp.artist.name}`}>
+                                    {samp.artist.name}
+                                </Link></td>
+                                <td><Link to={`/samples/sample/${samp._id}`}>
+                                    {samp.title}
                                 </Link>
-                            </td>
-                            <td><Link to={`/samples/${samp._id}`}>
-                                {samp.title}
-                            </Link>
-                            </td>
-                            <td>{samp.genre}</td>
-                            <td>{samp.year}</td>
-                        </tr>)
-                    })}
-                    {!filteredSamples && allSamples.map(samp => {
-                        return (<tr>
-                            <td><Link to={`/profile/${samp.artist}`}>
-                                {samp.artist}
-                            </Link></td>
-                            <td><Link to={`/samples/${samp._id}`}>
-                                {samp.title}
-                            </Link>
-                            </td>
-                            <td>{samp.genre}</td>
-                            <td>{samp.year}</td>
-                        </tr>
-                        )
-                    })}
-                     </tbody>
+                                </td>
+                                <td>{samp.genre}</td>
+                                <td>{samp.year}</td>
+                            </tr>
+                            )
+                        })}
+                    </tbody>
                 </table>
             </div>
         </div>
