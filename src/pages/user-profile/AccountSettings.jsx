@@ -5,7 +5,7 @@ import apiClient from '../../services/apiClient';
 
 const AccountSettings = () => {
   let navigate = useNavigate();
-
+  const [errorMessage, setErrorMessage] = useState(undefined);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,16 +15,20 @@ const AccountSettings = () => {
     changePassword: ""
   })
 
+
+
   const handleDeleteProfile = async (e) => {
     try {
       e.preventDefault();
-      const res = await apiClient.post("/profile/accountsettings", { email, password });
+      console.log("E + P ", email, password)
+      const res = await apiClient.post("/user", { email, password });
       if (res.status === 200) {
         localStorage.removeItem("authToken");
         navigate(0)
       }
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      const errorDescription = err.response.data.message;
+      setErrorMessage(errorDescription)
     }
   }
 
@@ -37,12 +41,13 @@ const AccountSettings = () => {
   const handleChangePasswordSubmit = async (e) => {
     try {
       e.preventDefault();
-      const res = await apiClient.put("/profile/accountsettings", changePass);
+      const res = await apiClient.put("/user", changePass);
       if (res.status === 200) {
         console.log("Success")
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      const errorDescription = err.response.data.message;
+      setErrorMessage(errorDescription)
     }
   }
   return (
@@ -88,6 +93,7 @@ const AccountSettings = () => {
         />
         <button type="submit">Delete Profile</button>
       </form>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </>
   )
 }

@@ -88,26 +88,13 @@ function SampleForm(props) {
                 const finalForm = { ...form, year: parseInt(form.year), linkType: "url" }
                 const res = await apiClient.post("/samples/create", { finalForm, projectId })
                 console.log("RES FROM BACKEND: ", res)
-                navigate('/profile')
+                navigate(`/profile/${user.name}`)
             }
         } catch (err) {
             console.log(err);
             const errorDescription = err.response.data.message;
             setErrorMessage(errorDescription);
         }
-    }
-
-    function showTogglePrivacy() {
-        return (
-            <label>Do you want this sample to be shown on your profile?
-                <label>
-                    <input type="radio" onChange={handleChange} name="public" value={true}></input> Yes, add sample to my profile
-                </label>
-                <label>
-                    <input type="radio" onChange={handleChange} name="public" value={false}></input> No, show only at the project
-                </label>
-            </label>
-        )
     }
 
     const [sampleType, setSampleType] = useState("url")
@@ -123,77 +110,67 @@ function SampleForm(props) {
 
     return (
         <div className="upload__form__c">
-          <div className="up__f__c">
-          <div className="upload__title">Upload Track</div>
+            <div className="up__f__c">
+                <div className="upload__title">Upload Track</div>
 
 
-        <div style={{ display: "flex", flexDirection: "column" }} >
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
-
-                
-                {/* Title */}
-                <label className= "label-title"><b>Title</b><span class="required">*</span>
-                    <input className="upload__inputs" placeholder="Name your track" type="text" onChange={handleChange} name="title" value={form.title}></input>
-                    </label>
-                {/* Description */}
-                <label className= "label-title"><b>Description</b><i> {"(optional)"}</i>
-                    <textarea className="textarea__input" placeholder="Describe your track" type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
-                </label>
-                {/* Year */}
-                <label className= "label-title"><b>Publication year</b><span class="required">*</span>: 
-                    <input placeholder="Select release year" className="year__input" type="number" onChange={handleChange} name="year" min="1960" max={currentYear} step="1" value={form.year}></input>
-                </label>
-                {/* Genre */}
-                    <label className= "tags-title-label"><b>Add tags to characterise the genre of your song:</b><i> {"(optional)"}</i>
-                    <div class="container-genres">
-                <div className="checkbox-genres-wrapper">
-                    <p>{GENRE_ENUM.map((genre) => {
-                        return <label key={genre}>
-                        <input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}
-                    </label>
-                    
-                    })}</p></div>
-                    </div>
-                    </label>
-
-                {/* Link Type */}
-                <label className= "label-title"><b>Select upload type:   </b><span class="required">*</span>  
-                <label>
-                        <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /><i>URL</i>
-                    </label>
-                    <label>
-                        <input type="radio" onChange={handleSampleType} name="linkType" value="upload" /> <i>Upload audio file</i>
-                    </label>
-            
-
-                {/* Link */}
-                {/* Upload Sample */}
+                <div style={{ display: "flex", flexDirection: "column" }} >
+                    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
 
 
-                    {sampleType === "url" ?
-                        <input className="upload_referenceLink"  placeholder="Paste reference link here" type="url" onChange={handleChange} name="link" value={form.link} />
-                        :
-                        <input type="file" onChange={upload} accept="audio/wav, audio/mp3" />
-                    }
-        </label>
+                        {/* Title */}
+                        <label className="label-title"><b>Title</b><span className="required">*</span>
+                            <input className="upload__inputs" placeholder="Name your track" type="text" onChange={handleChange} name="title" value={form.title}></input>
+                        </label>
+                        {/* Description */}
+                        <label className="label-title"><b>Description</b><i> {"(optional)"}</i>
+                            <textarea className="textarea__input" placeholder="Describe your track" type="text" onChange={handleChange} name="description" value={form.description} maxLength="500"></textarea>
+                        </label>
+                        {/* Year */}
+                        <label className="label-title"><b>Publication year</b><span className="required">*</span>:
+                            <input placeholder="Select release year" className="year__input" type="number" onChange={handleChange} name="year" min="1960" max={currentYear} step="1" value={form.year}></input>
+                        </label>
+                        {/* Genre */}
+                        <label className="tags-title-label"><b>Add tags to characterise the genre of your song:</b><i> {"(optional)"}</i>
+                            <div className="container-genres">
+                                <div className="checkbox-genres-wrapper">
+                                    <p>{GENRE_ENUM.map((genre) => {
+                                        return <label key={genre}>
+                                            <input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}
+                                        </label>
 
-        <div>
+                                    })}</p></div>
+                            </div>
+                        </label>
 
-             {/* Public */}
-             {/* {projectId ? showTogglePrivacy : <div><i>Samples, which are not attached to a project are always pupblic.</i></div>} */}
-        </div>
+                        {/* Link Type */}
+                        <label className="label-title"><b>Select upload type:   </b><span className="required">*</span>
+                            <label>
+                                <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /><i>URL</i>
+                            </label>
+                            <label>
+                                <input type="radio" onChange={handleSampleType} name="linkType" value="upload" /> <i>Upload audio file</i>
+                            </label>
 
 
-                {disableSubmit ? "" : <button className="uploadBtn" type="submit">Submit </button>}
-            </form>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            
-            
-            <p className="required-fields">
-    <span class="required">*</span>Required fields
-  </p>
-        </div>
-        </div>
+                            {/* Link */}
+                            {/* Upload Sample */}
+                            {sampleType === "url" ?
+                                <input className="upload_referenceLink" placeholder="Paste reference link here" type="url" onChange={handleChange} name="link" value={form.link} />
+                                :
+                                <input type="file" onChange={upload} accept="audio/wav, audio/mp3" />
+                            }
+                        </label>
+                        {disableSubmit ? "" : <button className="uploadBtn" type="submit">Submit </button>}
+                    </form>
+                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+
+                    <p className="required-fields">
+                        <span className="required">*</span>Required fields
+                    </p>
+                </div>
+            </div>
         </div>
     )
 }

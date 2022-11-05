@@ -1,14 +1,17 @@
-import React from 'react';
+import { React, useContext } from 'react';
 import UserSkillProjectSample from './UserSkillProjectSample';
+import { AuthContext } from "../../context/auth.context";
+import { Link } from 'react-router-dom';
 
-const UserInfo = ({ userInfo, userProject, userSample,userCollabProject }) => {
+const UserInfo = ({ userInfo }) => {
+  const { user } = useContext(AuthContext)
+  const isOwnProfile = (userInfo.name === user.name)
+
   return (
     <div className="container">
       <div className="profile-header">
         <div className="profile-img">
-          {userInfo.avatar ?
-            <img src={userInfo.avatar} alt="avatar" width="250px" height="250px" />
-            : <img src="https://i.stack.imgur.com/frlIf.png" alt="avatar" width="250px" height="250px" />}
+          <img src={userInfo.avatar} alt="avatar" width="250px" height="250px" />
         </div>
         <div className="profile-nav-info">
           <h3 className="user-name">{userInfo.name}</h3>
@@ -17,12 +20,15 @@ const UserInfo = ({ userInfo, userProject, userSample,userCollabProject }) => {
             <span id="country" className="country">{userInfo.country}.</span>
           </div>
         </div>
-        <div className="profile-option">
-          <div className="notification">
-            <i className="fa fa-bell"></i>
-            <span className="alert-message">3</span>
-          </div>
-        </div>
+        {
+          isOwnProfile ?
+            <Link to="/chats" className="profile-option">
+              <div className="notification">
+                <i className="fa fa-bell"></i>
+                <span className="alert-message">3</span>
+              </div>
+            </Link> : ""
+        }
       </div>
       <div className="main-bd">
         <div className="left-side">
@@ -48,7 +54,7 @@ const UserInfo = ({ userInfo, userProject, userSample,userCollabProject }) => {
           </div>
         </div>
         <div className="right-side">
-          <UserSkillProjectSample skills={userInfo.skills} projects={userProject} samples={userSample} collabProjects={userCollabProject}/>
+          <UserSkillProjectSample skills={userInfo.skills} projects={userInfo.ownProjects} samples={userInfo.samples} collabProjects={userInfo.collabProjects} />
         </div>
       </div>
     </div >
