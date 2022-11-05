@@ -7,8 +7,9 @@ import UserInfo from "../../components/UserProfile/UserInfo";
 
 function ProfilePage() {
   const [userInfo, setUserInfo] = useState(null);
-  const [userProject, setUserProject] = useState(null);
-  const [userSample, setUserSample] = useState([]);
+  // const [userProject, setUserProject] = useState(null);
+  // const [userCollabs, setUserCollabs] = useState(null);
+  // const [userSample, setUserSample] = useState([]);
   const { user } = useContext(AuthContext)//this function will give us the user info
 
   useEffect(() => {
@@ -16,39 +17,44 @@ function ProfilePage() {
       email: user.email
     })
       .then(response => {
+        console.log("RES: ", response)
         setUserInfo(response.data)
+        // setUserProject(response.data.ownProjects)
+        // setUserSample(response.data.samples)
+        // setUserCollabs(response.data.collabProjects)
       })
       .catch((err) => {
         console.log(err)
       });
   }, [user.email]);
 
-  useEffect(() => {
-    apiClient
-      .get(`/profile/addedproject/${user._id}`)
-      .then(response => {
-        setUserProject(response.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      });
-  }, [user._id]);
+  // useEffect(() => {
+  //   apiClient
+  //     .get(`/profile/addedproject/${user._id}`)
+  //     .then(response => {
+  //       setUserProject(response.data)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     });
+  // }, [user._id]);
 
-  useEffect(() => {
-    apiClient.get(`/samples/${user._id}`)
-      .then(response => {
-        setUserSample(response.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      });
-  }, [user._id]);
+  // useEffect(() => {
+  //   apiClient.get(`/samples/${user._id}`)
+  //     .then(response => {
+  //       setUserSample(response.data)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     });
+  // }, [user._id]);
 
   return (
     <div>
       {
         userInfo &&
-        <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} />
+        // <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} />
+        <UserInfo userInfo={userInfo} />
       }
       <div className="profile-btn">
         <Link to='/editprofile'><button className="chatbtn" id="chatBtn">Profile</button></Link>
