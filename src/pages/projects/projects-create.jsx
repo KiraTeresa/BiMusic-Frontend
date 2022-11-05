@@ -40,7 +40,6 @@ function ProjectsCreate() {
             .get(`https://countriesnow.space/api/v0.1/countries`)
             .then(response => {
                 const resArray = response.data.data;
-                // console.log("RES ARRAY ", resArray)
                 setCountriesAndCities(resArray)
 
                 apiClient.get(`/projects/create?userId=${user._id}`).then((result) => {

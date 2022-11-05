@@ -49,7 +49,7 @@ function ChatRoom() {
         } else {
             console.log(" --- already connected --- ")
         }
-    }, [chatId, chatClient?.connected])
+    }, [chatId])
 
 
     // get chat info

@@ -10,15 +10,13 @@ function ChatWindow({ chatInfo }) {
             {
                 dbHistory.length > 0 ?
                     dbHistory.map((element) => {
-                        const msgRead = element.readBy?.includes(user._id)
-                        return <ChatMessage key={element._id} msgInfo={{ name: element.author.name, msg: element.text, time: element.createdAt, msgRead }} />
+                        return <ChatMessage key={element._id} msgInfo={{ name: element.author.name, msg: element.text, time: element.createdAt, msgRead: element.readBy?.includes(user._id) }} />
                     })
                     : ""}
             {
                 msgHistory.length > 0 ?
                     msgHistory.map((element, index) => {
-                        const msgRead = element.readBy?.includes(user._id)
-                        return <ChatMessage key={index} msgInfo={{ name: element.user, msg: element.msg, time: element.time, msgRead }} />
+                        return <ChatMessage key={index} msgInfo={{ name: element.user, msg: element.msg, time: element.time, msgRead: element.readBy?.includes(user._id) }} />
                     })
                     : ""
             }
