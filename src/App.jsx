@@ -67,6 +67,7 @@ function App() {
         <Route path={APP_PATHS.CHAT_ROOM} element={<IsPrivate><ChatRoom /></IsPrivate>}></Route>
         <Route path={APP_PATHS.SAMPLES} element={<IsPrivate><Samples /></IsPrivate>}></Route>
         <Route path={APP_PATHS.SAMPLES_DETAIL} element={<IsPrivate><SamplesDetail /></IsPrivate>}></Route>
+        <Route path={APP_PATHS.USER_SAMPLES} element={<IsPrivate><SamplesDetail /></IsPrivate>} />
 
 
         <Route

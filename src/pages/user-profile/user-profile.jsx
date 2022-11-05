@@ -53,7 +53,7 @@ function ProfilePage() {
     <div>
       {
         userInfo &&
-        // <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} />
+        // <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} userCollabProject={userCollabProject}/>
         <UserInfo userInfo={userInfo} />
       }
       <div className="profile-btn">

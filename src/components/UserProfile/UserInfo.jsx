@@ -49,7 +49,7 @@ const UserInfo = ({ userInfo }) => {
           </div>
         </div>
         <div className="right-side">
-          <UserSkillProjectSample skills={userInfo.skills} projects={userInfo.ownProjects} samples={userInfo.samples} />
+          <UserSkillProjectSample skills={userInfo.skills} projects={userInfo.ownProjects} samples={userInfo.samples} collabProjects={userInfo.collabProjects} />
         </div>
       </div>
     </div >
