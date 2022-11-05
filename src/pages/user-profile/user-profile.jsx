@@ -8,6 +8,7 @@ import UserInfo from "../../components/UserProfile/UserInfo";
 function ProfilePage() {
   const [userInfo, setUserInfo] = useState(null);
   const [userProject, setUserProject] = useState(null);
+  const [userCollabProject, setUserCollabProject] = useState(null);
   const [userSample, setUserSample] = useState([]);
   const { user } = useContext(AuthContext)//this function will give us the user info
 
@@ -35,6 +36,17 @@ function ProfilePage() {
   }, [user._id]);
 
   useEffect(() => {
+    apiClient
+      .get(`/profile/collaboratedprojects/${user._id}`)
+      .then(response => {
+        setUserCollabProject(response.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }, [user._id]);
+
+  useEffect(() => {
     apiClient.get(`/samples/${user._id}`)
       .then(response => {
         setUserSample(response.data)
@@ -48,7 +60,7 @@ function ProfilePage() {
     <div>
       {
         userInfo &&
-        <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} />
+        <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} userCollabProject={userCollabProject}/>
       }
       <div className="profile-btn">
         <Link to='/editprofile'><button className="chatbtn" id="chatBtn">Profile</button></Link>

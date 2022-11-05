@@ -5,7 +5,7 @@ import Skills from './UserSkills/Skills';
 import Projects from "./UserProjects/Projects";
 import Samples from "./UserSamples/Samples";
 
-const UserSkillProjectSample = ({ skills, projects, samples }) => {
+const UserSkillProjectSample = ({ skills, projects, samples,collabProjects }) => {
   const [radioTab, setRadioTab] = useState("skills");
   return (
     <div>
@@ -21,7 +21,7 @@ const UserSkillProjectSample = ({ skills, projects, samples }) => {
         <Skills skillArr={skills} />
       }
       {radioTab === "projects" &&
-        <Projects projectArr={projects} />
+        <Projects projectArr={projects} collabProjectArr={collabProjects}/>
       }
       {radioTab === "samples" &&
         <Samples sampleArr={samples} />
