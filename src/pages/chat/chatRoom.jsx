@@ -94,12 +94,18 @@ function ChatRoom() {
         }).finally(() => setIsLoading(false))
     }, [chatId, user._id, user.name, navigate])
 
-
-    // auto scroll to latest msg on first render and after every new message
-    useEffect(() => {
+    function scrollToLatestMsg() {
         if (chatClient?.connected) {
             msgRef.current.scrollIntoView({ behavior: "smooth" })
         }
+    }
+
+    // auto scroll to latest msg on first render and after every new message
+    useEffect(() => {
+        const scroll = setTimeout(() => {
+            scrollToLatestMsg()
+        }, 500)
+        return () => clearTimeout(scroll)
     }, [msgHistory, chatClient?.connected])
 
 
@@ -116,8 +122,6 @@ function ChatRoom() {
                     navigate('/internal-server-error')
                 } else { setErrorMessage(err.response.data.message) }
             })
-
-                (() => console.log("Couldn't add your msg to collection --- "))
             setMessage({ ...message, msg: "" })
         }
     }

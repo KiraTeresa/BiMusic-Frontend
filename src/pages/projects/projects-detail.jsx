@@ -30,7 +30,7 @@ function ProjectDetail() {
             setProject(result.data.project)
             setUserStatus(result.data.aUserStatus)
         }).catch((err) => {
-            if (err.response.status === 500) {
+            if (err.response?.status === 500) {
                 navigate('/internal-server-error')
             } else { console.log(err) }
         }).finally(() => setIsLoading(false))

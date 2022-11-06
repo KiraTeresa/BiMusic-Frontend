@@ -20,9 +20,7 @@ function Projects() {
             if (err.response.status === 500) {
                 navigate('/internal-server-error')
             } else { console.log(err) }
-        })
-
-            ((err) => console.log("Error when trying to get projects from server.", err)).finally(() => setIsLoading(false))
+        }).finally(() => setIsLoading(false))
     }, [])
 
     function toggleFilter() {

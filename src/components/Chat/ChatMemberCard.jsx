@@ -5,7 +5,7 @@ function ChatMemberCard({ userInfo }) {
     const navigate = useNavigate()
 
     const goToUserProfile = () => {
-        navigate(`/profile/${_id}`)
+        navigate(`/profile/${name}`)
     }
 
     return (
