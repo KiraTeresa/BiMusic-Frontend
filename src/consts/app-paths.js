@@ -1,5 +1,8 @@
 const APP_PATHS = {
     HOME: '/',
+    // Auth paths:
+    SIGNUP: '/signup',
+    LOGIN: '/login',
     // User paths:
     PROFILE: '/profile/:username',
     PROFILE_EDIT: '/profile/edit',
