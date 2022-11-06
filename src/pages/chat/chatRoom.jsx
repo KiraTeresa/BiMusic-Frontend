@@ -35,7 +35,7 @@ function ChatRoom() {
                 console.log(err)
             }
         })
-    }, [chatId])
+    }, [chatId, navigate])
 
     // connect to socket server
     useEffect(() => {
@@ -106,7 +106,7 @@ function ChatRoom() {
             scrollToLatestMsg()
         }, 500)
         return () => clearTimeout(scroll)
-    }, [msgHistory, chatClient?.connected])
+    }, [msgHistory, chatClient?.connected, scrollToLatestMsg])
 
 
     function handleChange(e) {

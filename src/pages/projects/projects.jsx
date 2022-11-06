@@ -21,7 +21,7 @@ function Projects() {
                 navigate('/internal-server-error')
             } else { console.log(err) }
         }).finally(() => setIsLoading(false))
-    }, [])
+    }, [navigate])
 
     function toggleFilter() {
         setShowFilter(!showFilter)

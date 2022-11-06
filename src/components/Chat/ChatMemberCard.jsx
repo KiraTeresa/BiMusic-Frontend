@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 function ChatMemberCard({ userInfo }) {
-    const { _id, name, avatar, skills, status } = userInfo
+    const { name, avatar, skills, status } = userInfo
     const navigate = useNavigate()
 
     const goToUserProfile = () => {

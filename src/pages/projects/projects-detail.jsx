@@ -34,7 +34,7 @@ function ProjectDetail() {
                 navigate('/internal-server-error')
             } else { console.log(err) }
         }).finally(() => setIsLoading(false))
-    }, [projectId, alreadyCollab, alreadyPending, refresh])
+    }, [projectId, alreadyCollab, alreadyPending, refresh, navigate])
 
     async function triggerJoinLeave() {
         await apiClient.post(`/projects/${projectId}/${user._id}`).then((result) => {
