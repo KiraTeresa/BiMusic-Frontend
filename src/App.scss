@@ -1,6 +1,4 @@
 .App {
-  text-align: center;
-
   /* 
     ---------------------------------------------
     Colors
@@ -9,7 +7,7 @@
 
   $BACKGROUND-COLOR: #1E1E1E;
   $PRIMARY-COLOR: #00C2CB;
-  $SECONDARY-COLOR: #10949b;
+  $SECONDARY-COLOR: #0f5a5e;
   $TERTIARY-COLOR: #f0fafb;
 
   /* 
@@ -28,31 +26,26 @@
   //   src: url(/assets/fonts/Poppins/Poppins-Regular.ttf);
   // }
 
-  /* 
-    ---------------------------------------------
-    Reset CSS
-    --------------------------------------------- 
-  */
 
-  *,
-  ::before,
-  ::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
 
   /* 
   ---------------------------------------------
   General styles
   --------------------------------------------- 
   */
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  border: yellow solid 1px;
 
-  // &>div {
-  //   border: black solid 1px;
-  //   max-width: 1232px;
-  //   margin: 50px auto;
-  // }
+  &>div {
+    border: $PRIMARY-COLOR solid 1px;
+    width: 80%;
+    max-width: 1500px;
+    height: 100%;
+    margin: auto;
+  }
 
   .user-status {
     height: 10px;
@@ -80,11 +73,12 @@
 
     &.primary {
       background-color: $PRIMARY-COLOR;
-      color: #c1dbd4;
+      color: $SECONDARY-COLOR;
+      font-size: 18px;
 
       &:hover {
-        background-color: #73baa5;
-        color: #3b554e;
+        background-color: $SECONDARY-COLOR;
+        color: $TERTIARY-COLOR;
       }
     }
 
@@ -119,5 +113,44 @@
     color: #c6200a;
     font-size: 14px;
     padding: 5px;
+  }
+
+  /* 
+---------------------------------------------
+breakpoint 1024px
+--------------------------------------------- 
+*/
+  @media (max-width: 1024px) {
+    &>div {
+      border: purple solid 1px;
+      max-width: 976px;
+      margin: auto;
+    }
+  }
+
+  /* 
+---------------------------------------------
+breakpoint 768px
+--------------------------------------------- 
+*/
+  @media (max-width: 768px) {
+    &>div {
+      border: blue solid 1px;
+      max-width: 736;
+      margin: auto;
+    }
+  }
+
+  /* 
+---------------------------------------------
+breakpoint 480px
+--------------------------------------------- 
+*/
+  @media (max-width: 480px) {
+    &>div {
+      border: green solid 1px;
+      max-width: 90%;
+      margin: auto;
+    }
   }
 }

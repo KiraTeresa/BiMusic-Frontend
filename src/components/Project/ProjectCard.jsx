@@ -9,13 +9,9 @@ function ProjectCard({ project, backgroundColor }) {
     return (
         <div className="project-card" style={{ backgroundColor }}>
             <h3>{title}</h3>
-            <div>
-                <p>{shortDescription}</p>
-                <Link to={`/projects/${_id}`}><button>more info...</button></Link>
-            </div>
             <div className="initiator">
                 <p>By: {initiator && initiator.name}</p>
-                <img src={initiator && initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                {/* <img src={initiator.avatar} alt="user avatar" /> */}
             </div>
             <div className="item-wrapper">
                 {genre.map((g) => {
@@ -38,6 +34,10 @@ function ProjectCard({ project, backgroundColor }) {
                     <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
                 </div>
             </div>
+            <div>
+                <p>{shortDescription}</p>
+            </div>
+            <Link to={`/projects/${_id}`}><button className='btn primary'>more info...</button></Link>
         </div>
     )
 }
