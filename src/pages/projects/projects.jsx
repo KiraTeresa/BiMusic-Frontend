@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import apiClient from '../../services/apiClient'
 import ProjectCard from '../../components/Project/ProjectCard'
 import ProjectFilter from '../../components/Project/ProjectFilter';
@@ -11,12 +11,17 @@ function Projects() {
     const [isLoading, setIsLoading] = useState(true);
     const [filteredProjects, setFilteredProjects] = useState(undefined)
     const [showFilter, setShowFilter] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         apiClient.get("/projects").then((result) => {
             setAllProjects(result.data)
-        }).catch((err) => console.log("Error when trying to get projects from server.", err)).finally(() => setIsLoading(false))
-    }, [])
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else { console.log(err) }
+        }).finally(() => setIsLoading(false))
+    }, [navigate])
 
     function toggleFilter() {
         setShowFilter(!showFilter)

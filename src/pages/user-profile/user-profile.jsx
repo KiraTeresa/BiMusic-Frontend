@@ -2,7 +2,7 @@ import "./user-profile.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
 import apiClient from '../../services/apiClient';
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import UserInfo from "../../components/UserProfile/UserInfo";
 
 function ProfilePage() {
@@ -10,7 +10,7 @@ function ProfilePage() {
   const { user } = useContext(AuthContext)//this function will give us the user info
   const { username } = useParams()
   const isOwnProfile = (username === user.name)
-  console.log("Boolean: ", isOwnProfile)
+  const navigate = useNavigate()
 
   useEffect(() => {
     apiClient.get(`/profile/${username}`)
@@ -19,7 +19,14 @@ function ProfilePage() {
         setUserInfo(response.data)
       })
       .catch((err) => {
-        console.log(err)
+        if (err.response.status === 400) {
+          const errorDescription = err.response.data.message;
+          navigate('/', { state: { errorMessage: errorDescription } })
+        } else if (err.response.status === 500) {
+          navigate('/internal-server-error')
+        } else {
+          console.log(err)
+        }
       });
   }, [username]);
 

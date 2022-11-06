@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import apiClient from '../../services/apiClient'
 import Loading from '../../components/Loading/Loading';
-import SampleCard from '../../components/SampleCard/SampleCard';
+// import SampleCard from '../../components/SampleCard/SampleCard';
 import SampleFilter from '../../components/SampleFilter/SampleFilter';
 import './samples.scss'
 
@@ -11,11 +11,18 @@ function Samples() {
     const [isLoading, setIsLoading] = useState(true);
     const [filteredSamples, setFilteredSamples] = useState(undefined)
     const [showFilter, setShowFilter] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         apiClient.get("/samples").then((result) => {
             setAllSamples(result.data)
-        }).catch((err) => console.log("Error when trying to get projects from server.", err)).finally(() => setIsLoading(false))
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                console.log(err)
+            }
+        }).finally(() => setIsLoading(false))
     }, [])
 
     function toggleFilter() {

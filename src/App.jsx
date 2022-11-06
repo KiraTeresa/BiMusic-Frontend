@@ -16,6 +16,8 @@ import Chat from "./pages/chat/chat";
 import ChatRoom from "./pages/chat/chatRoom"
 import Samples from "./pages/samples/samples";
 import SamplesDetail from "./pages/samples/samples-details";
+import NotFoundPage from "./pages/notFoundPage/notFoundPage";
+import InternalServerError from "./pages/internalServerError/internalServerError";
 
 // Import Components
 import Navbar from "./components/Navbar/Navbar";
@@ -85,6 +87,8 @@ function App() {
             </IsPrivate>
           }
         />
+        <Route path={APP_PATHS.STATUS_400} element={<NotFoundPage />} />
+        <Route path={APP_PATHS.STATUS_500} element={<InternalServerError />} />
       </Routes>
     </div>
   );

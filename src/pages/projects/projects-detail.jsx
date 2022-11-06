@@ -17,6 +17,7 @@ function ProjectDetail() {
     const { id: projectId } = useParams();
     const [refresh, setRefresh] = useState(false);
     const { alreadyCollab, alreadyPending, isInitiator } = userStatus;
+    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate();
 
     const refreshPage = useCallback(() => {
@@ -28,13 +29,21 @@ function ProjectDetail() {
             // console.log("Res from server: ", result)
             setProject(result.data.project)
             setUserStatus(result.data.aUserStatus)
-        }).catch((err) => console.log("No Project details received ", err)).finally(() => setIsLoading(false))
-    }, [projectId, alreadyCollab, alreadyPending, refresh])
+        }).catch((err) => {
+            if (err.response?.status === 500) {
+                navigate('/internal-server-error')
+            } else { console.log(err) }
+        }).finally(() => setIsLoading(false))
+    }, [projectId, alreadyCollab, alreadyPending, refresh, navigate])
 
     async function triggerJoinLeave() {
         await apiClient.post(`/projects/${projectId}/${user._id}`).then((result) => {
             // console.log("Backend responded: ", result)
-        }).catch((err) => console.log("Error: ", err))
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else { console.log(err) }
+        })
 
         if (alreadyCollab) {
             setUserStatus({ ...userStatus, alreadyCollab: false })
@@ -55,14 +64,28 @@ function ProjectDetail() {
         await apiClient.post(`/projects/${projectId}/${value}/${name}`).then((result) => {
             // console.log("Backend handled the user request: ", result);
             refreshPage()
-        }).catch((err) => console.log("Error: ", err))
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                console.log("Error: ", err)
+                setErrorMessage(err.response.data.message)
+            }
+        })
     }
 
     async function handleProjectDelete(e) {
         await apiClient.post(`/projects/${projectId}/delete`).then((result) => {
             // console.log("Info from backend regarding deleting a project: ", result)
             navigate('/projects')
-        }).catch((err) => console.log("An error occured while trying to delete a project >> ", err))
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                const errorDescription = err.response.data.message;
+                setErrorMessage(errorDescription)
+            }
+        })
     }
 
     if (isLoading) {
@@ -79,7 +102,7 @@ function ProjectDetail() {
             <div className="project-detail">
                 <div className="participants">
                     <div>
-                        <Link to={`/profile/${initiator._id}`}>
+                        <Link to={`/profile/${initiator.name}`}>
                             <div className={`user-status ${initiator.status}`}></div>
                             <h3>{initiator.name}</h3>
                             <img src={initiator.avatar} alt="user avatar" /></Link>
@@ -114,6 +137,7 @@ function ProjectDetail() {
                     </div>
                 </div>
                 <div className="main">
+                    {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
                     <div className="description">
                         <h2>{title}</h2>
                         <p>{shortDescription}</p>

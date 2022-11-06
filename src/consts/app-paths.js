@@ -16,7 +16,10 @@ const APP_PATHS = {
     USER_SAMPLES: '/samples/:username',
     // Chat paths:
     CHAT: "/chats",
-    CHAT_ROOM: "/chats/:chatId"
+    CHAT_ROOM: "/chats/:chatId",
+    // Error:
+    STATUS_400: "/page-not-found",
+    STATUS_500: "/internal-server-error",
 }
 
 export default APP_PATHS;

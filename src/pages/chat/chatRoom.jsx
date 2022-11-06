@@ -19,6 +19,7 @@ function ChatRoom() {
     const [isLoading, setIsLoading] = useState(true);
     const [chatClient, setChatClient] = useState(null)
     const [allUnreadMessages, setAllUnreadMessages] = useState([])
+    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
     const msgRef = useRef()
 
@@ -26,8 +27,15 @@ function ChatRoom() {
     useEffect(() => {
         apiClient.get('/message/unread').then((result) => {
             setAllUnreadMessages(result.data)
-        }).catch((err) => console.log(err))
-    }, [chatId])
+            console.log("Hello", result)
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                console.log(err)
+            }
+        })
+    }, [chatId, navigate])
 
     // connect to socket server
     useEffect(() => {
@@ -56,6 +64,7 @@ function ChatRoom() {
     useEffect(() => {
         apiClient.get(`/chats/${chatId}`).then((result) => {
             const { chatFound, usersHistory } = result.data
+            setErrorMessage("")
 
             // set info of related project:
             setProjectInfo(chatFound.project)
@@ -75,19 +84,29 @@ function ChatRoom() {
             setMsgHistory([])
 
         }).catch((err) => {
-            const errorDescription = err.response.data.message;
-            navigate("/chats", { state: { errorMessage: errorDescription } })
-            msgRef.current.scrollIntoView({ behavior: "smooth" })
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                const errorDescription = err.response.data.message;
+                navigate("/chats", { state: { errorMessage: errorDescription } })
+                msgRef.current.scrollIntoView({ behavior: "smooth" })
+            }
         }).finally(() => setIsLoading(false))
     }, [chatId, user._id, user.name, navigate])
 
-
-    // auto scroll to latest msg on first render and after every new message
-    useEffect(() => {
+    function scrollToLatestMsg() {
         if (chatClient?.connected) {
             msgRef.current.scrollIntoView({ behavior: "smooth" })
         }
-    }, [msgHistory, chatClient?.connected])
+    }
+
+    // auto scroll to latest msg on first render and after every new message
+    useEffect(() => {
+        const scroll = setTimeout(() => {
+            scrollToLatestMsg()
+        }, 500)
+        return () => clearTimeout(scroll)
+    }, [msgHistory, chatClient?.connected, scrollToLatestMsg])
 
 
     function handleChange(e) {
@@ -98,7 +117,11 @@ function ChatRoom() {
         if (message.msg) {
             await apiClient.post("/message", message).then((result) => {
                 chatClient.emit('send', { ...message, msgId: result.data._id })
-            }).catch(() => console.log("Couldn't add your msg to collection --- "))
+            }).catch((err) => {
+                if (err.response.status === 500) {
+                    navigate('/internal-server-error')
+                } else { setErrorMessage(err.response.data.message) }
+            })
             setMessage({ ...message, msg: "" })
         }
     }
@@ -111,7 +134,7 @@ function ChatRoom() {
             }
 
             // set new message as read for all users who are currently in this chatroom:
-            await apiClient.put(`/message/read-one/${data.msgId}`).then(() => console.log("Newly received message was set as read.")).catch((err) => console.error(err))
+            await apiClient.put(`/message/read-one/${data.msgId}`).then(() => console.log("Newly received message was set as read.")).catch((err) => console.log(err))
         })
     }
 
@@ -122,7 +145,7 @@ function ChatRoom() {
     setTimeout(() => {
         // set all messages of this chat as "read" for the current user
         // timeout needed, in order to highlight unread messages
-        apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log(result.data)).catch((err) => console.error(err))
+        apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log(result.data)).catch((err) => console.log(err))
     }, 2000)
 
 
@@ -146,6 +169,7 @@ function ChatRoom() {
                         <textarea type="text" name="msg" onChange={handleChange} value={message.msg}></textarea>
                         <button onClick={sendMessage} className="btn primary">send</button>
                     </div>
+                    {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
                 </main>
                 <aside>
                     <div className="chat-member-wrapper">

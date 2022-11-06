@@ -7,7 +7,7 @@ function CommentFeedbackForm({ props }) {
     const { id } = useParams()
     const { type, refreshPage } = props
     const [errorMessage, setErrorMessage] = useState(undefined);
-    console.log("Props: ", type, " + ", refreshPage)
+    // console.log("Props: ", type, " + ", refreshPage)
 
     function handleChange(e) {
         const { name, value } = e.target
@@ -17,10 +17,10 @@ function CommentFeedbackForm({ props }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log("New Comment/Feedback --> ", form)
+        // console.log("New Comment/Feedback --> ", form)
 
         apiClient.post(`/${type}/${id}`, { form }).then((res) => {
-            console.log(res)
+            // console.log(res)
             setForm({ title: "", text: "" })
             refreshPage()
         }).catch((err) => {

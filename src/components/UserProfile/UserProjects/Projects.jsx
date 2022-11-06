@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom"
 
 const Projects = ({ projectArr, collabProjectArr }) => {
-  console.log("Here--> ", collabProjectArr);
+
   return <div className="profile-project">
     <h3>Own Project</h3>
     {projectArr.length > 0 ?

@@ -10,19 +10,16 @@ function SamplesCreate() {
     const location = useLocation();
 
     useEffect(() => {
-        console.log("Hi THERE");
+        // console.log("Hi THERE");
 
         if (location.state) {
             console.log("Gotya")
             apiClient.get(`/samples/create/?projectId=${location.state}`).then((response) => {
-                console.log("RESPONSE FROM SERVER --> ", response.data);
+                // console.log("RESPONSE FROM SERVER --> ", response.data);
                 setAddedToProject(response.data)
             }).catch((err) => console.log("ERR: ", err)).finally(() => setIsLoading(false))
         } else {
-            console.log("Nah")
-            apiClient.get(`/samples/create`).then((response) => {
-                console.log("RESPONSE FROM SERVER --> ", response.data);
-            }).catch((err) => console.log("ERR: ", err)).finally(() => setIsLoading(false))
+            setIsLoading(false)
         }
 
     }, [location.state])

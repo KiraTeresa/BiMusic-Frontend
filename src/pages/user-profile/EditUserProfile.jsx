@@ -22,7 +22,7 @@ const EditUserProfile = () => {
   const [country, setCountry] = useState(userInfo && userInfo.country);
   const [name, setName] = useState(userInfo && userInfo.name);
   const [aboutMe, setAboutMe] = useState(userInfo && userInfo.aboutMe);
-  // const [skillArr, setSkillArr] = useState([])
+
   const [filterSkillArr, setFilterSkillArr] = useState([])
   const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate()
@@ -39,7 +39,6 @@ const EditUserProfile = () => {
       setCities(findCountry.cities);
     }
   };
-
 
   useEffect(() => {
     axios
@@ -60,7 +59,15 @@ const EditUserProfile = () => {
         setUserSample(sample)
         setUserProject(ownProjects)
         setName(response.data.name)
-      }).catch((err) => { console.log(err) });
+      }).catch((err) => {
+        if (err.response.status === 400) {
+          navigate('/')
+        } else if (err.response.status === 500) {
+          navigate('/internal-server-error')
+        } else {
+          console.log(err)
+        }
+      });
   }, []);
 
   useEffect(() => {
@@ -70,17 +77,6 @@ const EditUserProfile = () => {
     })
     setFilterSkillArr(filterSkillEnum);
   }, [userInfo]);
-
-  // useEffect(() => {
-  //   apiClient
-  //     .get(`/profile/addedproject/${user._id}`)
-  //     .then(response => {
-  //       setUserProject(response.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     });
-  // }, []);
 
   const handleUserProfileUpdate = async (e) => {
     try {
@@ -95,8 +91,12 @@ const EditUserProfile = () => {
         navigate(`/profile/${updatedUser.name}`)
       });
     } catch (err) {
-      const errorDescription = err.response.data.message;
-      setErrorMessage(errorDescription);
+      if (err.response.status === 500) {
+        navigate('/internal-server-error')
+      } else {
+        const errorDescription = err.response.data.message;
+        setErrorMessage(errorDescription);
+      }
     }
   }
 
@@ -108,10 +108,15 @@ const EditUserProfile = () => {
       //Updating data to database
       const response = await apiClient.put("/profile/editskill", updatedData);
       //Fetching data again
-      const updatedInfo = await apiClient.post("/profile/", { email: user.email });
+      const updatedInfo = await apiClient.get(`/profile/${response.data.name}`);
       setUserInfo(updatedInfo.data);
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 500) {
+        navigate('/internal-server-error')
+      } else {
+        const errorDescription = err.response.data.message;
+        setErrorMessage(errorDescription);
+      }
     }
 
   }
@@ -122,11 +127,17 @@ const EditUserProfile = () => {
       let updatedData = { skill, email: userInfo.email };
       //Updating data to database
       const response = await apiClient.put("/profile/deleteskill", updatedData);
+      console.log("Updated skill: ", response)
       //Fetching data again
-      const updatedInfo = await apiClient.post("/profile/", { email: user.email });
+      const updatedInfo = await apiClient.get(`/profile/${response.data.name}`);
       setUserInfo(updatedInfo.data);
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 500) {
+        navigate('/internal-server-error')
+      } else {
+        const errorDescription = err.response.data.message;
+        setErrorMessage(errorDescription);
+      }
     }
   }
 
@@ -160,23 +171,17 @@ const EditUserProfile = () => {
         setIsLoading(false);
         setUserInfo(updatedInfo.data);
       }
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      if (err.response.status === 500) {
+        navigate('/internal-server-error')
+      } else {
+        const errorDescription = err.response.data.message;
+        setErrorMessage(errorDescription);
+      }
     }
   }
 
   //----------------------------Sample Projects--------------------------------//
-
-  // useEffect(() => {
-  //   apiClient.get(`/samples/${user._id}`)
-  //     .then(response => {
-  //       console.log(response);
-  //       setUserSample(response.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     });
-  // }, []);
   const handleDeleteSample = async (e, id) => {
     try {
       e.preventDefault();
@@ -186,8 +191,13 @@ const EditUserProfile = () => {
       //Fetching data again
       const updatedSample = await apiClient.get(`/samples/${user._id}`);
       setUserSample(updatedSample.data);
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      if (err.response.status === 500) {
+        navigate('/internal-server-error')
+      } else {
+        const errorDescription = err.response.data.message;
+        setErrorMessage(errorDescription);
+      }
     }
   }
 

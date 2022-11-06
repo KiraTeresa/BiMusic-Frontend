@@ -60,8 +60,12 @@ function ProjectsCreate() {
                         setCitiesList(resArray[0].cities)
                         console.log("First element: ", resArray[0])
                     }
-                }).catch(console.error)
-            }).catch(console.error).finally(() => setIsLoading(false));
+                })
+            }).catch((err) => {
+                if (err.response.status === 500) {
+                    navigate('/internal-server-error')
+                } else { console.log(err) }
+            }).finally(() => setIsLoading(false));
     }, [user._id])
 
     function handleChange(e) {
@@ -139,8 +143,12 @@ function ProjectsCreate() {
             }
         }).catch((err) => {
             console.log("AN ERROR --> ", err)
-            const errorDescription = err.response.data.message;
-            setErrorMessage(errorDescription);
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                const errorDescription = err.response.data.message;
+                setErrorMessage(errorDescription);
+            }
         })
     }
 
