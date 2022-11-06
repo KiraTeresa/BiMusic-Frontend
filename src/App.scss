@@ -38,7 +38,7 @@
   &>div {
     // border: $PRIMARY-COLOR solid 1px;
     width: 80%;
-    max-width: 1500px;
+    max-width: 1232px;
     height: 100%;
     margin: auto;
     padding: 10px;
@@ -81,19 +81,20 @@
 
     &.secondary {
       background-color: $SECONDARY-COLOR;
-      color: #3b554e;
+      color: $BACKGROUND-COLOR;
 
       &:hover {
-        background-color: #9db3ad;
+        background-color: rgba($SECONDARY-COLOR, 0.8);
+        box-shadow: 0px 0px 12px $PRIMARY-COLOR;
       }
     }
 
     &.tertiary {
-      background-color: #c1dbd4;
-      color: #73baa5;
+      background-color: $TERTIARY-COLOR;
+      color: $BACKGROUND-COLOR;
 
       &:hover {
-        background-color: #9db3ad;
+        background-color: rgba($TERTIARY-COLOR, 0.8);
       }
     }
   }
