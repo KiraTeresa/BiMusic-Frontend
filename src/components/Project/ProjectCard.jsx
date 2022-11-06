@@ -10,7 +10,7 @@ function ProjectCard({ project, backgroundColor }) {
         <div className="project-card" style={{ backgroundColor }}>
             <h3>{title}</h3>
             <div className="initiator">
-                <p>By: {initiator && initiator.name}</p>
+                <p>{initiator && initiator.name}</p>
                 {/* <img src={initiator.avatar} alt="user avatar" /> */}
             </div>
             <div className="item-wrapper">
