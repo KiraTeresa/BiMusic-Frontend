@@ -1,4 +1,4 @@
-import "./user-profile.css";
+import "./user-profile.scss";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
 import apiClient from '../../services/apiClient';
@@ -31,7 +31,7 @@ function ProfilePage() {
   }, [username]);
 
   return (
-    <div>
+    <div className="user-profile-container">
       {
         userInfo &&
         // <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} userCollabProject={userCollabProject}/>

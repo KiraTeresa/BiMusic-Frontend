@@ -1,4 +1,4 @@
-import "./LoginPage.css";
+import "./LoginPage.scss";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";

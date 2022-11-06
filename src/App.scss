@@ -33,10 +33,10 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
-  border: yellow solid 1px;
+  // border: yellow solid 1px;
 
   &>div {
-    border: $PRIMARY-COLOR solid 1px;
+    // border: $PRIMARY-COLOR solid 1px;
     width: 80%;
     max-width: 1500px;
     height: 100%;

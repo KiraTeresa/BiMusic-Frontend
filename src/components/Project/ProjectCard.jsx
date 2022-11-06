@@ -9,18 +9,18 @@ function ProjectCard({ project, backgroundColor }) {
     return (
         <div className="project-card" style={{ backgroundColor }}>
             <h3>{title}</h3>
-            <div className="initiator">
-                <p>{initiator && initiator.name}</p>
+            <div>
+                <p><span className="initiator">{initiator.name}</span> is looking for </p>
                 {/* <img src={initiator.avatar} alt="user avatar" /> */}
-            </div>
-            <div className="item-wrapper">
-                {genre.map((g) => {
-                    return <p className='genre' key={g}>{g}</p>
-                })}
             </div>
             <div className="item-wrapper">
                 {lookingFor.map((skill) => {
                     return <p className='skill' key={skill}>{skill}</p>
+                })}
+            </div>
+            <div className="item-wrapper">
+                {genre.map((g) => {
+                    return <p className='genre' key={g}>{g}</p>
                 })}
             </div>
             <div className="basic-info">

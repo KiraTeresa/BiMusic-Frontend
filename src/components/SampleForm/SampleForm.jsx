@@ -1,4 +1,4 @@
-import "./SampleForm.css";
+import "./SampleForm.scss";
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import GENRE_ENUM from "../../consts/genreEnum"

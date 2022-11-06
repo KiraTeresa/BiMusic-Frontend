@@ -1,5 +1,10 @@
-/* Style inputs, select elements and textareas */
-input[type=text], select, textarea{
+.user-profile-edit-container {
+
+
+  /* Style inputs, select elements and textareas */
+  input[type=text],
+  select,
+  textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -7,13 +12,13 @@ input[type=text], select, textarea{
     box-sizing: border-box;
     resize: vertical;
   }
-  
+
   /* Style the label to display next to the inputs */
   label {
     padding: 12px 12px 12px 0;
     display: inline-block;
   }
-  
+
   /* Style the submit button */
   input[type=submit] {
     background-color: #04AA6D;
@@ -23,7 +28,7 @@ input[type=text], select, textarea{
     border-radius: 4px;
     cursor: pointer;
   }
-  
+
   /* Style the container */
   .parent-wrapper {
     display: flex;
@@ -44,6 +49,7 @@ input[type=text], select, textarea{
     margin: 12px;
     width: 100%;
   }
+
   .container {
     border-radius: 5px;
     background-color: #f2f2f2;
@@ -51,21 +57,21 @@ input[type=text], select, textarea{
     margin: 12px;
     width: 100%;
   }
-  
+
   /* Floating column for labels: 25% width */
   .col-25 {
     float: left;
     width: 25%;
     margin-top: 6px;
   }
-  
+
   /* Floating column for inputs: 75% width */
   .col-75 {
     float: left;
     width: 75%;
     margin-top: 6px;
   }
-  
+
   /* Clear floats after the columns */
   .row:after {
     content: "";
@@ -74,8 +80,8 @@ input[type=text], select, textarea{
   }
 
   .currentSkill {
-      font-size: 20px;
-      margin-right: 10px;
+    font-size: 20px;
+    margin-right: 10px;
   }
 
   .borderFrame {
@@ -86,10 +92,13 @@ input[type=text], select, textarea{
     margin-left: auto;
     margin-right: auto;
   }
-  
+
   /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
   @media screen and (max-width: 600px) {
-    .col-25, .col-75, input[type=submit] {
+
+    .col-25,
+    .col-75,
+    input[type=submit] {
       width: 100%;
       margin-top: 0;
     }
@@ -97,15 +106,17 @@ input[type=text], select, textarea{
 
   /* Upload img button */
 
-.upload-file-btn{
- padding-top: 10%;
-}
+  .upload-file-btn {
+    padding-top: 10%;
+  }
 
 
-.currentSkill{
-font-size: 15px;
-}
+  .currentSkill {
+    font-size: 15px;
+  }
 
-h3 {
-  padding-bottom: 10%;
+  h3 {
+    padding-bottom: 10%;
+  }
+
 }

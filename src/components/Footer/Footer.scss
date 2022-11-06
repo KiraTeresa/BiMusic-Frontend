@@ -1,4 +1,9 @@
+@import '../../consts/colors.scss';
+
 footer {
-    border: pink 1px dashed;
     height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($TERTIARY-COLOR, 0.2);
 }
