@@ -1,3 +1,5 @@
+@import '../../consts/colors.scss';
+
 /* 
 ---------------------------------------------
 Projects
@@ -25,7 +27,7 @@ Project card
     height: auto;
 
     .initiator {
-        color: #63A18F;
+        color: $BACKGROUND-COLOR;
 
         img {
             height: 55px;
