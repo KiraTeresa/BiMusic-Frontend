@@ -46,10 +46,10 @@ function Projects() {
 
             <div className="projects-container">
                 {filteredProjects && filteredProjects.map(proj => {
-                    return <ProjectCard key={proj._id} project={proj} backgroundColor="lightBlue" />
+                    return <ProjectCard key={proj._id} project={proj} />
                 })}
                 {!filteredProjects && allProjects.map(proj => {
-                    return <ProjectCard key={proj._id} project={proj} backgroundColor="yellow" />
+                    return <ProjectCard key={proj._id} project={proj} />
                 })}
             </div>
         </div>

@@ -8,7 +8,7 @@ Projects
 .projects-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 20px;
     max-width: 80vw;
     margin: 50px auto;
 }
@@ -22,17 +22,19 @@ Project card
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 1px solid black;
+    border: 1px solid $PRIMARY-COLOR;
+    box-shadow: 0px 0px 12px $PRIMARY-COLOR;
     min-width: 250px;
     height: auto;
+    padding-top: 10px;
 
     .initiator {
-        color: $BACKGROUND-COLOR;
+        color: $PRIMARY-COLOR;
 
-        img {
-            height: 55px;
-            border-radius: 50%;
-        }
+        // img {
+        //     height: 55px;
+        //     border-radius: 50%;
+        // }
     }
 
     .item-wrapper {
@@ -47,7 +49,7 @@ Project card
         }
 
         .genre {
-            background-color: #9bbcb2;
+            background-color: rgba($PRIMARY-COLOR, 0.5);
             border: #63A18F 1px dashed;
         }
 
