@@ -1,4 +1,4 @@
-import "./user-profile-edit.css";
+import "./user-profile-edit.scss";
 import React from 'react'
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
@@ -202,7 +202,7 @@ const EditUserProfile = () => {
   }
 
   return (
-    <div>
+    <div className="user-profile-edit-container">
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       {userInfo ?
         <div>
