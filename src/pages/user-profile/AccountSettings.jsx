@@ -15,8 +15,6 @@ const AccountSettings = () => {
     changePassword: ""
   })
 
-
-
   const handleDeleteProfile = async (e) => {
     try {
       e.preventDefault();
@@ -27,8 +25,12 @@ const AccountSettings = () => {
         navigate(0)
       }
     } catch (err) {
-      const errorDescription = err.response.data.message;
-      setErrorMessage(errorDescription)
+      if (err.response.status === 500) {
+        navigate('/internal-server-error')
+      } else {
+        const errorDescription = err.response.data.message;
+        setErrorMessage(errorDescription)
+      }
     }
   }
 

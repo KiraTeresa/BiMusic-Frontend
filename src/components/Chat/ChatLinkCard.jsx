@@ -11,7 +11,11 @@ function ChatLinkCard({ chatInfo }) {
     useEffect(() => {
         apiClient.get(`/message/unread/${_id}`).then((unreadMsgArr) => {
             setUnreadMsg(unreadMsgArr.data)
-        }).catch((err) => console.log("Getting unread messages failed. ", err))
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else console.log(err)
+        })
     }, [_id, currentChat])
 
     function goToChatroom() {

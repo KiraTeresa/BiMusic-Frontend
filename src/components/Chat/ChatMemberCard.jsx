@@ -12,7 +12,7 @@ function ChatMemberCard({ userInfo }) {
         <div onClick={goToUserProfile} className="chat-member-item">
             <div className="chat-member">
                 <div className="avatar-wrapper">
-                    <img src={avatar ? avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
+                    <img src={avatar} alt="user avatar" />
                 </div>
                 <div className="name-wrapper">
                     <div className={`user-status ${status}`}></div>

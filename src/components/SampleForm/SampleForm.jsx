@@ -92,8 +92,12 @@ function SampleForm(props) {
             }
         } catch (err) {
             console.log(err);
-            const errorDescription = err.response.data.message;
-            setErrorMessage(errorDescription);
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                const errorDescription = err.response.data.message;
+                setErrorMessage(errorDescription);
+            }
         }
     }
 

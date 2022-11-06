@@ -15,6 +15,7 @@ function SamplesDetail() {
     const [sample, setSample] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [refresh, setRefresh] = useState(false);
+    const navigate = useNavigate()
 
     const refreshPage = useCallback(() => {
         setRefresh(!refresh)
@@ -24,7 +25,15 @@ function SamplesDetail() {
         apiClient.get(`/samples/sample/${id}`).then(async (result) => {
             console.log("Res from server: ", result)
             setSample(result.data)
-        }).catch((err) => console.log("No Project details received ", err)).finally(() => setIsLoading(false))
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                console.log("No Project details received ", err)
+                const errorDescription = err.response.data.message;
+                navigate('/', { state: { errorMessage: errorDescription } })
+            }
+        }).finally(() => setIsLoading(false))
     }, [id, refresh])
 
     // async function handleProjectDelete(e) {

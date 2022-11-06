@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from "../Loading/Loading"
 import ChatLinkCard from "./ChatLinkCard";
@@ -9,6 +10,7 @@ function ChatList({ currentChat }) {
     const [usersChats, setUsersChats] = useState([])
     const [newChat, setNewChat] = useState({})
     const [errorMessage, setErrorMessage] = useState("")
+    const navigate = useNavigate()
 
     useEffect(() => {
         apiClient.get("/chats").then((result) => {
@@ -16,7 +18,11 @@ function ChatList({ currentChat }) {
             setUsersProjects(allProjects)
             setUsersChats(existingChats)
             setErrorMessage("")
-        }).catch(() => console.log("Could not log you in at the chat")).finally(() => setIsLoading(false))
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else { console.log(err) }
+        }).finally(() => setIsLoading(false))
     }, [currentChat]) // needs this dependency to trigger update of unread messages
 
     function handleChange(e) {
