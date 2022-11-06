@@ -1,0 +1,44 @@
+/* 
+---------------------------------------------
+breakpoint 1024px
+--------------------------------------------- 
+*/
+@media (max-width: 1024px) {
+    .APP {
+        &>div {
+            border: purple solid 1px;
+            max-width: 976px;
+            margin: auto;
+        }
+    }
+}
+
+/* 
+---------------------------------------------
+breakpoint 768px
+--------------------------------------------- 
+*/
+@media (max-width: 768px) {
+    .APP {
+        &>div {
+            border: blue solid 1px;
+            max-width: 736;
+            margin: auto;
+        }
+    }
+}
+
+/* 
+---------------------------------------------
+breakpoint 480px
+--------------------------------------------- 
+*/
+@media (max-width: 480px) {
+    .APP {
+        &>div {
+            border: green solid 1px;
+            max-width: 90%;
+            margin: auto;
+        }
+    }
+}
