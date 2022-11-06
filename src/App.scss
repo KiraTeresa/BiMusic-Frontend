@@ -74,7 +74,7 @@
       font-size: 18px;
 
       &:hover {
-        background-color: $SECONDARY-COLOR;
+        background-color: rgba($PRIMARY-COLOR, 0.8);
         color: $TERTIARY-COLOR;
       }
     }

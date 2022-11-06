@@ -8,36 +8,43 @@ function ProjectCard({ project, backgroundColor }) {
 
     return (
         <div className="project-card" style={{ backgroundColor }}>
-            <h3>{title}</h3>
-            <div>
-                <p><span className="initiator">{initiator.name}</span> is looking for </p>
-                {/* <img src={initiator.avatar} alt="user avatar" /> */}
-            </div>
-            <div className="item-wrapper">
-                {lookingFor.map((skill) => {
-                    return <p className='skill' key={skill}>{skill}</p>
-                })}
-            </div>
-            <div className="item-wrapper">
-                {genre.map((g) => {
-                    return <p className='genre' key={g}>{g}</p>
-                })}
-            </div>
-            <div className="basic-info">
-                <div>
-                    <p>{startDate.slice(0, -14)} - {endDate.slice(0, -14)}</p>
-                    <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
+            <Link to={`/projects/${_id}`}>
+                <div className='card-head'>
+                    <h3>{title}</h3>
+                    {/* <p>{shortDescription}</p> */}
+                    <div className="date-location">
+                        {/* <div> */}
+                        <p className='date'>{startDate.slice(0, -14)} - {endDate.slice(0, -14)}</p>
+                        <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
+                    </div>
                 </div>
-                <div className="interaction-wrapper">
-                    <img className="icon" src={commentIcon} alt="comment icon" />{comments ? comments.length : "0"}
-                    <img className="icon" src={contributorsIcon} alt="contributors icon" />{collaborators ? collaborators.length : "0"}
-                    <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
+                <div className='card-body'>
+                    {/* <div className='looking-for'> */}
+                    {/* <img src={initiator.avatar} alt="user avatar" /> */}
+                    {/* </div> */}
+                    <div className='item-wrapper skill'>
+                        <h4>Skills:</h4>
+                        {lookingFor.map((skill) => {
+                            return <p key={skill}> {skill} </p>
+                        })}
+                    </div>
+                    <div className="item-wrapper genre">
+                        <h4>Genre:</h4>
+                        {genre.map((g) => {
+                            return <p key={g}>{g}</p>
+                        })}
+                    </div>
                 </div>
-            </div>
-            <div>
-                <p>{shortDescription}</p>
-            </div>
-            <Link to={`/projects/${_id}`}><button className='btn primary'>more info...</button></Link>
+                <div className="card-bottom">
+                    <p>Posted by <span className="initiator">{initiator.name}</span></p>
+                    <div>
+                        <img className="icon" src={commentIcon} alt="comment icon" />{comments ? comments.length : "0"}
+                        <img className="icon" src={contributorsIcon} alt="contributors icon" />{collaborators ? collaborators.length : "0"}
+                        <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
+                    </div>
+                </div>
+                {/* <button className='btn primary'>Read more about this project</button> */}
+            </Link>
         </div>
     )
 }

@@ -8,7 +8,7 @@ Projects
 .projects-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 30px;
     max-width: 80vw;
     margin: 50px auto;
 }
@@ -19,81 +19,175 @@ Project card
 --------------------------------------------- 
 */
 .project-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     border: 1px solid $PRIMARY-COLOR;
     box-shadow: 0px 0px 6px $TERTIARY-COLOR;
     min-width: 250px;
     height: auto;
-    padding-top: 10px;
+    // padding-top: 10px;
 
     &:hover {
         box-shadow: 0px 0px 12px $PRIMARY-COLOR;
+
+        .card-head {
+            box-shadow: 0px 0px 6px $PRIMARY-COLOR;
+            border-bottom-color: $PRIMARY-COLOR;
+        }
     }
 
-    h3 {
-        border: yellow dashed 1px;
+    a {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
     }
 
-    .initiator {
-        color: $PRIMARY-COLOR;
-        font-weight: bold;
+    .card-head {
+        border-bottom: 1px solid $TERTIARY-COLOR;
+        box-shadow: 0px 0px 6px $TERTIARY-COLOR;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
 
-        // img {
-        //     height: 55px;
-        //     border-radius: 50%;
+        h3 {
+            text-align: start;
+        }
+
+        // p {
+        //     margin-top: 5px;
+        //     font-size: 14px;
+        //     text-align: justify;
+        // }
+
+        .date-location {
+            // display: flex;
+            text-align: end;
+            gap: 10px;
+            padding: 5px;
+            font-size: 14px;
+
+            // .location {
+            //     &:before {
+            //         content: "[";
+            //     }
+
+            //     &:after {
+            //         content: "]";
+            //     }
+            // }
+        }
+    }
+
+    .card-body {
+        // display: grid;
+        // grid-template-columns: repeat(5, 1fr);
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        height: 100%;
+        padding: 10px 0 10px 10px;
+
+        // .looking-for {
+        //     // display: grid;
+        //     grid-column: 1/2;
+
+
+        //     img {
+        //         height: 55px;
+        //         border-radius: 50%;
+        //     }
+
+        // }
+
+        // .skill-wrapper {
+        //     grid-column: 2/5;
+        //     // display: flex;
+        //     // flex-wrap: wrap;
+        //     gap: 10px;
+
+        //     .skill {
+        //         &:nth-child(2n) {
+        //             color: $PRIMARY-COLOR;
+        //             font-size: 22px;
+        //         }
+
+        //         &:nth-child(2n+1) {
+        //             color: $TERTIARY-COLOR;
+        //             font-size: 18px;
+        //         }
+        //     }
+
+        // }
+
+        .item-wrapper {
+            // grid-column: 5/6;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            // justify-content: center;
+            // flex-wrap: wrap;
+            // gap: 4px;
+            // span {
+            //     &::before {
+            //         content: ", ";
+            //     }
+            // }
+
+            // p {
+            //     padding: 3px;
+            //     margin: 8px 0;
+            // }
+
+            &.skill {
+                text-align: left;
+
+                p {
+                    background-color: rgba($PRIMARY-COLOR, 0.5);
+                }
+            }
+
+            &.genre {
+                text-align: right;
+
+                p {
+                    background-color: rgba($PRIMARY-COLOR, 0.5);
+                }
+            }
+
+        }
+
+        // .time-location {
+        //     display: flex;
+        //     flex-direction: row;
+        //     justify-content: center;
+        // }
+
+        // .icon-wrapper {
+        //     grid-column: 5/6;
         // }
     }
 
-    .item-wrapper {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 4px;
-
-        p {
-            padding: 3px;
-            margin: 8px 0;
-        }
-
-        .genre {
-            background-color: rgba($PRIMARY-COLOR, 0.5);
-            border: #63A18F 1px dashed;
-        }
-
-        .skill {
-            background-color: #a4e0cf;
-            border: #63A18F 1px dashed;
-        }
-    }
-
-    .basic-info {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        // justify-content: space-between;
+    .card-bottom {
+        background-color: $PRIMARY-COLOR;
         padding: 5px;
-
-        p {
-            margin: 0;
-        }
-    }
-
-    .location {
-        &:before {
-            content: "[";
-        }
-
-        &:after {
-            content: "]";
-        }
-    }
-
-    .interaction-wrapper {
         display: flex;
+        justify-content: space-between;
         align-items: center;
+
+        .initiator {
+            // color: $PRIMARY-COLOR;
+            font-weight: bold;
+        }
     }
+
+
+
+
+    // .icon-wrapper {
+    //     display: flex;
+    //     align-items: center;
+    // }
 
     .icon {
         height: 30px;
