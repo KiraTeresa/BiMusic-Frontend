@@ -1,5 +1,4 @@
 import "./App.scss";
-import "./Responsive.scss";
 import { Routes, Route } from "react-router-dom";
 
 // Import Pages

@@ -1,3 +1,35 @@
-body {
-  margin: 0;
-}
+  /* 
+    ---------------------------------------------
+    Colors
+    --------------------------------------------- 
+  */
+
+  $BACKGROUND-COLOR: #1E1E1E;
+  $PRIMARY-COLOR: #00C2CB;
+  $SECONDARY-COLOR: #0f5a5e;
+  $TERTIARY-COLOR: #f0fafb;
+
+  /* 
+  ---------------------------------------------
+  Reset CSS
+  --------------------------------------------- 
+  */
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* 
+  ---------------------------------------------
+  Global Styles
+  --------------------------------------------- 
+  */
+
+  body {
+    margin: 0;
+    background-color: $BACKGROUND-COLOR;
+    color: $TERTIARY-COLOR;
+    font-family: "Poppins", sans-serif;
+  }
