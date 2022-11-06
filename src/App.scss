@@ -1,82 +1,123 @@
-/* 
----------------------------------------------
-General styles
---------------------------------------------- 
-*/
-
 .App {
   text-align: center;
-}
 
-.container {
-  border: black solid 1px;
-  max-width: 1232px;
-  margin: 50px auto;
-}
+  /* 
+    ---------------------------------------------
+    Colors
+    --------------------------------------------- 
+  */
 
-.user-status {
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
+  $BACKGROUND-COLOR: #1E1E1E;
+  $PRIMARY-COLOR: #00C2CB;
+  $SECONDARY-COLOR: #10949b;
+  $TERTIARY-COLOR: #f0fafb;
 
-  &.online {
-    background-color: #2eca57;
+  /* 
+    ---------------------------------------------
+    Fonts
+    --------------------------------------------- 
+  */
+
+  // @font-face {
+  //   font-family: bangers;
+  //   src: url(/assets/fonts/Bangers/Bangers-Regular.ttf);
+  // }
+
+  // @font-face {
+  //   font-family: poppins;
+  //   src: url(/assets/fonts/Poppins/Poppins-Regular.ttf);
+  // }
+
+  /* 
+    ---------------------------------------------
+    Reset CSS
+    --------------------------------------------- 
+  */
+
+  *,
+  ::before,
+  ::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
-  &.offline {
-    background-color: #e45723;
+  /* 
+  ---------------------------------------------
+  General styles
+  --------------------------------------------- 
+  */
+
+  // &>div {
+  //   border: black solid 1px;
+  //   max-width: 1232px;
+  //   margin: 50px auto;
+  // }
+
+  .user-status {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+
+    &.online {
+      background-color: #2eca57;
+    }
+
+    &.offline {
+      background-color: #e45723;
+    }
   }
-}
 
-/* 
----------------------------------------------
-Buttons
---------------------------------------------- 
-*/
+  /* 
+  ---------------------------------------------
+  Buttons
+  --------------------------------------------- 
+  */
 
-.btn {
-  width: 100%;
-  padding: 10px;
+  .btn {
+    width: 100%;
+    padding: 10px;
 
-  &.primary {
-    background-color: #3b554e;
-    color: #c1dbd4;
+    &.primary {
+      background-color: $PRIMARY-COLOR;
+      color: #c1dbd4;
 
-    &:hover {
-      background-color: #73baa5;
+      &:hover {
+        background-color: #73baa5;
+        color: #3b554e;
+      }
+    }
+
+    &.secondary {
+      background-color: $SECONDARY-COLOR;
       color: #3b554e;
+
+      &:hover {
+        background-color: #9db3ad;
+      }
+    }
+
+    &.tertiary {
+      background-color: #c1dbd4;
+      color: #73baa5;
+
+      &:hover {
+        background-color: #9db3ad;
+      }
     }
   }
 
-  &.secondary {
-    background-color: #73baa5;
-    color: #3b554e;
+  /* 
+  ---------------------------------------------
+  Error messages
+  --------------------------------------------- 
+  */
 
-    &:hover {
-      background-color: #9db3ad;
-    }
+  .error-message {
+    border: #c6200a dashed 1px;
+    background-color: #efaabb;
+    color: #c6200a;
+    font-size: 14px;
+    padding: 5px;
   }
-
-  &.tertiary {
-    background-color: #c1dbd4;
-    color: #73baa5;
-
-    &:hover {
-      background-color: #9db3ad;
-    }
-  }
-}
-
-/* 
----------------------------------------------
-Error messages
---------------------------------------------- 
-*/
-
-.error-message {
-  border: #c6200a dashed 1px;
-  background-color: #efaabb;
-  color: #c6200a;
-  font-size: 14px;
-  padding: 5px;
 }
