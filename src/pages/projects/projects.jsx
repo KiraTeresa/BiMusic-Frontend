@@ -32,19 +32,21 @@ function Projects() {
     }
 
     return (
-        <div>
-            <h2>All available projects</h2>
-            <Link to="/projects/create">
-                <button>Post your project</button>
-            </Link>
+        <div className='projects-container'>
+            <div className='head'>
+                <h2>All available projects</h2>
+                <Link to="/projects/create"><button className='btn primary'>Post your project</button></Link>
+            </div>
 
-            <button onClick={toggleFilter} style={{ backgroundColor: "#63A18F" }}>{showFilter ? "hide filter" : "show filter"}</button>
+            <div className='filter-wrapper'>
+                <button className='btn secondary filter-btn' onClick={toggleFilter}>{showFilter ? "hide filter" : "show filter"}</button>
 
-            {showFilter ? <ProjectFilter allProjects={allProjects} sendToParent={setFilteredProjects} /> : ""}
+                {showFilter ? <ProjectFilter allProjects={allProjects} sendToParent={setFilteredProjects} /> : ""}
 
-            <div>{filteredProjects ? <div><strong>{filteredProjects.length}</strong> project{filteredProjects.length > 1 ? "s" : ""} meet{filteredProjects.length === 1 ? "s" : ""} your criteria</div> : ""}</div>
+                <div className='filter-result'>{filteredProjects ? <div><strong>{filteredProjects.length}</strong> project{filteredProjects.length > 1 ? "s" : ""} meet{filteredProjects.length === 1 ? "s" : ""} your criteria</div> : ""}</div>
+            </div>
 
-            <div className="projects-container">
+            <div className="project-card-wrapper">
                 {filteredProjects && filteredProjects.map(proj => {
                     return <ProjectCard key={proj._id} project={proj} />
                 })}

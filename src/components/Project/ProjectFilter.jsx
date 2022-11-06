@@ -149,14 +149,15 @@ function ProjectFilter({ allProjects, sendToParent }) {
     }
 
 
-
     return (
-        <div>
-            <h4>Filter</h4>
+        <div className="project-filter-container">
+            {/* <div className="sticky"> */}
+
+            {/* <h4>Filter</h4> */}
 
             {/* Text */}
-            <label>Text search:
-                <input type="text" name="text" value={search.text} onChange={handleFilterChange}></input>
+            <label>
+                <input type="text" name="text" value={search.text} onChange={handleFilterChange} placeholder=" -- type here to filter by text --"></input>
             </label>
 
             {/* Genre */}
@@ -193,10 +194,11 @@ function ProjectFilter({ allProjects, sendToParent }) {
             </select>
 
             {/* Reset */}
-            <button onClick={resetFilter}>Reset</button>
+            <button className="btn tertiary reset" onClick={resetFilter}>reset filter</button>
 
 
             {!allProjects && <p>Sorry, there are no projects matching your search. Try another filter</p>}
+            {/* </div> */}
         </div>
     )
 }

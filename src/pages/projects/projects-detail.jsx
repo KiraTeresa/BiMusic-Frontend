@@ -99,89 +99,95 @@ function ProjectDetail() {
 
     return (
         <div className="project-detail-wrapper">
-            <div className="project-detail">
-                <div className="participants">
-                    <div>
-                        <Link to={`/profile/${initiator.name}`}>
-                            <div className={`user-status ${initiator.status}`}></div>
-                            <h3>{initiator.name}</h3>
-                            <img src={initiator.avatar} alt="user avatar" /></Link>
-                    </div>
+            <div className="participants">
+                <div className="initiator">
+                    <Link to={`/profile/${initiator.name}`}>
+                        {/* <div className="avatar-container"> */}
+                        <img src={initiator.avatar} alt="user avatar" />
+                        <div className="user-info">
+                            <h4>{initiator.name}</h4>
+                            <div className={`user-status ${initiator.status}`}>{initiator.status}</div>
+                        </div>
+                        {/* </div> */}
+                    </Link>
+                </div>
 
-                    <div className="collaborators">
-                        <h4>Collaborators:</h4>
-                        {project.collaborators.map((collab) => {
-                            return (<div key={collab.name}>
+                <div className="collaborators">
+                    <h4>Collaborators:</h4>
+                    {project.collaborators.map((collab) => {
+                        return (<div key={collab.name}>
+                            <Link to={`/profile/${collab.name}`}>
+                                <div className={`user-status ${collab.status}`}></div>
+                                <h4>{collab.name}</h4>
+                                <img src={collab.avatar} alt="user avatar" />
+                            </Link>
+                        </div>)
+                    })}
+                    {isInitiator ? <div><h4>Pending:</h4>
+                        {pendingCollabs.map((collab) => {
+                            return (<div key={collab._id}>
                                 <Link to={`/profile/${collab.name}`}>
-                                    <div className={`user-status ${collab.status}`}></div>
+                                    <div className={`user-status ${collab.status}`}>{collab.status}</div>
                                     <h3>{collab.name}</h3>
                                     <img src={collab.avatar} alt="user avatar" />
                                 </Link>
+                                <button onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
+                                <button onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>
                             </div>)
                         })}
-                        {isInitiator ? <div><h4>Pending:</h4>
-                            {pendingCollabs.map((collab) => {
-                                return (<div key={collab._id}>
-                                    <Link to={`/profile/${collab.name}`}>
-                                        <div className={`user-status ${collab.status}`}></div>
-                                        <h3>{collab.name}</h3>
-                                        <img src={collab.avatar} alt="user avatar" />
-                                    </Link>
-                                    <button onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
-                                    <button onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>
-                                </div>)
-                            })}
-                        </div> : ""}
-                        {alreadyCollab ? <button onClick={triggerJoinLeave}>leave collab</button> : ""}
-                        {alreadyPending ? <div><p>You are on the pending list</p><button onClick={triggerJoinLeave}>don't care anymore, remove me from that list</button></div> : ""}
-                    </div>
+                    </div> : ""}
+                    {alreadyCollab ? <button onClick={triggerJoinLeave}>leave collab</button> : ""}
+                    {alreadyPending ? <div><p>You are on the pending list</p><button onClick={triggerJoinLeave}>don't care anymore, remove me from that list</button></div> : ""}
                 </div>
-                <div className="main">
-                    {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
-                    <div className="description">
-                        <h2>{title}</h2>
-                        <p>{shortDescription}</p>
-                        <p>{longDescription}</p>
-                        {alreadyCollab ? "" : alreadyPending ? "" : isInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>}
-                    </div>
-                    <div className="comment-wrapper">
-                        <div className="comments">
-                            <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"}
-                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                <CommentForm props={{ refreshPage, type: "comment" }} />
-                                {project.comments.reverse().map((comment) => {
-                                    return (
-                                        <CommentCard key={comment._id} commentInfo={comment} />
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="sample">
-                        <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
-                        {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
-                    </div>
+            </div>
+            <div className="description">
+                {isInitiator ? <button className="btn delete" onClick={handleProjectDelete}> DELETE </button> : ""}
+                {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
+                <h2>{title}</h2>
+                <p className="shortD">{shortDescription}</p>
+                <p className="longD">{longDescription}</p>
+                {alreadyCollab ? "" : alreadyPending ? "" : isInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>}
+            </div>
+            <div className="sample">
+                {sample?.linkType === "url" ?
+                    <p>{initiator.name} added a video of <span className="title">{sample.title}</span>, check it out</p>
+                    : sample?.linkType === "upload" ?
+                        <p>{initiator.name} uploaded a sample with the title <span className="title">{sample.title}</span>, listen i:</p>
+                        : ""}
+                {/* <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" /> */}
+                {sample ? <SampleCard sampleInfo={sample} /> : ""}
+            </div>
+            <div className="info">
+                <div className="item-wrapper">
+                    {genre.map((g) => {
+                        return <p className='genre' key={g}>{g}</p>
+                    })}
                 </div>
-                <div className="aside">
-                    <div className="item-wrapper">
-                        {genre.map((g) => {
-                            return <p className='genre' key={g}>{g}</p>
+                <div className="item-wrapper">
+                    {lookingFor.map((skill) => {
+                        return <p className='skill' key={skill}>{skill}</p>
+                    })}
+                </div>
+                <div>
+                    <p>Start: {startDate.slice(0, -14)}</p>
+                    <p>End: {endDate.slice(0, -14)}</p>
+                </div>
+                <div>
+                    <p>Where?</p>
+                    <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
+                </div>
+            </div>
+            <div className="comment-wrapper">
+                <div className="comments">
+                    <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"}
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <CommentForm props={{ refreshPage, type: "comment" }} />
+                        {project.comments.reverse().map((comment) => {
+                            return (
+                                <CommentCard key={comment._id} commentInfo={comment} />
+                            )
                         })}
                     </div>
-                    <div className="item-wrapper">
-                        {lookingFor.map((skill) => {
-                            return <p className='skill' key={skill}>{skill}</p>
-                        })}
-                    </div>
-                    <div>
-                        <p>Start: {startDate.slice(0, -14)}</p>
-                        <p>End: {endDate.slice(0, -14)}</p>
-                    </div>
-                    <div>
-                        <p>Where?</p>
-                        <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
-                    </div>
-                    {isInitiator ? <button onClick={handleProjectDelete}> -- DELETE -- </button> : ""}
                 </div>
             </div>
         </div>

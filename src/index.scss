@@ -18,6 +18,13 @@
     box-sizing: border-box;
   }
 
+  a {
+    display: block;
+    color: inherit;
+    font-family: inherit;
+    text-decoration: none;
+  }
+
   /* 
   ---------------------------------------------
   Global Styles
