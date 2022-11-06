@@ -41,7 +41,7 @@
     max-width: 1232px;
     height: 100%;
     margin: auto;
-    padding: 10px;
+    padding: 20px;
   }
 
   .user-status {
@@ -97,6 +97,15 @@
         background-color: rgba($TERTIARY-COLOR, 0.8);
       }
     }
+
+    &.delete {
+      background-color: $ATTENTION-BACKGROUND-COLOR;
+      color: $ATTENTION-TEXT-COLOR;
+
+      &:hover {
+        box-shadow: 0px 0px 12px $ATTENTION-TEXT-COLOR;
+      }
+    }
   }
 
   /* 
@@ -106,9 +115,9 @@
   */
 
   .error-message {
-    border: #c6200a dashed 1px;
-    background-color: #efaabb;
-    color: #c6200a;
+    border: $ATTENTION-TEXT-COLOR dashed 1px;
+    background-color: $ATTENTION-BACKGROUND-COLOR;
+    color: $ATTENTION-TEXT-COLOR;
     font-size: 14px;
     padding: 5px;
   }
