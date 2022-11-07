@@ -11,8 +11,8 @@ function ProjectCard({ project, backgroundColor }) {
             <Link to={`/projects/${_id}`}>
                 <div className='card-head'>
                     <p className='title'>{title}</p>
-                    <div className='main-info'>
 
+                    <div className='main-info'>
                         <div className='about'>
                             <p className='shortD'> {shortDescription}</p>
                         </div>
