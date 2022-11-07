@@ -40,7 +40,8 @@ function ProjectCard({ project, backgroundColor }) {
                     <div>
                         <img className="icon" src={commentIcon} alt="comment icon" />{comments ? comments.length : "0"}
                         <img className="icon" src={contributorsIcon} alt="contributors icon" />{collaborators ? collaborators.length : "0"}
-                        <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
+                        {sample ?
+                            <img className={`icon`} src={sampleIcon} alt="sample icon" /> : ""}
                     </div>
                 </div>
                 {/* <button className='btn primary'>Read more about this project</button> */}
