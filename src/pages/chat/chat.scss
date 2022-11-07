@@ -1,13 +1,13 @@
 @import '../../consts/colors.scss';
 
-/* 
----------------------------------------------
-Chatroom
---------------------------------------------- 
-*/
 .chat-room-container {
     border: 1px solid $TERTIARY-COLOR;
 
+    /* 
+    ---------------------------------------------
+    Chatroom
+    --------------------------------------------- 
+    */
     .chat-head {
         height: 80px;
         display: grid;
@@ -23,7 +23,7 @@ Chatroom
 
         .side {
             align-self: flex-end;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
     }
 
@@ -35,7 +35,7 @@ Chatroom
         .side {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            // gap: 5px;
         }
 
         .main {
@@ -57,161 +57,178 @@ Chatroom
         }
     }
 
-}
-
-/* 
----------------------------------------------
-Chat message
---------------------------------------------- 
-*/
-.chat-message {
-    max-width: 350px;
-    // text-align: start;
-    padding: 15px;
-    padding-bottom: 10px;
-    word-break: break-word;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-
-    .msg-date {
-        font-size: 12px;
-        font-style: italic;
-        border-top: $TERTIARY-COLOR solid 1px;
-        padding-top: 4px;
-    }
-
-    &.right {
-        background-color: rgba($TERTIARY-COLOR, .4);
-        align-self: flex-end;
-        text-align: end;
-        border-radius: 35px 25px 0 35px;
-        padding-left: 20px;
-    }
-
-    &.left {
-        background-color: rgba($TERTIARY-COLOR, .7);
-        color: $BACKGROUND-COLOR;
-        align-self: flex-start;
-        text-align: start;
-        border-radius: 25px 35px 35px 0;
-        padding-right: 20px;
-
-        &.deleted {
-            background-color: $ATTENTION-BACKGROUND-COLOR;
-        }
-    }
-
-    &.unreadMsg {
-        border: $PRIMARY-COLOR dashed 3px;
-    }
-}
 
 
-/* 
----------------------------------------------
-Chat list
---------------------------------------------- 
-*/
-
-.chat-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 5px;
-    height: 100%;
-
-    .chat-link-wrapper {
-        height: 550px;
-        overflow-y: scroll;
-    }
-
-    .chat-link {
-        min-height: 50px;
+    /* 
+    ---------------------------------------------
+    Chat message
+    --------------------------------------------- 
+    */
+    .chat-message {
+        max-width: 350px;
+        // text-align: start;
+        padding: 15px;
+        padding-bottom: 10px;
+        word-break: break-word;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        text-align: start;
-        padding: 5px;
-        border: #3b554e solid 1px;
+        flex-direction: column;
+        gap: 4px;
 
-        &:hover {
-            background-color: #c1dbd4;
-            cursor: pointer;
+        .msg-date {
+            font-size: 12px;
+            font-style: italic;
+            border-top: $TERTIARY-COLOR solid 1px;
+            padding-top: 4px;
+        }
+
+        &.right {
+            background-color: rgba($TERTIARY-COLOR, .4);
+            align-self: flex-end;
+            text-align: end;
+            border-radius: 35px 25px 0 35px;
+            padding-left: 20px;
+        }
+
+        &.left {
+            background-color: rgba($TERTIARY-COLOR, .7);
+            color: $BACKGROUND-COLOR;
+            align-self: flex-start;
+            text-align: start;
+            border-radius: 25px 35px 35px 0;
+            padding-right: 20px;
+
+            &.deleted {
+                background-color: $ATTENTION-BACKGROUND-COLOR;
+            }
+        }
+
+        &.unreadMsg {
+            border: $PRIMARY-COLOR dashed 3px;
         }
     }
 
-}
 
-.msg-counter {
-    border-radius: 25% 10%;
-    padding: 5px;
-}
+    /* 
+    ---------------------------------------------
+    Chat list
+    --------------------------------------------- 
+    */
 
-.noMsg {
-    background-color: grey;
-}
+    .chat-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
-.newMsg {
-    background-color: red;
-}
+        .chat-link-wrapper {
+            height: 550px;
+            overflow-y: scroll;
+        }
 
-/* 
+        .chat-link {
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: start;
+            padding: 5px;
+            border-bottom: rgba($TERTIARY-COLOR, .7) solid 1px;
+
+            &:hover {
+                background-color: rgba($PRIMARY-COLOR, .9);
+                cursor: pointer;
+            }
+        }
+
+
+        form {
+            height: auto;
+
+            select {
+                // width: 150px;
+                height: 40px;
+                padding: 5px;
+                color: $TERTIARY-COLOR;
+                background-color: $BACKGROUND-COLOR;
+            }
+
+            select option:first-child {
+                background-color: $SECONDARY-COLOR;
+                font-size: 16px;
+            }
+        }
+    }
+
+    .msg-counter {
+        border-radius: 25% 10%;
+        padding: 5px;
+    }
+
+    .noMsg {
+        background-color: rgba($TERTIARY-COLOR, .4);
+    }
+
+    .newMsg {
+        background-color: rgba($PRIMARY-COLOR, .8);
+        border: solid 1px $TERTIARY-COLOR;
+    }
+
+    /* 
 ---------------------------------------------
 Chat member
 --------------------------------------------- 
 */
 
-.chat-member-wrapper {
-    height: 100%;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-
-    .chat-member {
+    .chat-member-wrapper {
+        height: 100%;
+        overflow-y: scroll;
         display: flex;
-        align-items: center;
+        flex-direction: column;
         gap: 5px;
-        padding: 5px;
 
-        .avatar-wrapper {
-            height: 50px;
-            width: 50px;
+        .chat-member {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px;
 
-            img {
+            .avatar-wrapper {
+                height: 50px;
+                width: 50px;
+
+                img {
+                    height: 100%;
+                    max-width: 100%;
+                }
+            }
+
+            .name-wrapper {
                 height: 100%;
-                max-width: 100%;
+                display: flex;
+                align-items: center;
+            }
+
+            &:hover {
+                background-color: #c1dbd4;
+                cursor: pointer;
             }
         }
 
-        .name-wrapper {
-            height: 100%;
+        .skills {
             display: flex;
-            align-items: center;
-        }
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2.5px;
 
-        &:hover {
-            background-color: #c1dbd4;
-            cursor: pointer;
-        }
-    }
-
-    .skills {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 2.5px;
-
-        .skill {
-            background-color: #c5e1f1;
-            border: #9db3ad dashed 1px;
-            padding: 2.5px;
-            font-size: 12px;
+            .skill {
+                background-color: #c5e1f1;
+                border: #9db3ad dashed 1px;
+                padding: 2.5px;
+                font-size: 12px;
+            }
         }
     }
-}
 
-.chat-member-item {
-    border: #3b554e solid 1px;
+    .chat-member-item {
+        border: #3b554e solid 1px;
+    }
 }
