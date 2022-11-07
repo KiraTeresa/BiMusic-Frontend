@@ -1,61 +1,62 @@
+@import '../../consts/colors.scss';
+
 /* 
 ---------------------------------------------
 Chatroom
 --------------------------------------------- 
 */
+.chat-room-container {
+    border: 1px solid $TERTIARY-COLOR;
 
-.container {
-    border: black solid 1px;
-    max-width: 1232px;
-    margin: 50px auto;
-
-    .chat-title {
-        background-color: #63A18F;
+    .chat-head {
         height: 80px;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         margin-bottom: 5px;
+        border: 1px solid $TERTIARY-COLOR;
 
-        h2 {
+        .title {
             grid-column: 2 / 5;
             align-self: center;
+            // color: $PRIMARY-COLOR;
         }
 
-        h4 {
+        .side {
             align-self: flex-end;
             margin-bottom: 5px;
         }
     }
-}
 
-.chat-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
-
-    aside {
-        border: #c1dbd4 dashed 1px;
-        display: flex;
-        flex-direction: column;
+    .chat-body {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
         gap: 5px;
+
+        .side {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .main {
+            grid-column: 2 / 5;
+
+            .chat-window-wrapper {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                height: 550px;
+                overflow-y: auto;
+
+                .chat-window {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                }
+            }
+        }
     }
 
-    main {
-        grid-column: 2 / 5;
-    }
-}
-
-.chat-window-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    height: 550px;
-    overflow-y: auto;
-
-    .chat-window {
-        display: flex;
-        flex-direction: column;
-    }
 }
 
 /* 
@@ -63,39 +64,48 @@ Chatroom
 Chat message
 --------------------------------------------- 
 */
-
 .chat-message {
     max-width: 350px;
-    text-align: start;
-    padding: 5px;
+    // text-align: start;
+    padding: 15px;
+    padding-bottom: 10px;
     word-break: break-word;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 
     .msg-date {
         font-size: 12px;
         font-style: italic;
+        border-top: $TERTIARY-COLOR solid 1px;
+        padding-top: 4px;
     }
 
     &.right {
-        background-color: #73baa5;
+        background-color: rgba($TERTIARY-COLOR, .4);
         align-self: flex-end;
         text-align: end;
+        border-radius: 35px 25px 0 35px;
+        padding-left: 20px;
     }
 
     &.left {
-        background-color: #3b554e;
+        background-color: rgba($TERTIARY-COLOR, .7);
+        color: $BACKGROUND-COLOR;
         align-self: flex-start;
         text-align: start;
+        border-radius: 25px 35px 35px 0;
+        padding-right: 20px;
 
         &.deleted {
-            background-color: #c6200a;
+            background-color: $ATTENTION-BACKGROUND-COLOR;
         }
     }
 
     &.unreadMsg {
-        border: #c6200a dashed 2px;
+        border: $PRIMARY-COLOR dashed 3px;
     }
 }
-
 
 
 /* 
