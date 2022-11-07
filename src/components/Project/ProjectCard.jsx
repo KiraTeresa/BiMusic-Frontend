@@ -10,29 +10,39 @@ function ProjectCard({ project, backgroundColor }) {
         <div className="project-card" style={{ backgroundColor }}>
             <Link to={`/projects/${_id}`}>
                 <div className='card-head'>
-                    <h3>{title}</h3>
-                    {/* <p>{shortDescription}</p> */}
-                    <div className="date-location">
-                        {/* <div> */}
-                        <p className='date'>{startDate.slice(0, -14)} - {endDate.slice(0, -14)}</p>
-                        <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
+                    <p className='title'>{title}</p>
+                    <div className='main-info'>
+
+                        <div className='about'>
+                            <p className='shortD'> {shortDescription}</p>
+                        </div>
+                        <div className='looking-for'>
+                            <div>{initiator.name} is looking for </div>
+                            <div className="item-wrapper">
+                                {lookingFor.map((skill) => {
+                                    return <p key={skill} className="skill"> {skill} </p>
+                                })}
+                            </div>
+                        </div>
                     </div>
                 </div>
+                {/* <div className="date-location">
+                    <p className='date'>{startDate.slice(0, -14)} - {endDate.slice(0, -14)}</p>
+                    <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
+                </div> */}
                 <div className='card-body'>
                     {/* <div className='looking-for'> */}
                     {/* <img src={initiator.avatar} alt="user avatar" /> */}
                     {/* </div> */}
-                    <div className='item-wrapper skill'>
-                        <h4>Skills:</h4>
-                        {lookingFor.map((skill) => {
-                            return <p key={skill}> {skill} </p>
-                        })}
-                    </div>
-                    <div className="item-wrapper genre">
-                        <h4>Genre:</h4>
+                    <div className='item-wrapper'>
+                        {/* <h4>Genre:</h4> */}
                         {genre.map((g) => {
                             return <p key={g}>{g}</p>
                         })}
+                        {/* <h4>{initiator.name} is looking for a </h4>
+                        {lookingFor.map((skill) => {
+                            return <p key={skill} className="skill"> {skill} </p>
+                        })} */}
                     </div>
                 </div>
                 <div className="card-bottom">
