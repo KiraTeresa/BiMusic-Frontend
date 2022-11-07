@@ -13,7 +13,7 @@ function ProfilePage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    apiClient.get(`/profile/${username}`)
+    apiClient.get(`/profile/${username}`) 
       .then(response => {
         console.log("RES: ", response)
         setUserInfo(response.data)

@@ -54,9 +54,10 @@ const EditUserProfile = () => {
     apiClient
       .get(`/profile/${user.name}`)
       .then((response) => {
-        const { sample, ownProjects } = response.data
+        console.log(response.data);
+        const { samples, ownProjects } = response.data
         setUserInfo(response.data)
-        setUserSample(sample)
+        setUserSample(samples)
         setUserProject(ownProjects)
         setName(response.data.name)
       }).catch((err) => {
@@ -150,6 +151,7 @@ const EditUserProfile = () => {
       //Fetching data again
       const updatedProject = await apiClient.get(`/profile/addedproject/${user._id}`);
       setUserProject(updatedProject.data);
+      navigate(`/profile/${user.name}`)
     } catch (error) {
       console.log(error)
     }
@@ -166,10 +168,11 @@ const EditUserProfile = () => {
       const avatarData = { avatar: response.data.url, cloudinary_id: response.data.public_id, email: userInfo.email }
       const uploadedAvatar = await apiClient.put("/profile/uploadavatar", avatarData)
       //Fetching data again
-      const updatedInfo = await apiClient.post("/profile/", { email: user.email });
+      const updatedInfo = await apiClient.get(`/profile/${user.name}`);
       if (updatedInfo.status === 200) {
         setIsLoading(false);
-        setUserInfo(updatedInfo.data);
+        // setUserInfo(updatedInfo.data);
+        navigate(`/profile/${user.name}`)
       }
     } catch (err) {
       if (err.response.status === 500) {
@@ -187,10 +190,11 @@ const EditUserProfile = () => {
       e.preventDefault();
       //Updating data to database
       const result = await apiClient.delete(`/samples/${id}`);
-      console.log(result);
-      //Fetching data again
-      const updatedSample = await apiClient.get(`/samples/${user._id}`);
-      setUserSample(updatedSample.data);
+      // console.log(result);
+      // //Fetching data again
+      // const updatedSample = await apiClient.get(`/samples/${user._id}`);
+      // setUserSample(updatedSample.data);
+      navigate(`/profile/${user.name}`)
     } catch (err) {
       if (err.response.status === 500) {
         navigate('/internal-server-error')
@@ -324,7 +328,7 @@ const EditUserProfile = () => {
                       <Link to={`/projects/${project._id}`}>
                         {project.title}
                       </Link>
-                      <button onClick={(e) => { handleDeleteProject(e, project._id) }}>Delete</button>
+                      <button onClick={(e) => { handleDeleteProject(e, project._id) }}disabled={!userProject}>Delete</button>
                     </div>
                   ))}
                 </div>
@@ -341,7 +345,7 @@ const EditUserProfile = () => {
                       <a href={sample.link} target="_blank">
                         {sample.title}
                       </a>
-                      <button onClick={(e) => { handleDeleteSample(e, sample._id) }}>Delete</button>
+                      <button onClick={(e) => { handleDeleteSample(e, sample._id) }}disabled={!userSample}>Delete</button>
                     </div>
                   ))}
                 </div>
