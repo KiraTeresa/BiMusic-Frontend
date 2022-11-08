@@ -146,11 +146,13 @@ const EditUserProfile = () => {
     try {
       e.preventDefault();
       let projectId = id;
+      console.log("Clicked.......", id);
       //Updating data to database
-      await apiClient.post(`/projects/${projectId}/delete`);
-      //Fetching data again
-      const updatedProject = await apiClient.get(`/profile/addedproject/${user._id}`);
-      setUserProject(updatedProject.data);
+      const result = await apiClient.post(`/projects/${projectId}/delete`);
+      console.log(result);
+      // //Fetching data again
+      // const updatedProject = await apiClient.get(`/profile/addedproject/${user._id}`);
+      // setUserProject(updatedProject.data);
       navigate(`/profile/${user.name}`)
     } catch (error) {
       console.log(error)
@@ -209,11 +211,9 @@ const EditUserProfile = () => {
     <div className="user-profile-edit-container">
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       {userInfo ?
-        <div>
-
-          <div className="parent-wrapper">
-
-            <div className="container-upload-profile-picture">
+        <>
+          <div className="parent-proj-samp">
+            <div className="container-grid">
               <h3>Upload profile picture</h3>
               {/* Upload/Update profile picture */}
               {isLoading ? <Loading /> :
@@ -229,10 +229,7 @@ const EditUserProfile = () => {
               </form>
             </div>
 
-
-
-            <div className="container-personal-information">
-
+            <div className="container-grid">
               {/* Name Field */}
               <h3>Personal Information</h3>
               <form onSubmit={handleUserProfileUpdate}>
@@ -276,9 +273,6 @@ const EditUserProfile = () => {
                     </select>
                   </div>
                 </div>
-
-
-
                 {/* About me */}
                 <div className="row">
                   <div className="col-25">
@@ -296,7 +290,7 @@ const EditUserProfile = () => {
           </div>
 
 
-          <div className="container">
+          <div className="container-skillset">
             {/* Update Current Skillset */}
             <h3>Edit skillset:</h3>
             <div className="borderFrame">
@@ -307,52 +301,48 @@ const EditUserProfile = () => {
                 </div>
               ))}
             </div>
-            <h3>Add new skills:</h3>
-            {filterSkillArr && filterSkillArr.map((skill) => {
-              return <label key={skill}>
-                <input onChange={(e) => { handleAddSkills(e, skill) }} type="checkbox" className="lookingFor" value={skill}>
-                </input>{skill}</label>
-            })}
+            <div className="container-newskill">
+              <h3>Add new skills:</h3>
+              {filterSkillArr && filterSkillArr.map((skill) => {
+                return <label key={skill}>
+                  <input onChange={(e) => { handleAddSkills(e, skill) }} type="checkbox" className="lookingFor" value={skill}>
+                  </input>{skill}</label>
+              })}
+            </div>
           </div>
 
 
-          <div className="parent-wrapper">
-
+          <div className="parent-proj-samp">
             {/* Update created Projects */}
-            <div className="container">
-              <div>
-                <h3>Created projects: </h3>
-                <div className="borderFrame">
-                  {userProject && userProject.map((project, index) => (
-                    <div key={index}>
-                      <Link to={`/projects/${project._id}`}>
-                        {project.title}
-                      </Link>
-                      <button onClick={(e) => { handleDeleteProject(e, project._id) }}disabled={!userProject}>Delete</button>
-                    </div>
-                  ))}
-                </div>
+            <div className="container-grid">
+              <h3>Created projects: </h3>
+              <div className="borderFrame">
+                {userProject && userProject.map((project, index) => (
+                  <div key={index}>
+                    <Link to={`/projects/${project._id}`}>
+                      {project.title}
+                    </Link>
+                    <button onClick={(e) => { handleDeleteProject(e, project._id) }} disabled={!userProject}>Delete</button>
+                  </div>
+                ))}
               </div>
             </div>
-
             {/* Delete Sample from Profile */}
-            <div className="container">
-              <div>
-                <h3>Uploaded Samples: </h3>
-                <div className="borderFrame">
-                  {userSample && userSample.map((sample, index) => (
-                    <div key={index}>
-                      <a href={sample.link} target="_blank">
-                        {sample.title}
-                      </a>
-                      <button onClick={(e) => { handleDeleteSample(e, sample._id) }}disabled={!userSample}>Delete</button>
-                    </div>
-                  ))}
-                </div>
+            <div className="container-grid">
+              <h3>Uploaded Samples:</h3>
+              <div className="borderFrame">
+                {userSample && userSample.map((sample, index) => (
+                  <div key={index}>
+                    <a href={sample.link} target="_blank">
+                      {sample.title}
+                    </a>
+                    <button onClick={(e) => { handleDeleteSample(e, sample._id) }} disabled={!userSample}>Delete</button>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </div>
+        </>
         : <div>noData</div>}
     </div>
   )

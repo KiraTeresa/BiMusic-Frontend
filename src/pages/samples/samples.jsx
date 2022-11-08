@@ -68,7 +68,7 @@ function Samples() {
                                         {samp.title}
                                     </Link>
                                     </td>
-                                    <td>{samp.genre}</td>
+                                    <td>{samp.genre.map(ge=>{return <p>{ge}</p>})}</td>
                                     <td>{samp.year}</td>
                                 </tr>)
                         })}
@@ -81,7 +81,7 @@ function Samples() {
                                     {samp.title}
                                 </Link>
                                 </td>
-                                <td>{samp.genre}</td>
+                                <td>{samp.genre.map(ge=>{return <p>{ge}</p>})}</td>
                                 <td>{samp.year}</td>
                             </tr>
                             )

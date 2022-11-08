@@ -41,6 +41,13 @@ const UserInfo = ({ userInfo }) => {
                 {userInfo.aboutMe}
               </p>
             </div>
+            {
+              isOwnProfile ?
+                <div className="profile-btn">
+                  <Link to='/profile/edit'><button className="chatbtn" id="chatBtn">Profile</button></Link>
+                  <Link to='/account-settings'><button className="createbtn" id="Create-post"> Account Settings</button></Link>
+                </div> : ""
+            }
             <div className="user-rating">
               <h3 className="rating">ph</h3>
               <div className="rate">
