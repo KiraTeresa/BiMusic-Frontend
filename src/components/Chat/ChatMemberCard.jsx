@@ -15,15 +15,15 @@ function ChatMemberCard({ userInfo }) {
                     <img src={avatar} alt="user avatar" />
                 </div>
                 <div className="name-wrapper">
-                    <div className={`user-status ${status}`}></div>
                     <p>{name}</p>
+                    <div className={`user-status ${status}`}></div>
                 </div>
             </div>
-            <div className="skills">
+            {/* <div className="skills">
                 {skills.map((skill) => {
                     return <p className="skill" key={skill}>{skill}</p>
                 })}
-            </div>
+            </div> */}
         </div>
     )
 }

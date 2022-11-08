@@ -150,36 +150,45 @@ function ChatRoom() {
 
 
     return (
-        <div className="container">
-            <div className="chat-title">
-                <h4>Your chatrooms {allUnreadMessages.length === 0 ? "" : <span className='msg-counter newMsg'>{allUnreadMessages.length}</span>}</h4>
-                <h2>Chatroom: {projectInfo.title}</h2>
-                <h4>Chat members</h4>
-            </div>
-            <div className="chat-container">
-                <aside>
-                    <ChatList currentChat={chatId} />
-                </aside>
-                <main>
-                    <div className="chat-window-wrapper">
-                        <ChatWindow chatInfo={{ dbHistory, msgHistory }} />
-                        <div ref={msgRef} style={{ height: "20px" }}></div>
+        <div>
+            <div className="chat-room-container">
+                <div className="chat-head">
+                    <div className="side">
+                        <h4>Your chatrooms {allUnreadMessages.length === 0 ? "" : <span className='msg-counter newMsg'>{allUnreadMessages.length}</span>}</h4>
                     </div>
-                    <div className="chat-form">
-                        <textarea type="text" name="msg" onChange={handleChange} value={message.msg}></textarea>
-                        <button onClick={sendMessage} className="btn primary">send</button>
+                    <div className="title">
+                        <h2>{projectInfo.title}</h2>
+                        {/* <p>is your current room</p> */}
                     </div>
-                    {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
-                </main>
-                <aside>
-                    <div className="chat-member-wrapper">
-                        <ChatMemberCard userInfo={projectInfo.initiator} />
-                        {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
-                        {projectInfo.collaborators.map((collab) => {
-                            return <ChatMemberCard key={collab._id} userInfo={collab} />
-                        })}
+                    <div className="side">
+                        <h4>Chat members</h4>
                     </div>
-                </aside>
+                </div>
+                <div className="chat-body">
+                    <div className="side chats">
+                        <ChatList currentChat={chatId} />
+                    </div>
+                    <div className="main">
+                        <div className="chat-window-wrapper">
+                            <ChatWindow chatInfo={{ dbHistory, msgHistory }} />
+                            <div ref={msgRef} style={{ height: "20px" }}></div>
+                        </div>
+                        <div className="chat-form">
+                            <textarea type="text" name="msg" onChange={handleChange} value={message.msg}></textarea>
+                            <button onClick={sendMessage} className="btn primary">send</button>
+                        </div>
+                        {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
+                    </div>
+                    <div className="side members">
+                        <div className="chat-member-wrapper">
+                            <ChatMemberCard userInfo={projectInfo.initiator} />
+                            {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
+                            {projectInfo.collaborators.map((collab) => {
+                                return <ChatMemberCard key={collab._id} userInfo={collab} />
+                            })}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

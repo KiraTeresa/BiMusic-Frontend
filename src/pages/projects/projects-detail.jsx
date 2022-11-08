@@ -98,31 +98,72 @@ function ProjectDetail() {
 
 
     return (
-        <div className="project-detail-wrapper">
-            <div className="participants">
+        <div className="project-detail-container">
+            <div className="project-info-wrapper">
+                <div className="description">
+                    {isInitiator ? <button className="btn delete" onClick={handleProjectDelete}> DELETE </button> : ""}
+                    {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
+                    <h2>{title}</h2>
+                    {/* <p className="shortD">{shortDescription}</p> */}
+                    <p className="longD">{longDescription}</p>
+                    {/* {alreadyCollab ? "" : alreadyPending ? "" : isInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>} */}
+                </div>
                 <div className="initiator">
+                    <h4>initiator</h4>
                     <Link to={`/profile/${initiator.name}`}>
-                        {/* <div className="avatar-container"> */}
                         <img src={initiator.avatar} alt="user avatar" />
                         <div className="user-info">
-                            <h4>{initiator.name}</h4>
-                            <div className={`user-status ${initiator.status}`}>{initiator.status}</div>
+                            <p>{initiator.name}</p>
+                            <p>
+                                <span className={`user-status ${initiator.status}`}></span>
+                            </p>
                         </div>
-                        {/* </div> */}
                     </Link>
                 </div>
+            </div>
 
+            <div className="participants">
+
+                {/* collaborators */}
                 <div className="collaborators">
-                    <h4>Collaborators:</h4>
-                    {project.collaborators.map((collab) => {
-                        return (<div key={collab.name}>
-                            <Link to={`/profile/${collab.name}`}>
-                                <div className={`user-status ${collab.status}`}></div>
-                                <h4>{collab.name}</h4>
-                                <img src={collab.avatar} alt="user avatar" />
-                            </Link>
-                        </div>)
-                    })}
+                    <h4>Collaborators</h4>
+                    {project.collaborators?.length === 0 ?
+                        <div className="no-collab">-- be the first to join --</div>
+                        : ""
+                    }
+
+                    <div className="collab-list">
+                        {project.collaborators.map((collab) => {
+                            return (
+                                <div key={collab.name}>
+                                    <Link to={`/profile/${collab.name}`}>
+                                        {/* <div className={`user-status ${collab.status}`}></div>
+                                <h4>{collab.name}</h4> */}
+                                        <img src={collab.avatar} alt="user avatar" />
+                                        <div className="user-info">
+                                            <p>{collab.name}</p>
+                                            <p>
+                                                <span className={`user-status ${collab.status}`}></span>
+                                            </p>
+                                        </div>
+                                    </Link>
+                                    {collab.name === user.name ?
+                                        <button onClick={triggerJoinLeave}>leave collab</button>
+                                        : ""}
+                                </div>)
+                        })}
+                    </div>
+                    <div className="skill-list">
+                        <p>Are you a </p>
+                        <p>skill skill skill</p>
+                        <p>and you like the project idea?</p>
+                        <p>then join</p>
+                        {alreadyCollab ? "" : alreadyPending ? "" : isInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>}
+                    </div>
+                </div>
+
+                {/* pending list */}
+                <div className="pending-list">
                     {isInitiator ? <div><h4>Pending:</h4>
                         {pendingCollabs.map((collab) => {
                             return (<div key={collab._id}>
@@ -136,18 +177,11 @@ function ProjectDetail() {
                             </div>)
                         })}
                     </div> : ""}
-                    {alreadyCollab ? <button onClick={triggerJoinLeave}>leave collab</button> : ""}
+                    {/* {alreadyCollab ? <button onClick={triggerJoinLeave}>leave collab</button> : ""} */}
                     {alreadyPending ? <div><p>You are on the pending list</p><button onClick={triggerJoinLeave}>don't care anymore, remove me from that list</button></div> : ""}
                 </div>
             </div>
-            <div className="description">
-                {isInitiator ? <button className="btn delete" onClick={handleProjectDelete}> DELETE </button> : ""}
-                {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
-                <h2>{title}</h2>
-                <p className="shortD">{shortDescription}</p>
-                <p className="longD">{longDescription}</p>
-                {alreadyCollab ? "" : alreadyPending ? "" : isInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>}
-            </div>
+
             <div className="sample">
                 {sample?.linkType === "url" ?
                     <p>{initiator.name} added a video of <span className="title">{sample.title}</span>, check it out</p>
