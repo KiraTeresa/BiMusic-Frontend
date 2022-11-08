@@ -114,14 +114,10 @@ function SampleForm(props) {
 
     return (
         <div className="upload__form__c">
+            <div className="upload__title">Upload Track</div>
             <div className="up__f__c">
-                <div className="upload__title">Upload Track</div>
-
-
                 <div style={{ display: "flex", flexDirection: "column" }} >
                     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
-
-
                         {/* Title */}
                         <label className="label-title"><b>Title</b><span className="required">*</span>
                             <input className="upload__inputs" placeholder="Name your track" type="text" onChange={handleChange} name="title" value={form.title}></input>
@@ -135,18 +131,16 @@ function SampleForm(props) {
                             <input placeholder="Select release year" className="year__input" type="number" onChange={handleChange} name="year" min="1960" max={currentYear} step="1" value={form.year}></input>
                         </label>
                         {/* Genre */}
-                        <label className="tags-title-label"><b>Add tags to characterise the genre of your song:</b><i> {"(optional)"}</i>
+                        <label className="label-title"><b>Add tags to characterise the genre of your song:</b><i> {"(optional)"}</i>
                             <div className="container-genres">
                                 <div className="checkbox-genres-wrapper">
-                                    <p>{GENRE_ENUM.map((genre) => {
-                                        return <label key={genre}>
+                                    {GENRE_ENUM.map((genre) => {
+                                        return <label key={genre} className="genre-upload-track">
                                             <input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}
                                         </label>
-
-                                    })}</p></div>
+                                    })}</div>
                             </div>
                         </label>
-
                         {/* Link Type */}
                         <label className="label-title"><b>Select upload type:   </b><span className="required">*</span>
                             <label>
@@ -155,8 +149,6 @@ function SampleForm(props) {
                             <label>
                                 <input type="radio" onChange={handleSampleType} name="linkType" value="upload" /> <i>Upload audio file</i>
                             </label>
-
-
                             {/* Link */}
                             {/* Upload Sample */}
                             {sampleType === "url" ?
@@ -168,8 +160,6 @@ function SampleForm(props) {
                         {disableSubmit ? "" : <button className="uploadBtn" type="submit">Submit </button>}
                     </form>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-
                     <p className="required-fields">
                         <span className="required">*</span>Required fields
                     </p>

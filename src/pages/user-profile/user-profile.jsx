@@ -37,13 +37,13 @@ function ProfilePage() {
         // <UserInfo userInfo={userInfo} userProject={userProject} userSample={userSample} userCollabProject={userCollabProject}/>
         <UserInfo userInfo={userInfo} />
       }
-      {
+      {/* {
         isOwnProfile ?
           <div className="profile-btn">
             <Link to='/profile/edit'><button className="chatbtn" id="chatBtn">Profile</button></Link>
             <Link to='/account-settings'><button className="createbtn" id="Create-post"> Account Settings</button></Link>
           </div> : ""
-      }
+      } */}
     </div >
   );
 }

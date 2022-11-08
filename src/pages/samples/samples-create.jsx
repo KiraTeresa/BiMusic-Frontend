@@ -38,9 +38,7 @@ function SamplesCreate() {
     }
 
     return (
-        <div>
-            <SampleForm />
-        </div>
+        <SampleForm />
     )
 }
 
