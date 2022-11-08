@@ -186,10 +186,10 @@ Chatroom
 
 
 /* 
-    ---------------------------------------------
-    Chat list
-    --------------------------------------------- 
-    */
+---------------------------------------------
+Chat list
+--------------------------------------------- 
+*/
 
 .chat-list {
     display: flex;
@@ -271,6 +271,7 @@ Chat
         // width: 100%;
         display: flex;
         flex-direction: column-reverse;
+        justify-content: flex-end;
 
         .chat-link-wrapper {
             height: unset;
