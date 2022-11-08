@@ -53,11 +53,9 @@ const AccountSettings = () => {
     }
   }
   return (
-    <>
-      <div>AccountSettings</div>
-
+    <div>
+      AccountSettings
       <h2>Change password</h2>
-
       <form onSubmit={handleChangePasswordSubmit}>
         <label>Email:</label>
         <input type="email" name="email" value={changePass.email} required={true} onChange={handleChangePassword}
@@ -80,7 +78,6 @@ const AccountSettings = () => {
         />
         <button type="submit">Change Password</button>
       </form>
-
       <h2>Delete Profile</h2>
       <form onSubmit={handleDeleteProfile}>
         <label>Email:</label>
@@ -96,7 +93,7 @@ const AccountSettings = () => {
         <button type="submit">Delete Profile</button>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-    </>
+    </div>
   )
 }
 
