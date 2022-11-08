@@ -101,10 +101,12 @@
     &.secondary {
       background-color: $SECONDARY-COLOR;
       color: $BACKGROUND-COLOR;
+      border: $SECONDARY-COLOR 2px solid;
 
       &:hover {
         background-color: rgba($SECONDARY-COLOR, 0.8);
         box-shadow: 0px 0px 12px $PRIMARY-COLOR;
+        border-color: $BACKGROUND-COLOR;
       }
     }
 

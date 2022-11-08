@@ -1,19 +1,20 @@
 @import '../../consts/colors.scss';
 
+/* 
+---------------------------------------------
+Chatroom
+--------------------------------------------- 
+*/
+
 .chat-room-container {
     // border: 1px solid $TERTIARY-COLOR;
     box-shadow: 0px 0px 6px $PRIMARY-COLOR;
 
-    /* 
-    ---------------------------------------------
-    Chatroom
-    --------------------------------------------- 
-    */
     .chat-head {
         height: 80px;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        margin-bottom: 5px;
+        // margin-bottom: 5px;
         border-bottom: 1px solid $TERTIARY-COLOR;
 
         .title {
@@ -31,12 +32,10 @@
     .chat-body {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        gap: 5px;
 
         .side {
             display: flex;
             flex-direction: column;
-            // gap: 5px;
         }
     }
 
@@ -48,6 +47,8 @@
     .main {
         grid-column: 2 / 5;
         height: 100%;
+        border-left: 1px solid $TERTIARY-COLOR;
+        border-right: 1px solid $TERTIARY-COLOR;
 
         .chat-window-wrapper {
             display: flex;
@@ -121,80 +122,11 @@
         }
     }
 
-
     /* 
     ---------------------------------------------
-    Chat list
+    Chat member
     --------------------------------------------- 
     */
-
-    .chat-list {
-        display: flex;
-        flex-direction: column;
-        // border: red 1px solid;
-        height: 100%;
-        justify-content: space-between;
-
-        .chat-link-wrapper {
-            height: 550px;
-            overflow-y: scroll;
-        }
-
-        .chat-link {
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-align: start;
-            padding: 5px;
-            border-bottom: rgba($TERTIARY-COLOR, .7) solid 1px;
-
-            &:hover {
-                // background-color: rgba($PRIMARY-COLOR, .9);
-                background-color: rgba($TERTIARY-COLOR, .7);
-                cursor: pointer;
-            }
-        }
-
-
-        form {
-            // height: auto;
-            // border: yellow solid 1px;
-
-            select {
-                // width: 150px;
-                height: 40px;
-                padding: 5px;
-                color: $TERTIARY-COLOR;
-                background-color: $BACKGROUND-COLOR;
-            }
-
-            select option:first-child {
-                background-color: $SECONDARY-COLOR;
-                font-size: 16px;
-            }
-        }
-    }
-
-    .msg-counter {
-        border-radius: 25% 10%;
-        padding: 5px;
-    }
-
-    .noMsg {
-        background-color: rgba($TERTIARY-COLOR, .4);
-    }
-
-    .newMsg {
-        background-color: rgba($PRIMARY-COLOR, .8);
-        border: solid 1px $TERTIARY-COLOR;
-    }
-
-    /* 
----------------------------------------------
-Chat member
---------------------------------------------- 
-*/
 
     .chat-member-wrapper {
         height: 100%;
@@ -249,5 +181,114 @@ Chat member
 
     .chat-member-item {
         border-bottom: rgba($TERTIARY-COLOR, .7) solid 1px;
+    }
+}
+
+
+/* 
+    ---------------------------------------------
+    Chat list
+    --------------------------------------------- 
+    */
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    // border: red 1px solid;
+    height: 100%;
+    justify-content: space-between;
+
+    .chat-link-wrapper {
+        height: 550px;
+        overflow-y: scroll;
+    }
+
+    .chat-link {
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: start;
+        padding: 5px;
+        border-bottom: rgba($TERTIARY-COLOR, .7) solid 1px;
+
+        &:hover {
+            // background-color: rgba($PRIMARY-COLOR, .9);
+            background-color: rgba($TERTIARY-COLOR, .7);
+            cursor: pointer;
+        }
+    }
+
+
+    form {
+        // height: auto;
+        // border: yellow solid 1px;
+
+        select {
+            width: 100%;
+            height: 40px;
+            padding: 5px;
+            color: $TERTIARY-COLOR;
+            background-color: $BACKGROUND-COLOR;
+
+            option:first-child {
+                background-color: $SECONDARY-COLOR;
+                font-size: 16px;
+            }
+        }
+
+    }
+}
+
+.msg-counter {
+    border-radius: 25% 10%;
+    padding: 5px;
+}
+
+.noMsg {
+    background-color: rgba($TERTIARY-COLOR, .4);
+}
+
+.newMsg {
+    background-color: rgba($PRIMARY-COLOR, .8);
+    border: solid 1px $TERTIARY-COLOR;
+}
+
+
+/* 
+---------------------------------------------
+Chat
+--------------------------------------------- 
+*/
+
+.chat-list-container {
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+
+    .chat-list {
+        // max-width: 1000px;
+        // width: 100%;
+        display: flex;
+        flex-direction: column-reverse;
+
+        .chat-link-wrapper {
+            height: unset;
+            overflow-y: unset;
+
+            .chat-link:last-child {
+                border: unset;
+            }
+        }
+
+        form {
+            display: flex;
+            box-shadow: 0px 0px 6px $PRIMARY-COLOR;
+            margin: 20px 0;
+
+            select {
+                text-align: center;
+            }
+        }
     }
 }

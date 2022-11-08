@@ -165,7 +165,7 @@ function ChatRoom() {
                     </div>
                 </div>
                 <div className="chat-body">
-                    <div className="side">
+                    <div className="side chats">
                         <ChatList currentChat={chatId} />
                     </div>
                     <div className="main">
@@ -179,7 +179,7 @@ function ChatRoom() {
                         </div>
                         {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
                     </div>
-                    <div className="side">
+                    <div className="side members">
                         <div className="chat-member-wrapper">
                             <ChatMemberCard userInfo={projectInfo.initiator} />
                             {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}

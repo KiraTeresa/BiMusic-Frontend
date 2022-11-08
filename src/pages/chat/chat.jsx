@@ -5,7 +5,7 @@ function Chat() {
     const location = useLocation();
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+        <div className="chat-list-container">
             <ChatList />
             {location?.state?.errorMessage ? <p className="error-message">{location.state.errorMessage}</p> : ""}
         </div>
