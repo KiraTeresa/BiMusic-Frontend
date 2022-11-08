@@ -273,148 +273,189 @@ Project detail
 --------------------------------------------- 
 */
 
-.project-detail-wrapper {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: auto;
-    // padding: 20px;
-    border: green dashed 1px;
+.project-detail-container {
+    border: pink dashed 2px;
+    // display: flex;
+    // flex-direction: column;
 
-    .icon {
-        width: 50px;
-    }
+    .project-info-wrapper {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        padding-top: 15px;
 
-    .participants {
-        grid-column: 1/4;
-        grid-row: auto;
-        background-color: #63A18F;
-        // min-width: 150px;
-        color: $TERTIARY-COLOR;
+        .description {
+            grid-column: 1/7;
 
-        .initiator {
-            border: red solid 1px;
-            height: 300px;
-            display: flex;
-            justify-content: center;
-            // min-width: 80%;
+            h2 {
+                color: $PRIMARY-COLOR;
+                margin-bottom: 36px;
+            }
 
-            a {
-                // display: flex;
-                // justify-content: flex-start;
-                // gap: 20px;
-                position: relative;
+            // .shortD {
+            //     margin-bottom: 24px;
+            //     font-weight: bolder;
+            // }
 
-                // .avatar-container {
-                height: 200px;
-                // width: 300px;
-                width: fit-content;
-                max-width: 100%;
-                align-self: flex-start;
-                // object-fit: cover;
-                // object-fit: contain;
-                overflow: hidden;
-                // border-radius: 50%;
-                box-shadow: 0px 0px 6px $TERTIARY-COLOR;
-                border: $TERTIARY-COLOR 1px solid;
-                border-radius: calc(20px);
-                text-align: left;
-
-
-                img {
-                    // border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-                    height: 100%;
-                    max-width: 100%;
-                }
-
-                // }
-
-                .user-info {
-                    position: absolute;
-                    bottom: -2px;
-                    width: 100%;
-                    height: 60px;
-                    padding: 5px 0 5px 15px;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    gap: 2px;
-                    background-color: $BACKGROUND-COLOR;
-                    border-radius: calc(20px);
-
-                    .user-status {
-                        background-color: unset;
-                        border-radius: unset;
-                        font-size: 14px;
-
-                        &.online {
-                            color: #16c93d;
-                        }
-
-                        &.offline {
-                            color: #c37b7b;
-                        }
-                    }
-                }
+            .longD {
+                overflow-wrap: break-word;
+                word-break: break-word;
             }
         }
 
-        // img {
-        //     width: 70px;
-        // }
-    }
+        .initiator {
+            grid-column: 9/11;
+            border-top: $TERTIARY-COLOR solid 1px;
+            border-radius: calc(20px);
+            width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
 
-    .description {
-        grid-column: 4/11;
-        grid-row: 1/2;
-        padding: 0 50px;
-        position: relative;
-
-        .btn {
-            position: absolute;
-            bottom: -5px;
-            right: -20px;
-            max-width: 100px;
-        }
-
-        h2 {
-            color: $PRIMARY-COLOR;
-            margin-bottom: 36px;
-        }
-
-        .shortD {
-            margin-bottom: 24px;
-            font-weight: bolder;
-        }
-
-        p {
-            overflow-wrap: break-word;
-            word-break: break-word;
+            h4 {
+                position: absolute;
+                color: $TERTIARY-COLOR;
+                top: -9px;
+                font-size: 18px;
+                padding: 0 5px;
+                background-color: $BACKGROUND-COLOR;
+            }
         }
     }
 
-    .sample {
-        grid-column: 4/11;
-        grid-row: 2/3;
-        border: yellow solid 1px;
 
-        .title {
-            color: $PRIMARY-COLOR;
+    .participants {
+        border-bottom: green solid 1px;
+        border-top: unset;
+        height: 400px;
+
+        .collaborators {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            border-top: $TERTIARY-COLOR solid 1px;
+            border-radius: calc(20px);
+            padding-top: 20px;
+            // height: 100%;
+            // width: fit-content;
+
+            h4 {
+                position: absolute;
+                color: $TERTIARY-COLOR;
+                top: -9px;
+                left: 0;
+                right: 0;
+                font-size: 18px;
+                padding: 0 5px;
+                background-color: $BACKGROUND-COLOR;
+                margin-left: auto;
+                margin-right: auto;
+                // border: blue solid 1px;
+                width: fit-content;
+            }
+        }
+
+        img {
+            max-height: 150px;
         }
     }
 
-    .info {
-        // grid-column-start: auto;
-        // grid-column-end: 11;
-        grid-column: 1/11;
-        border: #63A18F solid 2px;
-        // width: 100px;
-        // min-width: 150px;
+    /* 
+    ---------------------------------------------
+    user
+    --------------------------------------------- 
+    */
+
+    a {
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
+        position: relative;
+        height: 80%;
+        max-width: 80%;
+        overflow: hidden;
+        border: $TERTIARY-COLOR 1px solid;
+        border-radius: calc(15px);
+
+
+        img {
+            // border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            max-height: 100%;
+            // text-align: center;
+            // max-width: 100%;
+            // border: yellow dashed 1px;
+        }
+
+        .user-info {
+            // border: blue double 1px;
+            background-color: $BACKGROUND-COLOR;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 4px;
+        }
+
     }
 
-    .comment-wrapper {
-        grid-column: 1/11;
-    }
 
+
+
+    // .project-detail-wrapper {
+    //     display: grid;
+    //     grid-template-columns: repeat(10, 1fr);
+    //     grid-template-rows: auto;
+    //     // padding: 20px;
+    //     border: green dashed 1px;
+
+    //     .icon {
+    //         width: 50px;
+    //     }
+
+    //     .participants {
+    //         grid-column: 1/4;
+    //         grid-row: auto;
+    //         background-color: #63A18F;
+    //         // min-width: 150px;
+    //         color: $TERTIARY-COLOR;
+    //     }
+
+    //     .description {
+    //         grid-column: 4/11;
+    //         grid-row: 1/2;
+    //         padding: 0 50px;
+    //         position: relative;
+
+    //         .btn {
+    //             position: absolute;
+    //             bottom: -5px;
+    //             right: -20px;
+    //             max-width: 100px;
+    //         }
+    //     }
+
+    //     .sample {
+    //         grid-column: 4/11;
+    //         grid-row: 2/3;
+    //         border: yellow solid 1px;
+
+    //         .title {
+    //             color: $PRIMARY-COLOR;
+    //         }
+    //     }
+
+    //     .info {
+    //         // grid-column-start: auto;
+    //         // grid-column-end: 11;
+    //         grid-column: 1/11;
+    //         border: #63A18F solid 2px;
+    //         // width: 100px;
+    //         // min-width: 150px;
+    //         display: flex;
+    //         justify-content: space-around;
+    //     }
+
+    //     .comment-wrapper {
+    //         grid-column: 1/11;
+    //     }
+
+    // }
 }

@@ -69,11 +69,19 @@
     font-size: 14px;
 
     &.online {
-      color: #16c93d;
+
+      &::before {
+        color: #16c93d;
+        content: "online";
+      }
     }
 
     &.offline {
-      color: #c37b7b;
+
+      &::before {
+        color: #c37b7b;
+        content: "offline";
+      }
     }
   }
 

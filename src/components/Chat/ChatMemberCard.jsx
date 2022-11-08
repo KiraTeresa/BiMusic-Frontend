@@ -16,7 +16,7 @@ function ChatMemberCard({ userInfo }) {
                 </div>
                 <div className="name-wrapper">
                     <p>{name}</p>
-                    <div className={`user-status ${status}`}>{status}</div>
+                    <div className={`user-status ${status}`}></div>
                 </div>
             </div>
             {/* <div className="skills">
