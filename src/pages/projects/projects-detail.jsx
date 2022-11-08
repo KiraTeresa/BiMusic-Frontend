@@ -164,7 +164,8 @@ function ProjectDetail() {
 
                 {/* pending list */}
                 <div className="pending-list">
-                    {isInitiator ? <div><h4>Pending:</h4>
+                    <h4>Pending</h4>
+                    {isInitiator ? <div>
                         {pendingCollabs.map((collab) => {
                             return (<div key={collab._id}>
                                 <Link to={`/profile/${collab.name}`}>
@@ -182,7 +183,9 @@ function ProjectDetail() {
                 </div>
             </div>
 
+            {/* Sample */}
             <div className="sample">
+                <h4>Sample</h4>
                 {sample?.linkType === "url" ?
                     <p>{initiator.name} added a video of <span className="title">{sample.title}</span>, check it out</p>
                     : sample?.linkType === "upload" ?

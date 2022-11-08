@@ -1,5 +1,3 @@
-@import '../../consts/colors.scss';
-
 /* 
 ---------------------------------------------
 Projects
@@ -14,7 +12,6 @@ Projects
 
         h2 {
             padding: 0 15px 5px 0;
-            // border-bottom: $TERTIARY-COLOR solid 2px;
         }
     }
 
@@ -48,18 +45,18 @@ Project card
 --------------------------------------------- 
 */
 .project-card {
-    border: 1px solid $TERTIARY-COLOR;
-    // box-shadow: 0px 0px 6px $TERTIARY-COLOR;
+    border: 1px solid var(--TERTIARY-COLOR);
+    // box-shadow: 0px 0px 6px var(--TERTIARY-COLOR);
     // min-width: 250px;
     height: auto;
     // padding-top: 10px;
 
     &:hover {
-        box-shadow: 0px 0px 12px $PRIMARY-COLOR;
+        box-shadow: 0px 0px 12px var(--PRIMARY-COLOR);
 
         // .card-head {
-        //     box-shadow: 0px 0px 6px $PRIMARY-COLOR;
-        //     border-bottom-color: $PRIMARY-COLOR;
+        //     box-shadow: 0px 0px 6px var(--PRIMARY-COLOR);
+        //     border-bottom-color: var(--PRIMARY-COLOR);
         // }
     }
 
@@ -72,8 +69,8 @@ Project card
     }
 
     .card-head {
-        border-bottom: 1px solid $TERTIARY-COLOR;
-        // box-shadow: 0px 0px 6px $TERTIARY-COLOR;
+        border-bottom: 1px solid var(--TERTIARY-COLOR);
+        // box-shadow: 0px 0px 6px var(--TERTIARY-COLOR);
         padding: 15px;
         display: flex;
         // display: grid;
@@ -83,7 +80,7 @@ Project card
         gap: 10px;
 
         .title {
-            color: $SECONDARY-COLOR;
+            color: var(--SECONDARY-COLOR);
             font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
@@ -131,7 +128,7 @@ Project card
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: rgba($TERTIARY-COLOR, .2);
+        background-color: rgba(var(--TERTIARY-COLOR), .2);
 
         // .location {
         //     &:before {
@@ -156,7 +153,7 @@ Project card
         // }
 
         .skill {
-            background-color: rgba($PRIMARY-COLOR, .4);
+            background-color: rgba(var(--PRIMARY-COLOR), .4);
             padding: 2px;
         }
 
@@ -199,17 +196,17 @@ Project card
     }
 
     .card-bottom {
-        // background-color: $PRIMARY-COLOR;
+        // background-color: var(--PRIMARY-COLOR);
         padding: 5px;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        border-top: 1px solid $TERTIARY-COLOR;
-        // box-shadow: 0px 0px 6px $TERTIARY-COLOR;
+        border-top: 1px solid var(--TERTIARY-COLOR);
+        // box-shadow: 0px 0px 6px var(--TERTIARY-COLOR);
 
         .initiator {
-            // color: $PRIMARY-COLOR;
+            // color: var(--PRIMARY-COLOR);
             font-weight: bold;
         }
 
@@ -230,7 +227,7 @@ Project filter
 */
 
 .project-filter-container {
-    box-shadow: 0px 0px 12px $PRIMARY-COLOR;
+    box-shadow: 0px 0px 12px var(--PRIMARY-COLOR);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -252,12 +249,12 @@ Project filter
         width: 150px;
         height: 30px;
         padding: 5px;
-        color: $TERTIARY-COLOR;
-        background-color: $BACKGROUND-COLOR;
+        color: var(--TERTIARY-COLOR);
+        background-color: var(--BACKGROUND-COLOR);
     }
 
     select option:first-child {
-        background-color: $SECONDARY-COLOR;
+        background-color: var(--SECONDARY-COLOR);
         font-size: 16px;
     }
 
@@ -278,6 +275,58 @@ Project detail
     // display: flex;
     // flex-direction: column;
 
+    h4 {
+        position: absolute;
+        color: var(--TERTIARY-COLOR);
+        top: -9px;
+        font-size: 18px;
+        padding: 0 5px;
+        background-color: var(--BACKGROUND-COLOR);
+    }
+
+
+    /* 
+    ---------------------------------------------
+    user general styling
+    --------------------------------------------- 
+    */
+
+    a {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        height: 80%;
+        width: fit-content;
+        overflow: hidden;
+        border: var(--TERTIARY-COLOR) 1px solid;
+        border-radius: calc(15px);
+
+
+        img {
+            // border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            max-height: 100%;
+            // text-align: center;
+            // max-width: 100%;
+            // border: yellow dashed 1px;
+        }
+
+        .user-info {
+            // border: blue double 1px;
+            background-color: var(--BACKGROUND-COLOR);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 4px;
+        }
+
+    }
+
+    /* 
+    ---------------------------------------------
+    description & initiator
+    --------------------------------------------- 
+    */
+
     .project-info-wrapper {
         display: grid;
         grid-template-columns: repeat(10, 1fr);
@@ -287,7 +336,7 @@ Project detail
             grid-column: 1/7;
 
             h2 {
-                color: $PRIMARY-COLOR;
+                color: var(--PRIMARY-COLOR);
                 margin-bottom: 36px;
             }
 
@@ -304,55 +353,54 @@ Project detail
 
         .initiator {
             grid-column: 9/11;
-            border-top: $TERTIARY-COLOR solid 1px;
+            border-top: var(--TERTIARY-COLOR) solid 1px;
             border-radius: calc(20px);
             width: 300px;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-
-            h4 {
-                position: absolute;
-                color: $TERTIARY-COLOR;
-                top: -9px;
-                font-size: 18px;
-                padding: 0 5px;
-                background-color: $BACKGROUND-COLOR;
-            }
         }
     }
 
+    /* 
+    ---------------------------------------------
+    participants
+    --------------------------------------------- 
+    */
 
     .participants {
-        border-bottom: green solid 1px;
-        border-top: unset;
         height: 400px;
+
+        h4 {
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+        }
 
         .collaborators {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             position: relative;
-            border-top: $TERTIARY-COLOR solid 1px;
+            border-top: var(--TERTIARY-COLOR) solid 1px;
             border-radius: calc(20px);
             padding-top: 20px;
             // height: 100%;
             // width: fit-content;
 
-            h4 {
-                position: absolute;
-                color: $TERTIARY-COLOR;
-                top: -9px;
-                left: 0;
-                right: 0;
-                font-size: 18px;
-                padding: 0 5px;
-                background-color: $BACKGROUND-COLOR;
-                margin-left: auto;
-                margin-right: auto;
-                // border: blue solid 1px;
-                width: fit-content;
-            }
+        }
+
+        .pending-list {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            border-top: var(--TERTIARY-COLOR) solid 1px;
+            border-radius: calc(20px);
+            padding-top: 20px;
+            // height: 100%;
+            // width: fit-content;
         }
 
         img {
@@ -362,41 +410,29 @@ Project detail
 
     /* 
     ---------------------------------------------
-    user
+    sample
     --------------------------------------------- 
     */
 
-    a {
+    .sample {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         position: relative;
-        height: 80%;
-        max-width: 80%;
-        overflow: hidden;
-        border: $TERTIARY-COLOR 1px solid;
-        border-radius: calc(15px);
+        border-top: var(--TERTIARY-COLOR) solid 1px;
+        border-radius: calc(20px);
+        padding-top: 20px;
+        // height: 100%;
+        // width: fit-content;
 
-
-        img {
-            // border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            max-height: 100%;
-            // text-align: center;
-            // max-width: 100%;
-            // border: yellow dashed 1px;
-        }
-
-        .user-info {
-            // border: blue double 1px;
-            background-color: $BACKGROUND-COLOR;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            padding: 4px;
+        h4 {
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
         }
 
     }
-
-
 
 
     // .project-detail-wrapper {
@@ -415,7 +451,7 @@ Project detail
     //         grid-row: auto;
     //         background-color: #63A18F;
     //         // min-width: 150px;
-    //         color: $TERTIARY-COLOR;
+    //         color: var(--TERTIARY-COLOR);
     //     }
 
     //     .description {
@@ -438,7 +474,7 @@ Project detail
     //         border: yellow solid 1px;
 
     //         .title {
-    //             color: $PRIMARY-COLOR;
+    //             color: var(--PRIMARY-COLOR);
     //         }
     //     }
 
