@@ -44,17 +44,36 @@
     padding: 20px;
   }
 
+  /* 
+  ---------------------------------------------
+  User status
+  --------------------------------------------- 
+  */
+  // for circle:
+  // .user-status {
+  //   height: 10px;
+  //   width: 10px;
+  //   border-radius: 50%;
+
+  //   &.online {
+  //     background-color: #2eca57;
+  //   }
+
+  //   &.offline {
+  //     background-color: #e45723;
+  //   }
+  // }
+
+  // for text:
   .user-status {
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
+    font-size: 14px;
 
     &.online {
-      background-color: #2eca57;
+      color: #16c93d;
     }
 
     &.offline {
-      background-color: #e45723;
+      color: #c37b7b;
     }
   }
 
