@@ -71,7 +71,7 @@ const AccountSettings = () => {
         <label className='highlight hoverSOmething'>Email:</label>
         </div>
         <div className="col-75">
-        <input type="email" name="email" value={changePass.email} required={true} onChange={handleChangePassword}
+        <input className="account-settings-un-input" type="email" name="email" value={changePass.email} required={true} onChange={handleChangePassword}
         />
          </div>
          </div>
@@ -83,7 +83,7 @@ const AccountSettings = () => {
         <label>Password:</label>
         </div>
         <div className="col-75">
-        <input
+        <input className="account-settings-un-input"
           type="password"
           value={changePass.password}
           name="password"
@@ -98,7 +98,7 @@ const AccountSettings = () => {
         <label>New Password:</label>
         </div>
         <div className="col-75">
-        <input
+        <input className="account-settings-un-input"
           onChange={handleChangePassword}
           type="password"
           name="changePassword"
@@ -122,7 +122,7 @@ const AccountSettings = () => {
         <label>Email:</label>
         </div>
         <div className="col-75">
-        <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required={true} />
+        <input className="account-settings-un-input" type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required={true} />
         </div>
         </div>
 
@@ -131,13 +131,15 @@ const AccountSettings = () => {
         <div className="col-25">
         <label>Password:</label>
         </div>
-        <input
+        <div className="col-75">
+        <input className="account-settings-un-input"
           type="password"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required={true}
         />
+        </div>
          </div>
 
          <h6 class="warning_delete_user"> ⚠ By deleting your account, you will no longer be able to sign in, your activity will be removed from the Bi-Music platform and your username might be claimed by another user!</h6> 
