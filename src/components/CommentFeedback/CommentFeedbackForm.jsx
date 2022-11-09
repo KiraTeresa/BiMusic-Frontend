@@ -30,13 +30,13 @@ function CommentFeedbackForm({ props }) {
     }
 
     return (
-        <div style={{ width: "50%" }} >
+        <div className="form-wrapper">
             <form onSubmit={handleSubmit}>
                 {type === "feedback" ?
                     <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Title"></input>
                     : ""}
                 <textarea name="text" maxLength={500} value={form.text} onChange={handleChange}></textarea>
-                <button type="submit">post {type}</button>
+                <button className="btn tertiary" type="submit">post {type}</button>
             </form>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>

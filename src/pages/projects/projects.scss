@@ -543,7 +543,7 @@ Project detail
 
 /* 
 ---------------------------------------------
-Comment/Feedback card
+Comment/Feedback
 --------------------------------------------- 
 */
 
@@ -553,6 +553,29 @@ Comment/Feedback card
     display: flex;
     flex-direction: column;
     gap: 50px;
+
+    /* 
+    ---------------------------------------------
+    Form
+    --------------------------------------------- 
+    */
+
+    .form-wrapper {
+        form {
+            display: flex;
+            flex-direction: column;
+
+            textarea {
+                min-height: 75px;
+            }
+        }
+    }
+
+    /* 
+    ---------------------------------------------
+    Card
+    --------------------------------------------- 
+    */
 
     .speechbubble {
         border-radius: calc(20px);
