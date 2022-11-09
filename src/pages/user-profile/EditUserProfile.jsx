@@ -222,7 +222,7 @@ const EditUserProfile = () => {
                 </div>
               }
               <form onSubmit={handleAvatarUpdate}>
-                <input type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
+                <input  type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
                 <div className="upload-file-btn">
                   <p><input value="Upload file" type="submit" /></p>
                 </div>
@@ -238,7 +238,7 @@ const EditUserProfile = () => {
                     <label>Name:</label>
                   </div>
                   <div className="col-75">
-                    <input onChange={handleName} type="text" name="name" value={name} />
+                    <input  onChange={handleName} type="text" name="name" value={name} />
                   </div>
                 </div>
 
