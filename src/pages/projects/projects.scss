@@ -45,14 +45,14 @@ Project card
 --------------------------------------------- 
 */
 .project-card {
-    border: 1px solid var(--TERTIARY-COLOR);
+    border: 1px solid rgb(var(--TERTIARY-COLOR));
     // box-shadow: 0px 0px 6px var(--TERTIARY-COLOR);
     // min-width: 250px;
     height: auto;
     // padding-top: 10px;
 
     &:hover {
-        box-shadow: 0px 0px 12px var(--PRIMARY-COLOR);
+        box-shadow: 0px 0px 12px rgb(var(--PRIMARY-COLOR));
 
         // .card-head {
         //     box-shadow: 0px 0px 6px var(--PRIMARY-COLOR);
@@ -69,7 +69,7 @@ Project card
     }
 
     .card-head {
-        border-bottom: 1px solid var(--TERTIARY-COLOR);
+        border-bottom: 1px solid rgb(var(--TERTIARY-COLOR));
         // box-shadow: 0px 0px 6px var(--TERTIARY-COLOR);
         padding: 15px;
         display: flex;
@@ -80,7 +80,7 @@ Project card
         gap: 10px;
 
         .title {
-            color: var(--SECONDARY-COLOR);
+            color: rgb(var(--SECONDARY-COLOR));
             font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
@@ -202,7 +202,7 @@ Project card
         justify-content: space-between;
         align-items: center;
 
-        border-top: 1px solid var(--TERTIARY-COLOR);
+        border-top: 1px solid rgb(var(--TERTIARY-COLOR));
         // box-shadow: 0px 0px 6px var(--TERTIARY-COLOR);
 
         .initiator {
@@ -227,7 +227,7 @@ Project filter
 */
 
 .project-filter-container {
-    box-shadow: 0px 0px 12px var(--PRIMARY-COLOR);
+    box-shadow: 0px 0px 12px rgb(var(--PRIMARY-COLOR));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -250,11 +250,11 @@ Project filter
         height: 30px;
         padding: 5px;
         color: var(--TERTIARY-COLOR);
-        background-color: var(--BACKGROUND-COLOR);
+        background-color: rgb(var(--BACKGROUND-COLOR));
     }
 
     select option:first-child {
-        background-color: var(--SECONDARY-COLOR);
+        background-color: rgb(var(--SECONDARY-COLOR));
         font-size: 16px;
     }
 
@@ -277,7 +277,7 @@ Project detail
 
     .border-top {
         position: relative;
-        border-top: var(--TERTIARY-COLOR) solid 1px;
+        border-top: rgb(var(--TERTIARY-COLOR)) solid 1px;
         border-radius: calc(20px);
         padding: 20px;
         margin: 20px 0;
@@ -285,11 +285,11 @@ Project detail
 
         h4 {
             position: absolute;
-            color: var(--TERTIARY-COLOR);
+            color: rgb(var(--TERTIARY-COLOR));
             top: -9px;
             font-size: 18px;
             padding: 0 5px;
-            background-color: var(--BACKGROUND-COLOR);
+            background-color: rgb(var(--BACKGROUND-COLOR));
 
             &.full {
                 left: 0;
@@ -315,7 +315,7 @@ Project detail
         // height: 80%;
         width: fit-content;
         overflow: hidden;
-        border: var(--TERTIARY-COLOR) 1px solid;
+        border: rgb(var(--TERTIARY-COLOR)) 1px solid;
         border-radius: calc(15px);
 
 
@@ -329,7 +329,7 @@ Project detail
 
         .user-info {
             // border: blue double 1px;
-            background-color: var(--BACKGROUND-COLOR);
+            background-color: rgb(var(--BACKGROUND-COLOR));
             position: absolute;
             bottom: 0;
             width: 100%;
@@ -361,7 +361,7 @@ Project detail
             // border: dashed purple 1px;
 
             h2 {
-                color: var(--PRIMARY-COLOR);
+                color: rgb(var(--PRIMARY-COLOR));
                 // margin-bottom: 30px;
                 // border: solid yellowgreen 1px;
             }
@@ -390,14 +390,14 @@ Project detail
                     font-size: 14px;
 
                     p {
-                        border-bottom: solid var(--TERTIARY-COLOR) 1px;
+                        border-bottom: solid rgb(var(--TERTIARY-COLOR)) 1px;
                     }
 
                     .genre {
                         &:not(:first-child) {
                             &::before {
                                 content: ", ";
-                                color: var(--TERTIARY-COLOR);
+                                color: rgb(var(--TERTIARY-COLOR));
                                 font-size: 16px;
                                 text-transform: lowercase;
                             }
@@ -488,7 +488,7 @@ Project detail
     --------------------------------------------- 
     */
     .skill-list {
-        border: 1px dashed var(--PRIMARY-COLOR);
+        border: 1px dashed rgb(var(--PRIMARY-COLOR));
         font-size: 20px;
         hyphens: auto;
         display: flex;
@@ -500,12 +500,12 @@ Project detail
 
         .skill {
             text-transform: uppercase;
-            color: var(--PRIMARY-COLOR);
+            color: rgb(var(--PRIMARY-COLOR));
 
             &:not(:first-child) {
                 &::before {
                     content: " or ";
-                    color: var(--TERTIARY-COLOR);
+                    color: rgb(var(--TERTIARY-COLOR));
                     font-size: 16px;
                     text-transform: lowercase;
                 }
@@ -514,7 +514,7 @@ Project detail
             &:last-child {
                 &::after {
                     content: "?";
-                    color: var(--TERTIARY-COLOR);
+                    color: rgb(var(--TERTIARY-COLOR));
                 }
             }
         }

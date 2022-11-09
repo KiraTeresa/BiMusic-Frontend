@@ -89,34 +89,34 @@
 
     &.primary {
       background-color: rgb(var(--PRIMARY-COLOR));
-      color: rgb(var(--secondary-color));
+      color: rgb(var(--SECONDARY-COLOR));
       font-size: 18px;
 
       &:hover {
         background-color: rgba(var(--PRIMARY-COLOR), 0.8);
-        color: rgb(var(--tertiary-color));
+        color: rgb(var(--TERTIARY-COLOR));
       }
     }
 
     &.secondary {
-      background-color: rgb(var(--secondary-color));
+      background-color: rgb(var(--SECONDARY-COLOR));
       color: rgb(var(--BACKGROUND-COLOR));
-      border: rgb(var(--secondary-color)) 2px solid;
+      border: rgb(var(--SECONDARY-COLOR)) 2px solid;
 
       &:hover {
-        background-color: rgba(var(--secondary-color), 0.8);
+        background-color: rgba(var(--SECONDARY-COLOR), 0.8);
         box-shadow: 0px 0px 12px rgb(var(--PRIMARY-COLOR));
         border-color: rgb(var(--BACKGROUND-COLOR));
       }
     }
 
     &.tertiary {
-      background-color: rgb(var(--tertiary-color));
+      background-color: rgb(var(--TERTIARY-COLOR));
       color: rgb(var(--BACKGROUND-COLOR));
 
       &:hover {
-        background-color: rgba(var(--tertiary-color), 0.8);
-        color: rgb(var(--tertiary-color));
+        background-color: rgba(var(--TERTIARY-COLOR), 0.8);
+        color: rgb(var(--TERTIARY-COLOR));
       }
     }
 
