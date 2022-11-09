@@ -1,3 +1,4 @@
+import './projectsDetail.scss'
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";

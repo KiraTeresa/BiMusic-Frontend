@@ -1,4 +1,4 @@
-import './commentFeedback.scss'
+import './CommentFeedback.scss'
 import { formatDistanceToNow } from "date-fns";
 
 function CommentFeedbackCard({ commentInfo }) {

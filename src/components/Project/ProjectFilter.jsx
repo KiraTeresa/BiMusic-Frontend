@@ -1,3 +1,4 @@
+import './ProjectFilter.scss'
 import { useCallback, useEffect, useState } from "react"
 
 function ProjectFilter({ allProjects, sendToParent }) {

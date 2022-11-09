@@ -1,3 +1,4 @@
+import './ProjectCard.scss'
 import { Link } from 'react-router-dom';
 import commentIcon from '../../assets/icons/100.png'
 import contributorsIcon from '../../assets/icons/24.png'
