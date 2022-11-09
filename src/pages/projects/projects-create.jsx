@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns"
 import axios from "axios";
+import './ProjectsForm.scss'
 
 import GENRE_ENUM from "../../consts/genreEnum"
 import SKILL_ENUM from "../../consts/skillEnum"
@@ -157,75 +158,86 @@ function ProjectsCreate() {
     }
 
     return (
-        <div>
-            <h2>Form to create a new project</h2>
+        <div className="upload__form__c">
+             <div className="upload__title">Publish your collab request</div>
+             <div className="up__f__c">
+             <div style={{ display: "flex", flexDirection: "column" }} >
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
                 {/* Title */}
-                <label>Title
-                    <input onChange={handleChange} value={form.title} type="text" name="title" maxLength="50"></input>
+                <label className="label-title"><b>Title</b><span className="required">*</span>
+                    <input className="upload__inputs" placeholder="Name your project" onChange={handleChange} value={form.title} type="text" name="title" maxLength="50"></input>
                 </label>
                 {/* Short Description */}
-                <label>Give a briefe description of your idea:
-                    <input onChange={handleChange} value={form.shortDescription} type="text" name="shortDescription" maxLength="150"></input>
+                <label className="label-title"><b>Short Description</b><span className="required">*</span>
+                    <input className="upload__inputs" placeholder="Give a brief description of your project idea" onChange={handleChange} value={form.shortDescription} type="text" name="shortDescription" maxLength="150"></input>
                 </label>
                 {/* Long Description */}
-                <label>Now you can explain in more detail:
-                    <textarea onChange={handleChange} value={form.longDescription} type="text" name="longDescription" minLength="200" maxLength="1000"></textarea>
+                <label className="label-title"><b>Long Description</b><span className="required">*</span>
+                    <textarea placeholder="Describe your project in more detail" className="textarea__input" onChange={handleChange} value={form.longDescription} type="text" name="longDescription" minLength="200" maxLength="1000"></textarea>
                 </label>
                 {/* Genre */}
-                <div className="checkbox-wrapper">
-                    <label>Which genre will your project be?<i> {"(optional)"}</i></label>
-                    <div>
+                <label className="label-title"><b>What genre will your project be?</b><span className="required">*</span>
+                    <div className="container-genres">
+                                <div className="checkbox-genres-wrapper">
                         {GENRE_ENUM.map((genre) => {
-                            return <label key={genre}><input onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
+                            return <label key={genre} className="genre-upload-track"><input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="genre" value={genre}></input>{genre}</label>
                         })}
+                         </div>
                     </div>
-                </div>
+                    </label>
                 {/* Looking For (Skills) */}
-                <div className="checkbox-wrapper">
-                    <label>Who are you looking for?</label>
-                    <div>
+                <label className="label-title"><b>Who are you looking for?</b><span className="required">*</span>
+                    <div className="container-genres">
+                                <div className="checkbox-genres-wrapper">
                         {SKILL_ENUM.map((skill) => {
-                            return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
+                            return <label key={skill} className="genre-upload-track"><input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
                         })}</div>
-                </div>
+                     </div>
+                     </label> 
                 {/* Start Date */}
-                <label>When do you wanna start?
-                    <input onChange={handleChange} value={form.startDate} min="today" type="date" name="startDate"></input>
+                <label className="label-title"><span className="emojis">🚀 </span><b>When do you plan to start?  </b>
+                    <input className="year__input" onChange={handleChange} value={form.startDate} min="today" type="date" name="startDate"></input>
                 </label>
                 {/* End Date */}
-                <label>Wnen will it be over?
-                    <input onChange={handleChange} value={form.endDate} min={form.startDate} type="date" name="endDate"></input>
+                <label className="label-title"><span className="emojis">🏁 </span><b>When do you plan to finish your project?</b>
+                    <input className="year__input" onChange={handleChange} value={form.endDate} min={form.startDate} type="date" name="endDate"></input>
                 </label>
                 {/* Remote? */}
-                <label>Will you connect online?
+                <label className="project-create-check"><b><span className="emojis">🌎 </span>Would you prefer to collaborate online? </b>
                     <input onChange={handleCheckboxChange} value={form.isRemote} type="checkbox" name="isRemote"></input>
                 </label>
 
                 {/* Country */}
-                <label>-- Select the country --</label>
-                <select name="country" onChange={handleCountryChange} disabled={form.isRemote}>
+                    <label className="label-title"><b>Select your country location</b>
+                <select className="upload__inputs" name="country" onChange={handleCountryChange} disabled={form.isRemote}>
                     <option value={form.country}> -- {form.country} -- </option>
                     {countriesAndCities.map((element, index) => {
                         return <option key={index} value={element.country}>{element.country}</option>
                     })}
                 </select>
+                </label>
                 {/* City */}
-                <label>-- Select the city --</label>
-                <select name="city" onChange={handleChange} disabled={form.isRemote}>
+                <label className="label-title"><b>Select your city location</b>
+                <select className="upload__inputs" name="city" onChange={handleChange} disabled={form.isRemote}>
                     <option value={form.city}> -- {form.city} -- </option>
                     {citiesList.map(city => {
                         return <option key={city} value={city}>{city}</option>
                     })}
                 </select>
+                </label>
                 {/* Sample */}
-                <label>Do you want to add a sample?
+                <label className="project-create-check"><b>Would you like to upload a sample? </b>
                     <input onChange={handleCheckboxChange} value={form.addSample} type="checkbox" name="addSample"></input>
                 </label>
 
-                <button type="submit">Create</button>
+                <button className="uploadBtn" type="submit">Publish</button>
             </form>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <p className="required-fields">
+                        <span className="required">*</span>Required fields
+                    </p>
+                    </div >
+            </div >
         </div >
     )
 }

@@ -1,48 +1,47 @@
-  /* 
-    ---------------------------------------------
-    Colors
-    --------------------------------------------- 
-  */
+/* 
+---------------------------------------------
+Colors
+--------------------------------------------- 
+*/
+:root {
+  --BACKGROUND-COLOR: rgb(30, 30, 30);
+  --PRIMARY-COLOR: rgb(0, 194, 203);
+  --SECONDARY-COLOR: rgb(15, 90, 94);
+  --TERTIARY-COLOR: rgb(240, 250, 251);
 
-  :root {
-    --BACKGROUND-COLOR: rgb(30, 30, 30);
-    --PRIMARY-COLOR: rgb(0, 194, 203);
-    --SECONDARY-COLOR: rgb(15, 90, 94);
-    --TERTIARY-COLOR: rgb(240, 250, 251);
+  /* delete btn and error messages */
+  --ATTENTION-BACKGROUND-COLOR: rgb(239, 170, 187);
+  --ATTENTION-TEXT-COLOR: rgb(198, 32, 10);
+}
 
-    /* delete btn and error messages */
-    --ATTENTION-BACKGROUND-COLOR: rgb(239, 170, 187);
-    --ATTENTION-TEXT-COLOR: rgb(198, 32, 10);
-  }
-
-  /* 
+/* 
   ---------------------------------------------
   Reset CSS
   --------------------------------------------- 
   */
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  a {
-    display: block;
-    color: inherit;
-    font-family: inherit;
-    text-decoration: none;
-  }
+a {
+  display: block;
+  color: inherit;
+  font-family: inherit;
+  text-decoration: none;
+}
 
-  /* 
+/* 
   ---------------------------------------------
   Global Styles
   --------------------------------------------- 
   */
 
-  body {
-    margin: 0;
-    background-color: var(--BACKGROUND-COLOR);
-    color: var(--TERTIARY-COLOR);
-    font-family: "Poppins", sans-serif;
-  }
+body {
+  margin: 0;
+  background-color: var(--BACKGROUND-COLOR);
+  color: var(--TERTIARY-COLOR);
+  font-family: "Poppins", sans-serif;
+}

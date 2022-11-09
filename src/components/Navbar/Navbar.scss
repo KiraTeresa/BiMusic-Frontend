@@ -1,7 +1,44 @@
+@import '../../consts/colors.scss';
+
+// nav {
+//     height: 80px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     background-color: $PRIMARY-COLOR;
+//     box-shadow: 0px 0px 6px $TERTIARY-COLOR;
+// }
+
+
 nav {
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 0px 6px var(--TERTIARY-COLOR);
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  background-color: var(--PRIMARY-COLOR);
+  box-shadow: 0px 0px 6px var(--TERTIARY-COLOR);
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav li {
+  font-size: 13px;
+  line-height: 100px;
+  padding-left: 0.8rem;
+  text-transform: uppercase;
+}
+
+.logouticon {
+  height: 25px;
+  position: center;
+}
+
+.bimusicicon2 {
+  height: 80px;
+  position: center;
+  margin: 0;
 }

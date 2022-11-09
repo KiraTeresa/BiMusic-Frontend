@@ -222,7 +222,7 @@ const EditUserProfile = () => {
                 </div>
               }
               <form onSubmit={handleAvatarUpdate}>
-                <input type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
+                <input  type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
                 <div className="upload-file-btn">
                   <p><input value="Upload file" type="submit" /></p>
                 </div>
@@ -238,7 +238,7 @@ const EditUserProfile = () => {
                     <label>Name:</label>
                   </div>
                   <div className="col-75">
-                    <input onChange={handleName} type="text" name="name" value={name} />
+                    <input  onChange={handleName} type="text" name="name" value={name} />
                   </div>
                 </div>
 
@@ -297,7 +297,7 @@ const EditUserProfile = () => {
               {userInfo && userInfo.skills.map((skill, index) => (
                 <div key={index}>
                   <span className="currentSkill">{skill}</span>
-                  <button onClick={(e) => { handleDeleteSkills(e, skill) }}>Delete</button>
+                  <button className="cross-stand-alone" onClick={(e) => { handleDeleteSkills(e, skill) }}></button>
                 </div>
               ))}
             </div>
@@ -322,7 +322,7 @@ const EditUserProfile = () => {
                     <Link to={`/projects/${project._id}`}>
                       {project.title}
                     </Link>
-                    <button onClick={(e) => { handleDeleteProject(e, project._id) }} disabled={!userProject}>Delete</button>
+                    <button className="cross-stand-alone" onClick={(e) => { handleDeleteProject(e, project._id) }} disabled={!userProject}></button>
                   </div>
                 ))}
               </div>

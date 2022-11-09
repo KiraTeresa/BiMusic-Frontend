@@ -114,7 +114,7 @@ function SampleForm(props) {
 
     return (
         <div className="upload__form__c">
-            <div className="upload__title">Upload Track</div>
+            <div className="upload__title">Upload a track to share it with the community</div>
             <div className="up__f__c">
                 <div style={{ display: "flex", flexDirection: "column" }} >
                     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
@@ -144,10 +144,10 @@ function SampleForm(props) {
                         {/* Link Type */}
                         <label className="label-title"><b>Select upload type:   </b><span className="required">*</span>
                             <label>
-                                <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /><i>URL</i>
+                                <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /><i>URL </i>
                             </label>
                             <label>
-                                <input type="radio" onChange={handleSampleType} name="linkType" value="upload" /> <i>Upload audio file</i>
+                                <input type="radio" onChange={handleSampleType} name="linkType" value="upload" /> <i>Upload audio file <span className="audio-format-span">(mp3, wav) </span></i>
                             </label>
                             {/* Link */}
                             {/* Upload Sample */}

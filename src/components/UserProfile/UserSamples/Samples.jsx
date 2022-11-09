@@ -12,7 +12,7 @@ const Samples = ({ sampleArr }) => {
             <tr>
               <th>Title</th>
               <th>Genre</th>
-              <th>Obligation Year</th>
+              <th>Publication year</th>
             </tr>
           </thead>
           <tbody>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../../services/apiClient';
+import "./account-settings.scss";
 
 
 const AccountSettings = () => {
@@ -53,46 +54,105 @@ const AccountSettings = () => {
     }
   }
   return (
-    <div>
+    <div className="account-settings-container">
       AccountSettings
-      <h2>Change password</h2>
+
+
+{/* Change Password */}
+
+      <div className="parent-change-password-delete-profile">
+
+      <div className="container-grid-change-pw-delete-account">
+        
+      <h2 className="title-account-settings">Change password</h2>
       <form onSubmit={handleChangePasswordSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={changePass.email} required={true} onChange={handleChangePassword}
+      <div className="row">
+      <div className="col-25">
+        <label className='highlight hoverSOmething'>Email:</label>
+        </div>
+        <div className="col-75">
+        <input className="account-settings-un-input" type="email" name="email" value={changePass.email} required={true} onChange={handleChangePassword}
         />
+         </div>
+         </div>
+
+
+
+         <div className="row">
+          <div className="col-25">
         <label>Password:</label>
-        <input
+        </div>
+        <div className="col-75">
+        <input className="account-settings-un-input"
           type="password"
           value={changePass.password}
           name="password"
           required={true}
           onChange={handleChangePassword}
         />
-        <label>Change Password:</label>
-        <input
+        </div>
+        </div>
+
+        <div className="row">
+        <div className="col-25">
+        <label>New Password:</label>
+        </div>
+        <div className="col-75">
+        <input className="account-settings-un-input"
           onChange={handleChangePassword}
           type="password"
           name="changePassword"
           value={changePass.changePassword}
           required={true}
         />
-        <button type="submit">Change Password</button>
+         </div>
+         </div>
+        <button className='account-settings-submit-button' type="submit">Change Password</button>
       </form>
-      <h2>Delete Profile</h2>
+      </div>
+
+      <div className="container-grid-change-pw-delete-account">
+
+{/* Delete Profile */}
+<h2 className="title-account-settings">Delete Profile</h2>
       <form onSubmit={handleDeleteProfile}>
+
+      <div className="row">
+        <div className="col-25">
         <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required={true} />
+        </div>
+        <div className="col-75">
+        <input className="account-settings-un-input" type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required={true} />
+        </div>
+        </div>
+
+
+        <div className="row">
+        <div className="col-25">
         <label>Password:</label>
-        <input
+        </div>
+        <div className="col-75">
+        <input className="account-settings-un-input"
           type="password"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required={true}
         />
+        </div>
+         </div>
+
+         <h6 class="warning_delete_user"> ⚠ By deleting your account, you will no longer be able to sign in, your activity will be removed from the Bi-Music platform and your username might be claimed by another user!</h6> 
+
         <button type="submit">Delete Profile</button>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </div>
+
+
+
+
+      </div>
     </div>
   )
 }
