@@ -33,6 +33,27 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
+
+    .account-settings-un-input{
+      width: 95%;
+      color: black;
+      font-weight: 700;
+      font-size: 14px;
+      background: rgba(10, 4, 91, 0.04);
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      outline: none;
+      box-sizing: border-box;
+      border: 2px solid rgba(0, 0, 0, 0.02);
+      margin-bottom: 50px;
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Ubuntu', sans-serif;
+    }
+
+
   
     /* Style the container */
      .container {
@@ -82,7 +103,6 @@
     /* Floating column for inputs: 75% width */
     .col-75 {
       float: left;
-      width: 75%;
       margin-top: 6px;
     }
   
