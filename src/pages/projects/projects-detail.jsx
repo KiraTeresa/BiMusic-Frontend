@@ -240,14 +240,14 @@ function ProjectDetail() {
                 <h4 className="full">comments</h4>
                 <div className="comments">
                     {/* <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"} */}
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <CommentForm props={{ refreshPage, type: "comment" }} />
-                        {project.comments.reverse().map((comment) => {
-                            return (
-                                <CommentCard key={comment._id} commentInfo={comment} />
-                            )
-                        })}
-                    </div>
+                    {/* <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}> */}
+                    <CommentForm props={{ refreshPage, type: "comment" }} />
+                    {project.comments.reverse().map((comment) => {
+                        return (
+                            <CommentCard key={comment._id} commentInfo={comment} />
+                        )
+                    })}
+                    {/* </div> */}
                 </div>
             </div>
         </div>
