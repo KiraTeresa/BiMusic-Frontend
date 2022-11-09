@@ -88,44 +88,44 @@
     padding: 10px;
 
     &.primary {
-      background-color: var(--PRIMARY-COLOR);
-      color: var(--SECONDARY-COLOR);
+      background-color: rgb(var(--PRIMARY-COLOR));
+      color: rgb(var(--secondary-color));
       font-size: 18px;
 
       &:hover {
         background-color: rgba(var(--PRIMARY-COLOR), 0.8);
-        color: var(--TERTIARY-COLOR);
+        color: rgb(var(--tertiary-color));
       }
     }
 
     &.secondary {
-      background-color: var(--SECONDARY-COLOR);
-      color: var(--BACKGROUND-COLOR);
-      border: var(--SECONDARY-COLOR) 2px solid;
+      background-color: rgb(var(--secondary-color));
+      color: rgb(var(--BACKGROUND-COLOR));
+      border: rgb(var(--secondary-color)) 2px solid;
 
       &:hover {
-        background-color: rgba(var(--SECONDARY-COLOR), 0.8);
-        box-shadow: 0px 0px 12px var(--PRIMARY-COLOR);
-        border-color: var(--BACKGROUND-COLOR);
+        background-color: rgba(var(--secondary-color), 0.8);
+        box-shadow: 0px 0px 12px rgb(var(--PRIMARY-COLOR));
+        border-color: rgb(var(--BACKGROUND-COLOR));
       }
     }
 
     &.tertiary {
-      background-color: var(--TERTIARY-COLOR);
-      color: var(--BACKGROUND-COLOR);
+      background-color: rgb(var(--tertiary-color));
+      color: rgb(var(--BACKGROUND-COLOR));
 
       &:hover {
-        background-color: rgba(var(--TERTIARY-COLOR), 0.8);
-        color: var(--TERTIARY-COLOR);
+        background-color: rgba(var(--tertiary-color), 0.8);
+        color: rgb(var(--tertiary-color));
       }
     }
 
     &.delete {
-      background-color: var(--ATTENTION-BACKGROUND-COLOR);
-      color: var(--ATTENTION-TEXT-COLOR);
+      background-color: rgb(var(--ATTENTION-BACKGROUND-COLOR));
+      color: rgb(var(--ATTENTION-TEXT-COLOR));
 
       &:hover {
-        box-shadow: 0px 0px 12px var(--ATTENTION-TEXT-COLOR);
+        box-shadow: 0px 0px 12px rgb(var(--ATTENTION-TEXT-COLOR));
       }
     }
   }
@@ -137,9 +137,9 @@
   */
 
   .error-message {
-    border: var(--ATTENTION-TEXT-COLOR) dashed 1px;
-    background-color: var(--ATTENTION-BACKGROUND-COLOR);
-    color: var(--ATTENTION-TEXT-COLOR);
+    border: rgb(var(--ATTENTION-TEXT-COLOR)) dashed 1px;
+    background-color: rgb(var(--ATTENTION-BACKGROUND-COLOR));
+    color: rgb(var(--ATTENTION-TEXT-COLOR));
     font-size: 14px;
     padding: 5px;
   }
