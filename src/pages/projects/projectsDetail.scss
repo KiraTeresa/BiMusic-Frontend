@@ -79,8 +79,13 @@ Project detail
         // grid-template-columns: repeat(10, 1fr);
         display: flex;
         justify-content: space-between;
-        flex-wrap: wrap;
+        // flex-wrap: wrap;
         padding-top: 15px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+        }
 
         .description {
             // grid-column: 1/7;
@@ -89,6 +94,11 @@ Project detail
             justify-content: space-between;
             max-width: 60%;
             // border: dashed purple 1px;
+
+            @media (max-width: 768px) {
+                gap: 8px;
+                max-width: unset;
+            }
 
             h2 {
                 color: rgb(var(--PRIMARY-COLOR));
@@ -101,10 +111,20 @@ Project detail
                 justify-content: space-between;
                 // border: solid blue 1px;
 
+                @media (max-width: 1024px) {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
                 .date-location {
                     display: flex;
                     flex-direction: column;
                     align-items: flex-start;
+
+                    @media (max-width: 768px) {
+                        width: 100%;
+                        align-items: center;
+                    }
 
                     span {
                         font-size: 14px;
@@ -117,8 +137,17 @@ Project detail
                     flex-direction: column;
                     flex-wrap: wrap;
                     align-items: flex-end;
-                    // border: solid yellowgreen 1px;
                     font-size: 14px;
+
+                    @media (max-width: 1024px) {
+                        align-items: flex-start;
+                        margin-top: 8px;
+                    }
+
+                    @media (max-width: 768px) {
+                        width: 100%;
+                        align-items: center;
+                    }
 
                     p {
                         border-bottom: solid rgb(var(--TERTIARY-COLOR)) 1px;
@@ -171,17 +200,22 @@ Project detail
         .collaborators {
             display: flex;
             justify-content: space-between;
-            flex-wrap: wrap;
+            // flex-wrap: wrap;
+
+            @media (max-width: 768px) {
+                // justify-content: center;
+                flex-direction: column;
+                align-items: center;
+            }
 
             .collab-list {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 20px;
-                // background-color: pink;
 
-                // .btn-wrapper {
-                //     display: flex;
-                // }
+                @media (max-width: 768px) {
+                    justify-content: center;
+                }
             }
 
             .no-collab {
@@ -194,6 +228,10 @@ Project detail
             display: flex;
             justify-content: space-between;
 
+            @media (max-width: 768px) {
+                justify-content: center;
+            }
+
             &.hide {
                 display: none;
             }
@@ -201,6 +239,10 @@ Project detail
             .pending {
                 display: flex;
                 gap: 10px;
+
+                @media (max-width: 480px) {
+                    flex-direction: column;
+                }
 
                 .btn-wrapper {
                     align-self: flex-end;
@@ -228,6 +270,11 @@ Project detail
         max-width: 50%;
         justify-content: center;
         word-wrap: break-word;
+
+        @media (max-width: 768px) {
+            max-width: unset;
+            margin-top: 16px;
+        }
 
         .skill {
             text-transform: uppercase;
