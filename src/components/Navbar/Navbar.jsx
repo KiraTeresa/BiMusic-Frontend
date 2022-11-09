@@ -2,6 +2,8 @@ import "./Navbar.scss";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
+import logouticon from '../../assets/icons/shutdown.png'
+import bimusicicon from '../../assets/icons/bimusiclogo2.png'
 
 function Navbar() {
   // Subscribe to the AuthContext to gain access to
@@ -9,52 +11,53 @@ function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   return (
-    <nav>
-      <Link to="/">
-        <button>Home</button>
-      </Link>
+    <nav className="shift">
+      <Link to="/"><img className="bimusicicon2" src={bimusicicon} alt="musicicon" /></Link>
+
+      <ul>
 
       {isLoggedIn && (
         <>
-          <button onClick={logOutUser}>Logout</button>
 
-          <Link to={`/profile/${user.name}`}>
-            <button>Profile</button>
-            {/* <img src="https://picsum.photos/id/402/200/300" style={{ width: 50, height: 50, borderRadius: 25}} alt="profile" /> */}
-          </Link>
 
-          <Link to="/projects">
-            <button>Projects</button>
-          </Link>
+<li>
+<Link to={`/profile/${user.name}`}>Profile</Link>
+          </li>
 
-          <Link to="/samples">
-            <button>Samples</button>
-          </Link>
+          <li>
+          <Link to="/projects">Projects</Link>
+          </li>
 
-          <Link to="/samples/create">
-            <button>AddSample</button>
-          </Link>
+  
+          <li>
+          <Link to="/samples">Samples</Link>
+          </li>
 
-          <Link to="/chats">
-            <button>Your Chats</button>
-          </Link>
+          <li>
+          <Link to="/chats">Chat</Link>
+          </li>
 
-          <span>{user && user.name}</span>
+        <li>
+          <Link onClick={logOutUser}> <img className="logouticon" src={logouticon} alt="logout icon" /></Link>
+          </li>
+          {/* <span>{user && user.name}</span> */}
         </>
       )}
 
       {!isLoggedIn && (
         <>
+         <li>
           <Link to="/signup">
-            {" "}
-            <button>Sign Up</button>{" "}
-          </Link>
+            {" "}Sign Up{" "}</Link>
+            </li>
+            <li>
           <Link to="/login">
-            {" "}
-            <button>Login</button>{" "}
+            {" "}Login{" "}
           </Link>
+          </li>
         </>
       )}
+      </ul>
     </nav>
   );
 }

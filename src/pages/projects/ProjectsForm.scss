@@ -1,3 +1,11 @@
+
+body{
+  background-image: linear-gradient(0deg, #434343 0%, #000000 100%);
+
+  
+
+}
+
 .upload__form__c {
     display: flex;
     justify-content: center;
@@ -168,6 +176,11 @@ background-color: rgb(218, 226, 218);
   padding: 5px;
 }
 
-.audio-format-span{
-  font-size: 12px;
+.project-create-check {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.emojis{
+  font-size: 20px;
 }

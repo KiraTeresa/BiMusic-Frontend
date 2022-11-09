@@ -297,7 +297,7 @@ const EditUserProfile = () => {
               {userInfo && userInfo.skills.map((skill, index) => (
                 <div key={index}>
                   <span className="currentSkill">{skill}</span>
-                  <button onClick={(e) => { handleDeleteSkills(e, skill) }}>Delete</button>
+                  <button className="cross-stand-alone" onClick={(e) => { handleDeleteSkills(e, skill) }}></button>
                 </div>
               ))}
             </div>
@@ -322,7 +322,7 @@ const EditUserProfile = () => {
                     <Link to={`/projects/${project._id}`}>
                       {project.title}
                     </Link>
-                    <button onClick={(e) => { handleDeleteProject(e, project._id) }} disabled={!userProject}>Delete</button>
+                    <button className="cross-stand-alone" onClick={(e) => { handleDeleteProject(e, project._id) }} disabled={!userProject}></button>
                   </div>
                 ))}
               </div>
