@@ -45,27 +45,36 @@ function LoginPage() {
   };
 
   return (
-    <div className="LoginPage">
-      <h1>Login</h1>
+<div className="mainwraplogin">
+<p className="login-title" align="center">Login</p>
 
       <form onSubmit={handleLoginSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
 
-        <label>Password:</label>
-        <input
+      <div className="login-row">
+        <div className="login-col-25">
+        <label className="login-title-labels">Email:</label>
+       </div>
+        <input className="login-input-field" type="email" name="email" value={email} onChange={handleEmail} />
+        </div>
+
+
+
+        <div className="login-col-25">
+        <label className="login-title-labels">Password:</label>
+        </div>
+        <input className="login-input-field"
           type="password"
           name="password"
           value={password}
           onChange={handlePassword}
         />
 
-        <button type="submit">Login</button>
+      <p><button className="loginbtn" type="submit">Login</button></p>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <p>Don't have an account yet?</p>
-      <Link to={"/signup"}> Sign Up</Link>
+      <Link to={"/signup"}> Sign Up here <span className="emojis">👈</span></Link>
     </div>
   );
 }
