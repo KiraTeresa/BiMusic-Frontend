@@ -1,5 +1,3 @@
-@import '../../consts/colors.scss';
-
 // nav {
 //     height: 80px;
 //     display: flex;
@@ -11,38 +9,34 @@
 
 
 nav {
-    height: 70px;
-    display: flex;
-    justify-content:space-between; 
-    align-items: center;
-    padding: 0.5rem 2rem;
-    background-color: $PRIMARY-COLOR;
-    box-shadow: 0px 0px 6px $TERTIARY-COLOR;
-  }
-  
-  nav ul {
-    display: flex;
-    list-style: none; 
-  }
-  nav li {
-    font-size: 13px;
-    line-height: 100px;
-    padding-left: 0.8rem; 
-    text-transform: uppercase;
-  }
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  background-color: rgb(var(--PRIMARY-COLOR));
+  box-shadow: 0px 0px 6px rgb(var(--TERTIARY-COLOR));
+}
 
-  .logouticon {
-    height: 25px;
-    position: center;
-  }
+nav ul {
+  display: flex;
+  list-style: none;
+}
 
-  .bimusicicon2 {
-    height: 80px;
-    position: center;
-    margin: 0;
-  }
+nav li {
+  font-size: 13px;
+  line-height: 100px;
+  padding-left: 0.8rem;
+  text-transform: uppercase;
+}
 
+.logouticon {
+  height: 25px;
+  position: center;
+}
 
-
-
-
+.bimusicicon2 {
+  height: 80px;
+  position: center;
+  margin: 0;
+}
