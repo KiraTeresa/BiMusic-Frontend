@@ -144,7 +144,7 @@
     transform: rotateY(180deg);
     color: #15883e;
   }
-
+// eve
   .profile-btn {
     display: flex;
     justify-content: space-between;
@@ -156,7 +156,7 @@
     padding: 10px;
     width: 100%;
     border-radius: 3px;
-    background: #15883e;
+   background: linear-gradient(to right, #424784b0, #5d62b1);
     color: #fff;
     font-family: "Bree Serif";
     font-size: 1rem;
@@ -170,7 +170,7 @@
 
   button.chatbtn:hover,
   button.createbtn:hover {
-    background: #15883e;
+    background: linear-gradient(to right, #424784b0, #2f3475);;
   }
 
   button.chatbtn i,
@@ -316,8 +316,6 @@
     }
   }
 
-
-  .profile-header h3 {}
 
   .profile-option {
     width: 30px;
