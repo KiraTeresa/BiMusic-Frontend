@@ -22,7 +22,12 @@ Comment/Feedback
             display: flex;
             flex-direction: column;
 
+            input {
+                padding: 5px;
+            }
+
             textarea {
+                padding: 5px;
                 min-height: 75px;
             }
         }
@@ -41,6 +46,11 @@ Comment/Feedback
         padding: 25px 25px 15px 25px;
         min-height: 75px;
         position: relative;
+
+        h5 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
 
         //  Arrow left
         &:nth-child(2n):after {

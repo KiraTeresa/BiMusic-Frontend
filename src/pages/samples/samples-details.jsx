@@ -1,3 +1,4 @@
+import './samplesDetail.scss'
 import { useCallback, useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
@@ -47,9 +48,10 @@ function SamplesDetail() {
         return <Loading />
     }
     const { title, genre, artist } = sample;
+
     return (
-        <div className="project-detail-wrapper">
-            <div className="project-detail">
+        <div className="sample-detail-container">
+            <div className="project-info-wrapper">
                 <div className="participants">
                     <div>
                         <Link to={`/profile/${artist.name}`}><h3>{artist.name}</h3>
@@ -59,19 +61,6 @@ function SamplesDetail() {
                 <div className="main">
                     <div className="description">
                         <h2>{title}</h2>
-                    </div>
-                    <div className="comment-wrapper">
-                        <div className="comments">
-                            <img className="icon" src={commentIcon} alt="comment icon" />{sample?.feedback ? sample.feedback.length : "0"}
-                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                <FeedbackForm props={{ refreshPage, type: "feedback" }} />
-                                {sample?.feedback.reverse().map((element) => {
-                                    return (
-                                        <FeedbackCard key={element._id} commentInfo={element} />
-                                    )
-                                })}
-                            </div>
-                        </div>
                     </div>
                     <div className="sample">
                         {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
@@ -85,8 +74,64 @@ function SamplesDetail() {
                     </div>
                 </div>
             </div>
-        </div>
+
+            {/* feedback */}
+            <div className='border-top'>
+                <h4 className='full'>feedback</h4>
+                <div className="comments">
+                    {/* <img className="icon" src={commentIcon} alt="comment icon" />{sample?.feedback ? sample.feedback.length : "0"} */}
+                    {/* <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}> */}
+                    <FeedbackForm props={{ refreshPage, type: "feedback" }} />
+                    {sample?.feedback.reverse().map((element) => {
+                        return (
+                            <FeedbackCard key={element._id} commentInfo={element} />
+                        )
+                    })}
+                    {/* </div> */}
+                </div>
+            </div>
+        </div >
     )
+    // return (
+    //     <div className="project-detail-wrapper">
+    //         <div className="project-detail">
+    //             <div className="participants">
+    //                 <div>
+    //                     <Link to={`/profile/${artist.name}`}><h3>{artist.name}</h3>
+    //                     </Link>
+    //                 </div>
+    //             </div>
+    //             <div className="main">
+    //                 <div className="description">
+    //                     <h2>{title}</h2>
+    //                 </div>
+    //                 <div>
+    //                     <div className="comments">
+    //                         <img className="icon" src={commentIcon} alt="comment icon" />{sample?.feedback ? sample.feedback.length : "0"}
+    //                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    //                             <FeedbackForm props={{ refreshPage, type: "feedback" }} />
+    //                             {sample?.feedback.reverse().map((element) => {
+    //                                 return (
+    //                                     <FeedbackCard key={element._id} commentInfo={element} />
+    //                                 )
+    //                             })}
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //                 <div className="sample">
+    //                     {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
+    //                 </div>
+    //             </div>
+    //             <div className="aside">
+    //                 <div className="item-wrapper">
+    //                     {genre.map((g) => {
+    //                         return <p className='genre' key={g}>{g}</p>
+    //                     })}
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    // )
 }
 
 export default SamplesDetail;

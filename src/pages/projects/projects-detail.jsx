@@ -237,7 +237,7 @@ function ProjectDetail() {
             }
 
             {/* comments */}
-            <div className="comment-wrapper border-top">
+            <div className="border-top">
                 <h4 className="full">comments</h4>
                 <div className="comments">
                     {/* <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"} */}
