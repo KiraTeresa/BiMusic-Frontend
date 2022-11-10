@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react"
 import { useParams } from "react-router-dom";
 import apiClient from "../../services/apiClient";
@@ -8,6 +9,10 @@ function CommentFeedbackForm({ props }) {
     const { type, refreshPage } = props
     const [errorMessage, setErrorMessage] = useState(undefined);
     // console.log("Props: ", type, " + ", refreshPage)
+
+    useEffect(() => {
+        setForm({ title: "", text: "" })
+    }, [])
 
     function handleChange(e) {
         const { name, value } = e.target
@@ -30,13 +35,13 @@ function CommentFeedbackForm({ props }) {
     }
 
     return (
-        <div style={{ width: "50%" }} >
+        <div className="form-wrapper">
             <form onSubmit={handleSubmit}>
                 {type === "feedback" ?
-                    <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Title"></input>
+                    <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Feedback title"></input>
                     : ""}
-                <textarea name="text" maxLength={500} value={form.text} onChange={handleChange}></textarea>
-                <button type="submit">post {type}</button>
+                <textarea name="text" maxLength={500} value={form.text} onChange={handleChange} placeholder="Type your message here.."></textarea>
+                <button className="btn tertiary" type="submit">post {type}</button>
             </form>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>

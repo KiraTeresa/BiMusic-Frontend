@@ -1,3 +1,4 @@
+import './samplesDetail.scss'
 import { useCallback, useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
@@ -46,46 +47,53 @@ function SamplesDetail() {
     if (isLoading) {
         return <Loading />
     }
-    const { title, genre, artist } = sample;
+    const { title, genre, artist, description } = sample;
+
     return (
-        <div className="project-detail-wrapper">
-            <div className="project-detail">
-                <div className="participants">
-                    <div>
-                        <Link to={`/profile/${artist.name}`}><h3>{artist.name}</h3>
-                        </Link>
-                    </div>
-                </div>
-                <div className="main">
-                    <div className="description">
-                        <h2>{title}</h2>
-                    </div>
-                    <div className="comment-wrapper">
-                        <div className="comments">
-                            <img className="icon" src={commentIcon} alt="comment icon" />{sample?.feedback ? sample.feedback.length : "0"}
-                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                <FeedbackForm props={{ refreshPage, type: "feedback" }} />
-                                {sample?.feedback.reverse().map((element) => {
-                                    return (
-                                        <FeedbackCard key={element._id} commentInfo={element} />
-                                    )
-                                })}
-                            </div>
+        <div className="sample-detail-container">
+            <div className="project-info-wrapper">
+
+                {/* artist */}
+                <div className="artist border-top">
+                    <h4>artist</h4>
+                    <Link to={`/profile/${artist.name}`}>
+                        <img src={artist.avatar} alt="user avatar" />
+                        <div className="user-info">
+                            <p>{artist.name}</p>
+                            <p>
+                                <span className={`user-status ${artist.status}`}></span>
+                            </p>
                         </div>
-                    </div>
-                    <div className="sample">
-                        {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
-                    </div>
+                    </Link>
                 </div>
-                <div className="aside">
-                    <div className="item-wrapper">
-                        {genre.map((g) => {
-                            return <p className='genre' key={g}>{g}</p>
-                        })}
-                    </div>
+
+                {/* sample */}
+                <div className="description">
+                    {/* <h2>{title}</h2> */}
+                    <p className="longD">{description}</p>
+                    {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
                 </div>
             </div>
-        </div>
+
+            {/* feedback */}
+            <div className='border-top'>
+                <h4 className='full'>feedback</h4>
+                <div className="comments">
+
+                    <FeedbackForm props={{ refreshPage, type: "feedback" }} />
+
+                    {/* no feedback */}
+                    {sample.feedback.length === 0 ? <div>-- be the first to give feedback --</div> : ""}
+
+                    {/* feedback */}
+                    {sample?.feedback.reverse().map((element) => {
+                        return (
+                            <FeedbackCard key={element._id} commentInfo={element} />
+                        )
+                    })}
+                </div>
+            </div>
+        </div >
     )
 }
 

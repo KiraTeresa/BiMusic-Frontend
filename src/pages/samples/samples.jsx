@@ -34,16 +34,21 @@ function Samples() {
     }
 
     return (
-        <div>
-            <h2>All available samples</h2>
-            <Link to="/samples/create">
-                <button>Post your sample</button>
-            </Link>
-            <button onClick={toggleFilter} style={{ backgroundColor: "#63A18F" }}>{showFilter ? "hide filter" : "show filter"}</button>
+        <div className='projects-container'>
+            <div className='head'>
+                <h2>All available samples</h2>
+                <Link to="/samples/create">
+                    <button className='btn primary'>Post your sample</button>
+                </Link>
+            </div>
 
-            {showFilter ? <SampleFilter allSamples={allSamples} sendToParent={setFilteredSamples} /> : ""}
+            <div className='filter-wrapper'>
+                <button className='btn secondary filter-btn' onClick={toggleFilter}>{showFilter ? "hide filter" : "show filter"}</button>
 
-            <div>{filteredSamples ? <div><strong>{filteredSamples.length}</strong> sample{filteredSamples.length > 1 ? "s" : ""} meet{filteredSamples.length === 1 ? "s" : ""} your criteria</div> : ""}</div>
+                {showFilter ? <SampleFilter allSamples={allSamples} sendToParent={setFilteredSamples} /> : ""}
+
+                <div>{filteredSamples ? <div><strong>{filteredSamples.length}</strong> sample{filteredSamples.length > 1 ? "s" : ""} meet{filteredSamples.length === 1 ? "s" : ""} your criteria</div> : ""}</div>
+            </div>
 
             <div className="samples-container">
                 <table className="styled-table">
@@ -68,7 +73,7 @@ function Samples() {
                                         {samp.title}
                                     </Link>
                                     </td>
-                                    <td>{samp.genre.map(ge=>{return <p>{ge}</p>})}</td>
+                                    <td>{samp.genre.map(ge => { return <p key={ge}>{ge}</p> })}</td>
                                     <td>{samp.year}</td>
                                 </tr>)
                         })}
@@ -81,7 +86,7 @@ function Samples() {
                                     {samp.title}
                                 </Link>
                                 </td>
-                                <td>{samp.genre.map(ge=>{return <p>{ge}</p>})}</td>
+                                <td>{samp.genre.map(ge => { return <p key={ge}>{ge}</p> })}</td>
                                 <td>{samp.year}</td>
                             </tr>
                             )
