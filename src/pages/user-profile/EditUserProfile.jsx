@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
 import axios from "axios";
 import SKILL_ENUM from "../../consts/skillEnum"
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from "../../components/Loading/Loading";
 
@@ -222,9 +222,9 @@ const EditUserProfile = () => {
                 </div>
               }
               <form onSubmit={handleAvatarUpdate}>
-                <input  type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
+                <input type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
                 <div className="upload-file-btn">
-                  <p><input value="Upload file" type="submit" /></p>
+                  <p><input className="btn primary" value="Upload file" type="submit" /></p>
                 </div>
               </form>
             </div>
@@ -238,7 +238,7 @@ const EditUserProfile = () => {
                     <label>Name:</label>
                   </div>
                   <div className="col-75">
-                    <input  onChange={handleName} type="text" name="name" value={name} />
+                    <input onChange={handleName} type="text" name="name" value={name} />
                   </div>
                 </div>
 
@@ -284,7 +284,7 @@ const EditUserProfile = () => {
                 </div>
 
                 {/* Update (Name,City,Country,AboutMe) Button */}
-                <button type="submit">Save Changes</button>
+                <button className="btn primary" type="submit">Save Changes</button>
               </form>
             </div>
           </div>
@@ -295,9 +295,9 @@ const EditUserProfile = () => {
             <h3>Edit skillset:</h3>
             <div className="borderFrame">
               {userInfo && userInfo.skills.map((skill, index) => (
-                <div key={index}>
+                <div className="skills" onClick={(e) => { handleDeleteSkills(e, skill) }} key={index}>
                   <span className="currentSkill">{skill}</span>
-                  <button className="cross-stand-alone" onClick={(e) => { handleDeleteSkills(e, skill) }}></button>
+                  <button className="cross-stand-alone" ></button>
                 </div>
               ))}
             </div>
@@ -333,10 +333,10 @@ const EditUserProfile = () => {
               <div className="borderFrame">
                 {userSample && userSample.map((sample, index) => (
                   <div key={index}>
-                    <a href={sample.link} target="_blank">
+                    <Link to={`/samples/sample/${sample._id}`}>
                       {sample.title}
-                    </a>
-                    <button onClick={(e) => { handleDeleteSample(e, sample._id) }} disabled={!userSample}>Delete</button>
+                    </Link>
+                    <button className="cross-stand-alone" onClick={(e) => { handleDeleteSample(e, sample._id) }} disabled={!userSample}></button>
                   </div>
                 ))}
               </div>

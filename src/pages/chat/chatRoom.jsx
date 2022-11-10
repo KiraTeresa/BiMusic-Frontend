@@ -27,7 +27,7 @@ function ChatRoom() {
     useEffect(() => {
         apiClient.get('/message/unread').then((result) => {
             setAllUnreadMessages(result.data)
-            console.log("Hello", result)
+            // console.log("Hello", result)
         }).catch((err) => {
             if (err.response.status === 500) {
                 navigate('/internal-server-error')

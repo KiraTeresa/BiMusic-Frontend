@@ -113,9 +113,10 @@ function SampleForm(props) {
     }
 
     return (
-        <div className="upload__form__c">
+        <div className="upload__form__c-samp">
             <div className="upload__title">Upload a track to share it with the community</div>
             <div className="up__f__c">
+                <div className='gradient'></div>
                 <div style={{ display: "flex", flexDirection: "column" }} >
                     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
                         {/* Title */}
@@ -157,7 +158,7 @@ function SampleForm(props) {
                                 <input type="file" onChange={upload} accept="audio/wav, audio/mp3" />
                             }
                         </label>
-                        {disableSubmit ? "" : <button className="uploadBtn" type="submit">Submit </button>}
+                        {disableSubmit ? "" : <button className="btn primary" type="submit">Submit </button>}
                     </form>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
                     <p className="required-fields">
