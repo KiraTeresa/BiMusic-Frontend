@@ -1,11 +1,27 @@
-import { React, useContext } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import UserSkillProjectSample from './UserSkillProjectSample';
 import { AuthContext } from "../../context/auth.context";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import apiClient from "../../services/apiClient";
 
 const UserInfo = ({ userInfo }) => {
   const { user } = useContext(AuthContext)
+  const [allUnreadMessages, setAllUnreadMessages] = useState([])
   const isOwnProfile = (userInfo.name === user.name)
+  const navigate = useNavigate();
+
+  // get num of all unread messages for this user
+  useEffect(() => {
+    apiClient.get('/message/unread').then((result) => {
+      setAllUnreadMessages(result.data)
+    }).catch((err) => {
+      if (err.response.status === 500) {
+        navigate('/internal-server-error')
+      } else {
+        console.log(err)
+      }
+    })
+  }, [])
 
   return (
     <div className="container">
@@ -25,7 +41,7 @@ const UserInfo = ({ userInfo }) => {
             <Link to="/chats" className="profile-option">
               <div className="notification">
                 <i className="fa fa-bell"></i>
-                <span className="alert-message">3</span>
+                <span className="alert-message">{allUnreadMessages.length}</span>
               </div>
             </Link> : ""
         }
@@ -33,35 +49,45 @@ const UserInfo = ({ userInfo }) => {
       <div className="main-bd">
         <div className="left-side">
           <div className="profile-side">
-            <p className="mobile-no"><i className="fa fa-phone"></i> placeholder</p>
-            <p className="user-mail"><i className="fa fa-envelope"></i> {userInfo.email}</p>
+            {/* <p className="mobile-no"><i className="fa fa-phone"></i> placeholder</p> */}
+            {/* <p className="user-mail"><i className="fa fa-envelope"></i> {userInfo.email}</p> */}
             <div className="user-bio">
               <h3> About me</h3>
               <p className="bio">
                 {userInfo.aboutMe}
               </p>
             </div>
+
+            <div className="user-rating">
+              <h3 className="rating">My skills</h3>
+              <div className="rate">
+                {/* <div className="star-outer">
+                  <div className="star-inner">
+                  </div>
+                </div> */}
+                <span className="no-of-user-rate"></span>
+                {userInfo.skills.map((skill) => {
+                  return <li>{skill}</li>
+                })}
+                {/* <span>placeholder</span>
+                <span>&nbsp;&nbsp;placeholer</span> */}
+              </div>
+            </div>
+
             {
               isOwnProfile ?
                 <div className="profile-btn">
-                  <Link to='/profile/edit'><button className="chatbtn" id="chatBtn">Profile</button></Link>
-                  <Link to='/account-settings'><button className="createbtn" id="Create-post"> Account Settings</button></Link>
+                  <Link to='/profile/edit'><button className="btn primary" id="chatBtn">Edit profile</button></Link>
+                  <Link to='/account-settings'>
+                    <p>Account Settings</p>
+                  </Link>
                 </div> : ""
             }
-            <div className="user-rating">
-              <h3 className="rating">ph</h3>
-              <div className="rate">
-                <div className="star-outer">
-                  <div className="star-inner">
-                  </div>
-                </div>
-                <span className="no-of-user-rate"></span><span>placeholder</span><span>&nbsp;&nbsp;placeholer</span>
-              </div>
-            </div>
+
           </div>
         </div>
         <div className="right-side">
-          <UserSkillProjectSample skills={userInfo.skills} projects={userInfo.ownProjects} samples={userInfo.samples} collabProjects={userInfo.collabProjects} />
+          <UserSkillProjectSample projects={userInfo.ownProjects} samples={userInfo.samples} collabProjects={userInfo.collabProjects} />
         </div>
       </div>
     </div >

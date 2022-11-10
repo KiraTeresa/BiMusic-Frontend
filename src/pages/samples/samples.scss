@@ -173,9 +173,10 @@ table caption {
 }
 
 table tr {
-  background: linear-gradient(to right, #424784b0, #5d62b1);
+  background: rgb(var(--TERTIARY-COLOR));
   border: 1px solid #ddd;
   padding: .35em;
+  color: rgb(var(--BACKGROUND-COLOR));
 }
 
 table th,
@@ -188,7 +189,8 @@ table th {
   font-size: .85em;
   letter-spacing: .1em;
   text-transform: uppercase;
-  background-color: #4a4c65b0;
+  background-color: rgb(var(--QUATERNARY-COLOR));
+  color: rgb(var(--TERTIARY-COLOR));
 }
 
 @media screen and (max-width: 600px) {
