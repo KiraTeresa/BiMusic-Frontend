@@ -21,18 +21,18 @@ function SampleCard({ sampleInfo, backgroundColor }) {
     //     }
     // }
     return (
-        <div>
-            <h4>{genre}</h4>
-            <h4>{title}</h4>
-            <div style={{ backgroundColor: backgroundColor }}>
-                {linkType === "url" ?
-                    <iframe style={{ width: "560px", height: "315px" }} src={`https://www.youtube.com/embed/${embededCode}`} title={title} frameBorder="0"></iframe>
-                    : linkType === "upload" ?
-                        <audio controls >
-                            <source src={uploadedLink} />
-                        </audio> : "- no sample found -"
-                }
-            </div>
+        <div className="sample-card-container">
+            {/* <h4>{genre}</h4>
+            <h4>{title}</h4> */}
+
+            {linkType === "url" ?
+                <iframe src={`https://www.youtube.com/embed/${embededCode}`} title={title} frameBorder="0"></iframe>
+                : linkType === "upload" ?
+                    <audio controls >
+                        <source src={uploadedLink} />
+                    </audio> : "- no sample found -"
+            }
+
         </div>
     )
 }
