@@ -103,63 +103,92 @@ function SignupPage() {
   }
 
   return (
-    <div className="SignupPage">
-      <h1>Sign Up</h1>
+  <div className="mainwrap-signup">
+   <p className="signup-title" align="center">Sign up</p>
 
       <form onSubmit={handleSignupSubmit}>
+      <div className="signup-row">
+        <div className="sign-col-25">
         <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
+        </div>
+        <input className="signup-input-field" type="email" name="email" value={email} onChange={handleEmail} />
+        </div>
 
-        <label>Password:</label>
+
+        <div className="signup-row">
+        <div className="sign-col-25">
+        <label>Choose Password:</label>
+        </div>
         <input
+        className="signup-input-field"
           type="password"
           name="password"
           value={password}
           onChange={handlePassword}
         />
+         </div>
 
+        <div className="signup-row">
+        <div className="sign-col-25">
         <label>Username:</label>
-        <input type="text" name="username" value={username} onChange={handleName} placeholder="Choose a username" />
+        </div>
+        <input className="signup-input-field" type="text" name="username" value={username} onChange={handleName} placeholder="Choose a username" />
+        </div>
 
 
-
-
+        <div className="signup-row">
+        <div className="sign-col-25">
         <label>Where do you live?</label>
-        <select name="country" onChange={handleCountry}>
-          <option value=""> -- Select the country --</option>
+        </div>
+        <select className="signup-input-field" name="country" onChange={handleCountry}>
+          <option value=""> Select the country</option>
           {countries.map((element, index) => {
             return <option key={index} value={element.country}>{element.country}</option>
           })}
         </select>
+        </div>
 
-
-
+        <div className="signup-row">
+        <div className="sign-col-25">
         <label>Pick the city closest to you</label>
-        <select name="city" onChange={handleCity} disabled={!country}>
-          <option value="">-- Select the city --</option>
+        </div>
+        <select className="signup-input-field" name="city" onChange={handleCity} disabled={!country}>
+          <option value="">Select the city</option>
           {cities && cities.map((element, index) => {
             return <option key={index} value={element}>{element}</option>
           })}
         </select>
+        </div>
 
 
 
-
+        <div className="signup-row">
+        <div className="sign-col-25">
         <label>Tell a little bit about yourself:</label>
-        <input type="text" name="country" value={aboutMe} onChange={handleAboutMe} placeholder="What inspires you? What drives you?..." />
+        </div>
+        <textarea className="signup-input-field" type="text" name="country" value={aboutMe} onChange={handleAboutMe} placeholder="What inspires you? What drives you?..." />
+        </div>
 
-        <label>What kind of musician are you?</label>
+        <div className="signup-row">
+        <div className="sign-col-25">
+        <label className="label-title">What kind of musician are you?</label>
+        </div>
+        <div className="signup-checkbox-genres-wrapper">
         {SKILL_ENUM.map((skill) => {
-          return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
+          return <label key={skill}><input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
         })}
+         </div>
+         </div>
+    
 
-        <button type="submit">Sign Up</button>
+
+        <button className="loginbtn" type="submit">Sign Up</button>
       </form>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+      <Link to={"/login"}> Log in here <span className="emojis">👈</span></Link>
     </div>
   );
 }

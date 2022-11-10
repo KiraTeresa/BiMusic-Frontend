@@ -226,7 +226,14 @@ function ProjectDetail() {
             {/* Sample */}
             {sample ?
                 <div className="sample border-top">
-                    <h4 className="full">sample</h4>
+                    <h4 className="full">sample: {sample.title}</h4>
+                    {/* <p>---- sample sample ----</p> */}
+                    {/* {sample?.linkType === "url" ?
+                    <p>{initiator.name} added a video of <span className="title">{sample.title}</span>, check it out</p>
+                    : sample?.linkType === "upload" ?
+                    <p>{initiator.name} uploaded a sample with the title <span className="title">{sample.title}</span>, listen i:</p>
+                : ""} */}
+                    {/* <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" /> */}
                     <SampleCard sampleInfo={sample} />
                 </div>
                 : ""
