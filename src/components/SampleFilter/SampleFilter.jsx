@@ -4,7 +4,7 @@ function SampleFilter({ allSamples, sendToParent }) {
   const [genreFilter, setGenreFilter] = useState([])
   const [search, setSearch] = useState({
     genre: "",
-    })
+  })
 
   const resetFilter = useCallback(() => {
     updateGenreFilter(allSamples)
@@ -56,16 +56,26 @@ function SampleFilter({ allSamples, sendToParent }) {
 
 
   return (
-    <div>
-      <h4>Filter</h4>
-      <select value={search.genre} name="genre" onChange={handleFilterChange}>
-        <option value=""> -- filter by genre --</option>
-        {genreFilter.map(genre => {
-          return <option key={genre} value={genre}>{genre}</option>
-        })}
-      </select>
-      <button onClick={resetFilter}>Reset</button>
-      {!allSamples && <p>Sorry, there are no projects matching your search. Try another filter</p>}
+    <div className="filter-container">
+      <div className="filter">
+
+        <div className='wrap-4 samp'>
+          <div className="wrap-2">
+            {/* Genre */}
+            <select value={search.genre} name="genre" onChange={handleFilterChange}>
+              <option value=""> -- filter by genre --</option>
+              {genreFilter.map(genre => {
+                return <option key={genre} value={genre}>{genre}</option>
+              })}
+            </select>
+          </div>
+
+          {/* Reset */}
+          <button className="btn tertiary reset" onClick={resetFilter}>reset filter</button>
+        </div>
+
+        {!allSamples && <p>Sorry, there are no projects matching your search. Try another filter</p>}
+      </div>
     </div>
   )
 }

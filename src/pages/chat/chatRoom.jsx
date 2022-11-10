@@ -19,6 +19,7 @@ function ChatRoom() {
     const [isLoading, setIsLoading] = useState(true);
     const [chatClient, setChatClient] = useState(null)
     const [allUnreadMessages, setAllUnreadMessages] = useState([])
+    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate()
     const msgRef = useRef()
 
@@ -26,8 +27,15 @@ function ChatRoom() {
     useEffect(() => {
         apiClient.get('/message/unread').then((result) => {
             setAllUnreadMessages(result.data)
-        }).catch((err) => console.log(err))
-    }, [chatId])
+            console.log("Hello", result)
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                console.log(err)
+            }
+        })
+    }, [chatId, navigate])
 
     // connect to socket server
     useEffect(() => {
@@ -56,6 +64,7 @@ function ChatRoom() {
     useEffect(() => {
         apiClient.get(`/chats/${chatId}`).then((result) => {
             const { chatFound, usersHistory } = result.data
+            setErrorMessage("")
 
             // set info of related project:
             setProjectInfo(chatFound.project)
@@ -75,19 +84,29 @@ function ChatRoom() {
             setMsgHistory([])
 
         }).catch((err) => {
-            const errorDescription = err.response.data.message;
-            navigate("/chats", { state: { errorMessage: errorDescription } })
-            msgRef.current.scrollIntoView({ behavior: "smooth" })
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                const errorDescription = err.response.data.message;
+                navigate("/chats", { state: { errorMessage: errorDescription } })
+                msgRef.current.scrollIntoView({ behavior: "smooth" })
+            }
         }).finally(() => setIsLoading(false))
     }, [chatId, user._id, user.name, navigate])
 
-
-    // auto scroll to latest msg on first render and after every new message
-    useEffect(() => {
+    function scrollToLatestMsg() {
         if (chatClient?.connected) {
             msgRef.current.scrollIntoView({ behavior: "smooth" })
         }
-    }, [msgHistory])
+    }
+
+    // auto scroll to latest msg on first render and after every new message
+    useEffect(() => {
+        const scroll = setTimeout(() => {
+            scrollToLatestMsg()
+        }, 500)
+        return () => clearTimeout(scroll)
+    }, [msgHistory, chatClient?.connected, scrollToLatestMsg])
 
 
     function handleChange(e) {
@@ -95,10 +114,16 @@ function ChatRoom() {
     }
 
     async function sendMessage() {
-        await apiClient.post("/message", message).then((result) => {
-            chatClient.emit('send', { ...message, msgId: result.data._id })
-        }).catch(() => console.log("Couldn't add your msg to collection --- "))
-        setMessage({ ...message, msg: "" })
+        if (message.msg) {
+            await apiClient.post("/message", message).then((result) => {
+                chatClient.emit('send', { ...message, msgId: result.data._id })
+            }).catch((err) => {
+                if (err.response.status === 500) {
+                    navigate('/internal-server-error')
+                } else { setErrorMessage(err.response.data.message) }
+            })
+            setMessage({ ...message, msg: "" })
+        }
     }
 
     // receiving data (new message) from socket server
@@ -109,7 +134,7 @@ function ChatRoom() {
             }
 
             // set new message as read for all users who are currently in this chatroom:
-            await apiClient.put(`/message/read-one/${data.msgId}`).then(() => console.log("Newly received message was set as read.")).catch((err) => console.error(err))
+            await apiClient.put(`/message/read-one/${data.msgId}`).then(() => console.log("Newly received message was set as read.")).catch((err) => console.log(err))
         })
     }
 
@@ -120,40 +145,50 @@ function ChatRoom() {
     setTimeout(() => {
         // set all messages of this chat as "read" for the current user
         // timeout needed, in order to highlight unread messages
-        apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log("Answer from backend: ", result.data)).catch((err) => console.error(err))
+        apiClient.put(`/message/read-all/${chatId}`).then((result) => console.log(result.data)).catch((err) => console.log(err))
     }, 2000)
 
 
     return (
-        <div className="container">
-            <div className="chat-title">
-                <h4>Your chatrooms {allUnreadMessages.length === 0 ? "" : <span className='msg-counter newMsg'>{allUnreadMessages.length}</span>}</h4>
-                <h2>Chatroom: {projectInfo.title}</h2>
-                <h4>Chat members</h4>
-            </div>
-            <div className="chat-container">
-                <aside>
-                    <ChatList currentChat={chatId} />
-                </aside>
-                <main>
-                    <div className="chat-window-wrapper">
-                        <ChatWindow chatInfo={{ dbHistory, msgHistory }} />
-                        <div ref={msgRef} style={{ height: "20px" }}></div>
+        <div>
+            <div className="chat-room-container">
+                <div className="chat-head">
+                    <div className="side">
+                        <h4>Your chatrooms {allUnreadMessages.length === 0 ? "" : <span className='msg-counter newMsg'>{allUnreadMessages.length}</span>}</h4>
                     </div>
-                    <div className="chat-form">
-                        <textarea type="text" name="msg" onChange={handleChange} value={message.msg}></textarea>
-                        <button onClick={sendMessage} className="btn-primary">send</button>
+                    <div className="title">
+                        <h2>{projectInfo.title}</h2>
+                        {/* <p>is your current room</p> */}
                     </div>
-                </main>
-                <aside>
-                    <div className="chat-member-wrapper">
-                        <ChatMemberCard userInfo={projectInfo.initiator} />
-                        {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
-                        {projectInfo.collaborators.map((collab) => {
-                            return <ChatMemberCard key={collab._id} userInfo={collab} />
-                        })}
+                    <div className="side">
+                        <h4>Chat members</h4>
                     </div>
-                </aside>
+                </div>
+                <div className="chat-body">
+                    <div className="side chats">
+                        <ChatList currentChat={chatId} />
+                    </div>
+                    <div className="main">
+                        <div className="chat-window-wrapper">
+                            <ChatWindow chatInfo={{ dbHistory, msgHistory }} />
+                            <div ref={msgRef} style={{ height: "20px" }}></div>
+                        </div>
+                        <div className="chat-form">
+                            <textarea type="text" name="msg" onChange={handleChange} value={message.msg}></textarea>
+                            <button onClick={sendMessage} className="btn primary">send</button>
+                        </div>
+                        {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
+                    </div>
+                    <div className="side members">
+                        <div className="chat-member-wrapper">
+                            <ChatMemberCard userInfo={projectInfo.initiator} />
+                            {projectInfo.collaborators.length > 0 ? "" : <p>-- this project has no collabs --</p>}
+                            {projectInfo.collaborators.map((collab) => {
+                                return <ChatMemberCard key={collab._id} userInfo={collab} />
+                            })}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

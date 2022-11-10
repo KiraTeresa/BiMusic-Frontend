@@ -1,3 +1,4 @@
+import './ProjectFilter.scss'
 import { useCallback, useEffect, useState } from "react"
 
 function ProjectFilter({ allProjects, sendToParent }) {
@@ -149,42 +150,61 @@ function ProjectFilter({ allProjects, sendToParent }) {
     }
 
 
-
     return (
-        <div>
-            <h4>Filter</h4>
-            <label>Text search:
-                <input type="text" name="text" value={search.text} onChange={handleFilterChange}></input>
-            </label>
-            <select value={search.genre} name="genre" onChange={handleFilterChange}>
-                <option value=""> -- filter by genre --</option>
-                {genreFilter.map(genre => {
-                    return <option key={genre} value={genre}>{genre}</option>
-                })}
-            </select>
-            <select value={search.lookingFor} name="lookingFor" onChange={handleFilterChange}>
-                <option value=""> -- filter by skill --</option>
-                {skillFilter.map(skill => {
-                    return <option key={skill} value={skill}>{skill}</option>
-                })}
-            </select>
-            <select value={search.country} name="country" onChange={handleFilterChange}>
-                <option value=""> -- filter by country --</option>
-                {hasRemoteOption ? <option value="isRemote">{'>>'} online</option> : ""}
-                {countryFilter.map(country => {
-                    return <option key={country} value={country}>{country}</option>
-                })}
-            </select>
-            <select value={search.city} name="city" onChange={handleFilterChange} disabled={search.country === "isRemote"}>
-                <option value=""> -- filter by city --</option>
-                {cityFilter.map(city => {
-                    return <option key={city} value={city}>{city}</option>
-                })}
-            </select>
-            <button onClick={resetFilter}>Reset</button>
+        <div className="filter-container">
+            <div className="filter">
+
+                {/* Text */}
+                <label>
+                    <input type="text" name="text" value={search.text} onChange={handleFilterChange} placeholder=" -- type here to filter by text --"></input>
+                </label>
+
+                <div className='wrap-4'>
+                    <div className="wrap-2">
+                        {/* Genre */}
+                        <select value={search.genre} name="genre" onChange={handleFilterChange}>
+                            <option value=""> -- filter by genre --</option>
+                            {genreFilter.map(genre => {
+                                return <option key={genre} value={genre}>{genre}</option>
+                            })}
+                        </select>
+
+                        {/* Skill */}
+                        <select value={search.lookingFor} name="lookingFor" onChange={handleFilterChange}>
+                            <option value=""> -- filter by skill --</option>
+                            {skillFilter.map(skill => {
+                                return <option key={skill} value={skill}>{skill}</option>
+                            })}
+                        </select>
+                    </div>
+
+                    <div className="wrap-2">
+                        {/* Country */}
+                        <select value={search.country} name="country" onChange={handleFilterChange}>
+                            <option value=""> -- filter by country --</option>
+                            {hasRemoteOption ? <option value="isRemote">{'>>'} online</option> : ""}
+                            {countryFilter.map(country => {
+                                return <option key={country} value={country}>{country}</option>
+                            })}
+                        </select>
+
+                        {/* City */}
+                        <select value={search.city} name="city" onChange={handleFilterChange} disabled={search.country === "isRemote"}>
+                            <option value=""> -- filter by city --</option>
+                            {cityFilter.map(city => {
+                                return <option key={city} value={city}>{city}</option>
+                            })}
+                        </select>
+                    </div>
+                </div>
 
 
-            {!allProjects && <p>Sorry, there are no projects matching your search. Try another filter</p>}
+                {/* Reset */}
+                <button className="btn tertiary reset" onClick={resetFilter}>reset filter</button>
+
+
+                {!allProjects && <p>Sorry, there are no projects matching your search. Try another filter</p>}
+            </div>
         </div>
     )
 }

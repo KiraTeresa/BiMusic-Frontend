@@ -1,0 +1,185 @@
+.App {
+  /* 
+    ---------------------------------------------
+    Fonts
+    --------------------------------------------- 
+  */
+
+  // @font-face {
+  //   font-family: bangers;
+  //   src: url(/assets/fonts/Bangers/Bangers-Regular.ttf);
+  // }
+
+  // @font-face {
+  //   font-family: poppins;
+  //   src: url(/assets/fonts/Poppins/Poppins-Regular.ttf);
+  // }
+
+
+
+  /* 
+  ---------------------------------------------
+  General styles
+  --------------------------------------------- 
+  */
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  // border: yellow solid 1px;
+
+  &>div {
+    width: 80%;
+    max-width: 1232px;
+    height: 100%;
+    margin: auto;
+    padding: 20px;
+  }
+
+  /* 
+  ---------------------------------------------
+  User status
+  --------------------------------------------- 
+  */
+  // for circle:
+  // .user-status {
+  //   height: 10px;
+  //   width: 10px;
+  //   border-radius: 50%;
+
+  //   &.online {
+  //     background-color: #2eca57;
+  //   }
+
+  //   &.offline {
+  //     background-color: #e45723;
+  //   }
+  // }
+
+  // for text:
+  .user-status {
+    font-size: 14px;
+
+    &.online {
+
+      &::before {
+        color: #16c93d;
+        content: "online";
+      }
+    }
+
+    &.offline {
+
+      &::before {
+        color: #c37b7b;
+        content: "offline";
+      }
+    }
+  }
+
+  /* 
+  ---------------------------------------------
+  Buttons
+  --------------------------------------------- 
+  */
+
+  .btn {
+    width: 100%;
+    padding: 10px;
+
+    &.primary {
+      background-color: rgb(var(--PRIMARY-COLOR));
+      color: rgb(var(--SECONDARY-COLOR));
+      font-size: 18px;
+
+      &:hover {
+        background-color: rgba(var(--PRIMARY-COLOR), 0.8);
+        color: rgb(var(--TERTIARY-COLOR));
+      }
+    }
+
+    &.secondary {
+      background-color: rgb(var(--SECONDARY-COLOR));
+      color: rgb(var(--BACKGROUND-COLOR));
+      border: rgb(var(--SECONDARY-COLOR)) 2px solid;
+
+      &:hover {
+        background-color: rgba(var(--SECONDARY-COLOR), 0.8);
+        box-shadow: 0px 0px 12px rgb(var(--PRIMARY-COLOR));
+        border-color: rgb(var(--BACKGROUND-COLOR));
+      }
+    }
+
+    &.tertiary {
+      background-color: rgb(var(--TERTIARY-COLOR));
+      color: rgb(var(--BACKGROUND-COLOR));
+
+      &:hover {
+        background-color: rgba(var(--TERTIARY-COLOR), 0.8);
+        color: rgb(var(--TERTIARY-COLOR));
+      }
+    }
+
+    &.delete {
+      background-color: rgb(var(--ATTENTION-BACKGROUND-COLOR));
+      color: rgb(var(--ATTENTION-TEXT-COLOR));
+
+      &:hover {
+        box-shadow: 0px 0px 12px rgb(var(--ATTENTION-TEXT-COLOR));
+      }
+    }
+  }
+
+  /* 
+  ---------------------------------------------
+  Error messages
+  --------------------------------------------- 
+  */
+
+  .error-message {
+    border: rgb(var(--ATTENTION-TEXT-COLOR)) dashed 1px;
+    background-color: rgb(var(--ATTENTION-BACKGROUND-COLOR));
+    color: rgb(var(--ATTENTION-TEXT-COLOR));
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  /* 
+---------------------------------------------
+breakpoint 1024px
+--------------------------------------------- 
+*/
+  @media (max-width: 1024px) {
+    &>div {
+      border: purple solid 1px;
+      max-width: 976px;
+      margin: auto;
+    }
+  }
+
+  /* 
+---------------------------------------------
+breakpoint 768px
+--------------------------------------------- 
+*/
+  @media (max-width: 768px) {
+    &>div {
+      border: blue solid 1px;
+      max-width: 736;
+      margin: auto;
+    }
+  }
+
+  /* 
+---------------------------------------------
+breakpoint 480px
+--------------------------------------------- 
+*/
+  @media (max-width: 480px) {
+    &>div {
+      border: green solid 1px;
+      max-width: 90%;
+      margin: auto;
+    }
+  }
+}

@@ -63,7 +63,7 @@ function AuthProviderWrapper(props) {
   const logOutUser = async () => {
     // TO DO >>>> would rather call this route 'user' instead of 'initiator'
     // change user status to "offline"
-    await apiClient.put(`/initiator/${user._id}`).then(() => console.log('You are offline')).catch((err) => console.log("Error, couldn't update user status ", err))
+    await apiClient.put(`/user/${user._id}`).then(() => console.log('You are offline')).catch((err) => console.log("Error, couldn't update user status ", err))
     // Upon logout, remove the token from the localStorage
     removeToken();
     authenticateUser();

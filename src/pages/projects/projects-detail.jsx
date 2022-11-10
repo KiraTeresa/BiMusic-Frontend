@@ -1,3 +1,4 @@
+import './projectsDetail.scss'
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
@@ -5,22 +6,20 @@ import Loading from '../../components/Loading/Loading';
 import { useAuth } from "../../context/auth.context";
 import commentIcon from '../../assets/icons/100.png'
 import sampleIcon from '../../assets/icons/71.png'
-import CommentForm from "../../components/Comment/CommentForm";
-import CommentCard from "../../components/Comment/CommentCard";
+import CommentForm from "../../components/CommentFeedback/CommentFeedbackForm";
+import CommentCard from "../../components/CommentFeedback/CommentFeedbackCard";
 import SampleCard from "../../components/SampleCard/SampleCard";
 
 function ProjectDetail() {
     const { user } = useAuth() // <-- returns logged-in user (_id, email, name) << useEffect??
-    // console.log("USER INFO --> ", user)
     const [project, setProject] = useState({});
     const [userStatus, setUserStatus] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const { projectId } = useParams();
+    const { id: projectId } = useParams();
     const [refresh, setRefresh] = useState(false);
     const { alreadyCollab, alreadyPending, isInitiator } = userStatus;
+    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate();
-
-    // console.log("ID --> ", projectId)
 
     const refreshPage = useCallback(() => {
         setRefresh(!refresh)
@@ -28,16 +27,24 @@ function ProjectDetail() {
 
     useEffect(() => {
         apiClient.get(`/projects/${projectId}`).then(async (result) => {
-            console.log("Res from server: ", result)
+            // console.log("Res from server: ", result)
             setProject(result.data.project)
             setUserStatus(result.data.aUserStatus)
-        }).catch((err) => console.log("No Project details received ", err)).finally(() => setIsLoading(false))
-    }, [projectId, alreadyCollab, alreadyPending, refresh])
+        }).catch((err) => {
+            if (err.response?.status === 500) {
+                navigate('/internal-server-error')
+            } else { console.log(err) }
+        }).finally(() => setIsLoading(false))
+    }, [projectId, alreadyCollab, alreadyPending, refresh, navigate])
 
     async function triggerJoinLeave() {
         await apiClient.post(`/projects/${projectId}/${user._id}`).then((result) => {
-            console.log("Backend responded: ", result)
-        }).catch((err) => console.log("Error: ", err))
+            // console.log("Backend responded: ", result)
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else { console.log(err) }
+        })
 
         if (alreadyCollab) {
             setUserStatus({ ...userStatus, alreadyCollab: false })
@@ -53,19 +60,33 @@ function ProjectDetail() {
     }
 
     async function handleUserRequest(e) {
-        console.log("Event ", e.target)
+        // console.log("Event ", e.target)
         const { value, name } = e.target;
         await apiClient.post(`/projects/${projectId}/${value}/${name}`).then((result) => {
-            console.log("Backend handled the user request: ", result);
+            // console.log("Backend handled the user request: ", result);
             refreshPage()
-        }).catch((err) => console.log("Error: ", err))
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                console.log("Error: ", err)
+                setErrorMessage(err.response.data.message)
+            }
+        })
     }
 
     async function handleProjectDelete(e) {
         await apiClient.post(`/projects/${projectId}/delete`).then((result) => {
-            console.log("Info from backend regarding deleting a project: ", result)
+            // console.log("Info from backend regarding deleting a project: ", result)
             navigate('/projects')
-        }).catch((err) => console.log("An error occured while trying to delete a project >> ", err))
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                navigate('/internal-server-error')
+            } else {
+                const errorDescription = err.response.data.message;
+                setErrorMessage(errorDescription)
+            }
+        })
     }
 
     if (isLoading) {
@@ -73,94 +94,162 @@ function ProjectDetail() {
     }
 
 
-    console.log("WHO is WHO *********** ", alreadyCollab, " | ", alreadyPending, " | ", isInitiator)
+    // console.log("WHO is WHO *********** ", alreadyCollab, " | ", alreadyPending, " | ", isInitiator)
     const { title, shortDescription, longDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, pendingCollabs, comments, sample } = project;
 
 
     return (
-        <div className="project-detail-wrapper">
-            <div className="project-detail">
-                <div className="participants">
-                    <div>
-                        <Link to={`/profile/${initiator._id}`}>
-                            <div className={`user-status ${initiator.status}`}></div>
-                            <h3>{initiator.name}</h3>
-                            <img src={initiator.avatar ? initiator.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" /></Link>
-                    </div>
+        <div className="project-detail-container">
+            {/* info */}
+            <div className="project-info-wrapper">
+                <div className="description">
+                    <h2>{title}</h2>
+                    <p className="longD">{longDescription}</p>
+                    {/* {alreadyCollab ? "" : alreadyPending ? "" : isInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>} */}
 
-                    <div className="collaborators">
-                        <h4>Collaborators:</h4>
-                        {project.collaborators.map((collab) => {
-                            return (<div key={collab.name}>
-                                <Link to={`/profile/${collab.name}`}>
-                                    <div className={`user-status ${collab.status}`}></div>
-                                    <h3>{collab.name}</h3>
-                                    <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
-                                </Link>
-                            </div>)
-                        })}
-                        {isInitiator ? <div><h4>Pending:</h4>
-                            {pendingCollabs.map((collab) => {
-                                return (<div key={collab._id}>
-                                    <Link to={`/profile/${collab.name}`}>
-                                        <div className={`user-status ${collab.status}`}></div>
-                                        <h3>{collab.name}</h3>
-                                        <img src={collab.avatar ? collab.avatar : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"} alt="user avatar" />
-                                    </Link>
-                                    <button onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
-                                    <button onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>
-                                </div>)
-                            })}
-                        </div> : ""}
-                        {alreadyCollab ? <button onClick={triggerJoinLeave}>leave collab</button> : ""}
-                        {alreadyPending ? <div><p>You are on the pending list</p><button onClick={triggerJoinLeave}>don't care anymore, remove me from that list</button></div> : ""}
-                    </div>
-                </div>
-                <div className="main">
-                    <div className="description">
-                        <h2>{title}</h2>
-                        <p>{shortDescription}</p>
-                        <p>{longDescription}</p>
-                        {alreadyCollab ? "" : alreadyPending ? "" : isInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>}
-                    </div>
-                    <div className="comment-wrapper">
-                        <div className="comments">
-                            <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"}
-                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                <CommentForm refreshPage={refreshPage} />
-                                {project.comments.reverse().map((comment) => {
-                                    return (
-                                        <CommentCard key={comment._id} commentInfo={comment} />
-                                    )
+                    <div className="info">
+                        <div className="date-location">
+                            <p className='location'>Where? <span>{isRemote ? "online" : (city + ", " + country)}</span></p>
+                            <p>When? <span>{startDate.slice(0, -14)}</span> {'–'} <span>{endDate.slice(0, -14)}</span></p>
+                        </div>
+
+                        <div className="genre-wrapper">
+                            <p>Intended genre</p>
+                            <div>
+                                {genre.map((g) => {
+                                    return <span className='genre' key={g}>{g}</span>
                                 })}
                             </div>
                         </div>
-                        <div className="sample">
-                            <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" />
-                            {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
-                        </div>
                     </div>
                 </div>
-                <div className="aside">
-                    <div className="item-wrapper">
-                        {genre.map((g) => {
-                            return <p className='genre' key={g}>{g}</p>
+                <div className="initiator border-top">
+                    <h4>initiator</h4>
+                    <Link to={`/profile/${initiator.name}`}>
+                        <img src={initiator.avatar} alt="user avatar" />
+                        <div className="user-info">
+                            <p>{initiator.name}</p>
+                            <p>
+                                <span className={`user-status ${initiator.status}`}></span>
+                            </p>
+                        </div>
+                    </Link>
+                    {isInitiator ? <button className="btn delete" onClick={handleProjectDelete}> DELETE project </button> : ""}
+                    {errorMessage ? <div className="error-message">{errorMessage}</div> : ""}
+                </div>
+            </div>
+
+            <div className="participants">
+                <div className="collaborators border-top">
+                    <h4 className="full">collaborators</h4>
+                    {project.collaborators?.length === 0 ?
+                        <div className="no-collab">-- be the first to join --</div>
+                        : ""
+                    }
+
+                    {/* collaborators */}
+                    <div className="collab-list">
+                        {project.collaborators.map((collab) => {
+                            return (
+                                <div className="collab" key={collab.name}>
+                                    <Link to={`/profile/${collab.name}`}>
+                                        {/* <div className={`user-status ${collab.status}`}></div>
+                                <h4>{collab.name}</h4> */}
+                                        <img src={collab.avatar} alt="user avatar" />
+                                        <div className="user-info">
+                                            <p>{collab.name}</p>
+                                            <p>
+                                                <span className={`user-status ${collab.status}`}></span>
+                                            </p>
+                                        </div>
+                                    </Link>
+                                    {collab.name === user.name ?
+                                        <button className="btn tertiary" onClick={triggerJoinLeave}>leave collab</button>
+                                        : ""}
+                                </div>)
                         })}
                     </div>
-                    <div className="item-wrapper">
-                        {lookingFor.map((skill) => {
-                            return <p className='skill' key={skill}>{skill}</p>
-                        })}
+
+                    {/* skills */}
+                    <div className="skill-list">
+                        <p>Are you a</p>
+                        <div>
+                            {lookingFor.map((skill) => {
+                                return <span className='skill' key={skill}>{skill}</span>
+                            })}
+                        </div>
+                        <p>
+                            Do you like the project idea?
+                        </p>
+
+                        {alreadyCollab ? "" : alreadyPending ? "" : isInitiator ? "" : <button className="btn primary" onClick={triggerJoinLeave}>join</button>}
+
+                        {alreadyPending ? <div className="pend-info">
+                            <p>Great, you are already on the pending list. Wait for {initiator.name} to handle your request.</p>
+                            <button className="btn tertiary" onClick={triggerJoinLeave}>hop off the pending list</button>
+                        </div> : ""}
                     </div>
-                    <div>
-                        <p>Start: {startDate.slice(0, -14)}</p>
-                        <p>End: {endDate.slice(0, -14)}</p>
+                </div>
+
+
+                {/* pending list */}
+                {/* only display if user is initiator AND the list is not empty */}
+                {isInitiator ? pendingCollabs.length > 0 ?
+                    <div className={`pending-list border-top ${alreadyCollab ? "hide" : ""}`}>
+                        <h4 className="full">pending</h4>
+                        <div>
+                            {pendingCollabs.map((collab) => {
+                                return (
+                                    <div className="pending" key={collab._id}>
+                                        <Link to={`/profile/${collab.name}`}>
+                                            <img src={collab.avatar} alt="user avatar" />
+                                            <div className="user-info">
+                                                <p>{collab.name}</p>
+                                                <p>
+                                                    <span className={`user-status ${collab.status}`}></span>
+                                                </p>
+                                            </div>
+                                        </Link>
+                                        <div className="btn-wrapper">
+                                            <button className="btn primary" onClick={handleUserRequest} name="accept" value={collab._id}>Accept</button>
+                                            <button className="btn delete" onClick={handleUserRequest} name="reject" value={collab._id}>Reject</button>
+                                        </div>
+                                    </div>)
+                            })}
+                        </div>
                     </div>
-                    <div>
-                        <p>Where?</p>
-                        <p className='location'>{isRemote ? "online" : (city + ", " + country)}</p>
-                    </div>
-                    {isInitiator ? <button onClick={handleProjectDelete}> -- DELETE -- </button> : ""}
+                    : ""
+                    : ""
+                }
+            </div>
+
+            {/* Sample */}
+            {sample ?
+                <div className="sample border-top">
+                    <h4 className="full">sample</h4>
+                    {/* <p>---- sample sample ----</p> */}
+                    {/* {sample?.linkType === "url" ?
+                    <p>{initiator.name} added a video of <span className="title">{sample.title}</span>, check it out</p>
+                    : sample?.linkType === "upload" ?
+                    <p>{initiator.name} uploaded a sample with the title <span className="title">{sample.title}</span>, listen i:</p>
+                : ""} */}
+                    {/* <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" /> */}
+                    <SampleCard sampleInfo={sample} />
+                </div>
+                : ""
+            }
+
+            {/* comments */}
+            <div className="border-top">
+                <h4 className="full">comments</h4>
+                <div className="comments">
+                    <CommentForm props={{ refreshPage, type: "comment" }} />
+                    {project.comments.reverse().map((comment) => {
+                        return (
+                            <CommentCard key={comment._id} commentInfo={comment} />
+                        )
+                    })}
+                    {/* </div> */}
                 </div>
             </div>
         </div>
