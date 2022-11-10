@@ -28,7 +28,10 @@ const Samples = ({ sampleArr }) => {
               </tr>)
             })}
           </tbody>
-        </table> : <p>Add Some Sample</p>
+        </table> :   <td><Link to={`/samples/create`}>
+          Click here to publish your first sample!
+                </Link>
+                </td>
       }
     </div>
   )
