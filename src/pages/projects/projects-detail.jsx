@@ -1,3 +1,4 @@
+import './projectsDetail.scss'
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
@@ -190,8 +191,10 @@ function ProjectDetail() {
                     </div>
                 </div>
 
+
                 {/* pending list */}
-                {isInitiator ?
+                {/* only display if user is initiator AND the list is not empty */}
+                {isInitiator ? pendingCollabs.length > 0 ?
                     <div className={`pending-list border-top ${alreadyCollab ? "hide" : ""}`}>
                         <h4 className="full">pending</h4>
                         <div>
@@ -216,6 +219,7 @@ function ProjectDetail() {
                         </div>
                     </div>
                     : ""
+                    : ""
                 }
             </div>
 
@@ -223,31 +227,22 @@ function ProjectDetail() {
             {sample ?
                 <div className="sample border-top">
                     <h4 className="full">sample</h4>
-                    <p>---- sample sample ----</p>
-                    {/* {sample?.linkType === "url" ?
-                    <p>{initiator.name} added a video of <span className="title">{sample.title}</span>, check it out</p>
-                    : sample?.linkType === "upload" ?
-                    <p>{initiator.name} uploaded a sample with the title <span className="title">{sample.title}</span>, listen i:</p>
-                : ""} */}
-                    {/* <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" /> */}
                     <SampleCard sampleInfo={sample} />
                 </div>
                 : ""
             }
 
             {/* comments */}
-            <div className="comment-wrapper border-top">
+            <div className="border-top">
                 <h4 className="full">comments</h4>
                 <div className="comments">
-                    {/* <img className="icon" src={commentIcon} alt="comment icon" />{comments ? project.comments.length : "0"} */}
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                        <CommentForm props={{ refreshPage, type: "comment" }} />
-                        {project.comments.reverse().map((comment) => {
-                            return (
-                                <CommentCard key={comment._id} commentInfo={comment} />
-                            )
-                        })}
-                    </div>
+                    <CommentForm props={{ refreshPage, type: "comment" }} />
+                    {project.comments.reverse().map((comment) => {
+                        return (
+                            <CommentCard key={comment._id} commentInfo={comment} />
+                        )
+                    })}
+                    {/* </div> */}
                 </div>
             </div>
         </div>
