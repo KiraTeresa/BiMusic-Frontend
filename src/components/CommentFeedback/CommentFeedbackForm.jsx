@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react"
 import { useParams } from "react-router-dom";
 import apiClient from "../../services/apiClient";
@@ -8,6 +9,10 @@ function CommentFeedbackForm({ props }) {
     const { type, refreshPage } = props
     const [errorMessage, setErrorMessage] = useState(undefined);
     // console.log("Props: ", type, " + ", refreshPage)
+
+    useEffect(() => {
+        setForm({ title: "", text: "" })
+    }, [])
 
     function handleChange(e) {
         const { name, value } = e.target
