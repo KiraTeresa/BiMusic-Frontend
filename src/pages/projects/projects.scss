@@ -13,6 +13,14 @@ Projects
         h2 {
             padding: 0 15px 5px 0;
         }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+
+            h2 {
+                padding-bottom: 15px;
+            }
+        }
     }
 
     .filter-wrapper {

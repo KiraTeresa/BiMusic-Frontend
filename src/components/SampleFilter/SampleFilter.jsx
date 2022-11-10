@@ -57,19 +57,25 @@ function SampleFilter({ allSamples, sendToParent }) {
 
   return (
     <div className="filter-container">
+      <div className="filter">
 
-      {/* Genre */}
-      <select value={search.genre} name="genre" onChange={handleFilterChange}>
-        <option value=""> -- filter by genre --</option>
-        {genreFilter.map(genre => {
-          return <option key={genre} value={genre}>{genre}</option>
-        })}
-      </select>
+        <div className='wrap-4 samp'>
+          <div className="wrap-2">
+            {/* Genre */}
+            <select value={search.genre} name="genre" onChange={handleFilterChange}>
+              <option value=""> -- filter by genre --</option>
+              {genreFilter.map(genre => {
+                return <option key={genre} value={genre}>{genre}</option>
+              })}
+            </select>
+          </div>
 
-      {/* Reset */}
-      <button className="btn tertiary reset" onClick={resetFilter}>reset filter</button>
+          {/* Reset */}
+          <button className="btn tertiary reset" onClick={resetFilter}>reset filter</button>
+        </div>
 
-      {!allSamples && <p>Sorry, there are no projects matching your search. Try another filter</p>}
+        {!allSamples && <p>Sorry, there are no projects matching your search. Try another filter</p>}
+      </div>
     </div>
   )
 }

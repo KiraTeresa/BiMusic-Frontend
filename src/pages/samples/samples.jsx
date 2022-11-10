@@ -43,7 +43,7 @@ function Samples() {
             </div>
 
             <div className='filter-wrapper'>
-                <button className='btn secondary filter-btn' onClick={toggleFilter} style={{ backgroundColor: "#63A18F" }}>{showFilter ? "hide filter" : "show filter"}</button>
+                <button className='btn secondary filter-btn' onClick={toggleFilter}>{showFilter ? "hide filter" : "show filter"}</button>
 
                 {showFilter ? <SampleFilter allSamples={allSamples} sendToParent={setFilteredSamples} /> : ""}
 
