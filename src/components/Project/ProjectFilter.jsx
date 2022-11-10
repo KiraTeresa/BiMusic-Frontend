@@ -151,10 +151,7 @@ function ProjectFilter({ allProjects, sendToParent }) {
 
 
     return (
-        <div className="project-filter-container">
-            {/* <div className="sticky"> */}
-
-            {/* <h4>Filter</h4> */}
+        <div className="filter-container">
 
             {/* Text */}
             <label>
@@ -199,7 +196,6 @@ function ProjectFilter({ allProjects, sendToParent }) {
 
 
             {!allProjects && <p>Sorry, there are no projects matching your search. Try another filter</p>}
-            {/* </div> */}
         </div>
     )
 }
