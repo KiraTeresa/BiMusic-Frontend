@@ -54,7 +54,7 @@ function SamplesDetail() {
             <div className="project-info-wrapper">
 
                 {/* artist */}
-                <div className="initiator border-top">
+                <div className="artist border-top">
                     <h4>artist</h4>
                     <Link to={`/profile/${artist.name}`}>
                         <img src={artist.avatar} alt="user avatar" />
