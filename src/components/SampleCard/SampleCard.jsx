@@ -1,3 +1,7 @@
+import "./sampleCard.scss";
+import {Link } from "react-router-dom";
+
+
 function SampleCard({ sampleInfo, backgroundColor }) {
     const { linkType, title, uploadedLink, link, genre } = sampleInfo;
     // let sample;
@@ -20,15 +24,20 @@ function SampleCard({ sampleInfo, backgroundColor }) {
     //         )
     //     }
     // }
+
+    
+
     return (
         <div>
-            <h4>{genre}</h4>
-            <h4>{title}</h4>
+            {/* <h4>{title}</h4> */}
+            {/* <h4>{genre}</h4> */}
+           
             <div style={{ backgroundColor: backgroundColor }}>
                 {linkType === "url" ?
-                    <iframe style={{ width: "560px", height: "315px" }} src={`https://www.youtube.com/embed/${embededCode}`} title={title} frameBorder="0"></iframe>
+          <div class="iframe-container">
+                    <iframe style={{ width: "340px", height: "255px" }} src={`https://www.youtube.com/embed/${embededCode}`} title={title} frameBorder="0"></iframe> </div>
                     : linkType === "upload" ?
-                        <audio controls >
+                    <audio controls >
                             <source src={uploadedLink} />
                         </audio> : "- no sample found -"
                 }

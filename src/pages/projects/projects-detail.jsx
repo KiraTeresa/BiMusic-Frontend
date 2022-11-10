@@ -222,8 +222,8 @@ function ProjectDetail() {
             {/* Sample */}
             {sample ?
                 <div className="sample border-top">
-                    <h4 className="full">sample</h4>
-                    <p>---- sample sample ----</p>
+                    <h4 className="full">sample: {sample.title}</h4>
+                    {/* <p>---- sample sample ----</p> */}
                     {/* {sample?.linkType === "url" ?
                     <p>{initiator.name} added a video of <span className="title">{sample.title}</span>, check it out</p>
                     : sample?.linkType === "upload" ?

@@ -210,7 +210,7 @@ function ProjectsCreate() {
                 {/* Country */}
                     <label className="label-title"><b>Select your country location</b>
                 <select className="upload__inputs" name="country" onChange={handleCountryChange} disabled={form.isRemote}>
-                    <option value={form.country}> -- {form.country} -- </option>
+                    <option value={form.country}>{form.country}</option>
                     {countriesAndCities.map((element, index) => {
                         return <option key={index} value={element.country}>{element.country}</option>
                     })}
@@ -219,7 +219,7 @@ function ProjectsCreate() {
                 {/* City */}
                 <label className="label-title"><b>Select your city location</b>
                 <select className="upload__inputs" name="city" onChange={handleChange} disabled={form.isRemote}>
-                    <option value={form.city}> -- {form.city} -- </option>
+                    <option value={form.city}>{form.city}</option>
                     {citiesList.map(city => {
                         return <option key={city} value={city}>{city}</option>
                     })}
