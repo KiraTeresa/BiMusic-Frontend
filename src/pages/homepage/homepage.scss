@@ -64,8 +64,10 @@
         .buzzwords {
             flex-grow: 100;
             display: flex;
-            flex-direction: column;
+            // flex-direction: column;
             justify-content: center;
+            align-items: center;
+            // flex-wrap: wrap;
             gap: 4px;
             height: 100%;
 
@@ -80,60 +82,80 @@
             }
 
             .b-1 {
-                margin-left: 35%;
+                // margin-left: 35%;
             }
 
             .b-2 {
-                margin-left: 65%;
-                transform: rotate(15deg);
 
-                img {
-                    @media (max-width: 768px) {
-                        display: none;
-                    }
+                // margin-left: 75%;
+                // transform: rotate(15deg);
+                @media (max-width: 750px) {
+                    display: none;
+
                 }
             }
 
             .b-3 {
-                margin-left: 5%;
-                transform: rotate(-15deg);
-            }
 
-            .b-4 {
-                margin-left: 35%;
-                transform: rotate(-15deg);
-            }
-
-            .b-5 {
-                margin-left: 75%;
-                transform: rotate(10deg);
-
-                img {
-                    @media (max-width: 768px) {
-                        display: none;
-                    }
+                // margin-left: 5%;
+                // transform: rotate(-15deg);
+                @media (max-width: 800px) {
+                    display: none;
                 }
             }
 
+            .b-4 {
+                // margin-left: 35%;
+                // transform: rotate(-15deg);
+
+                @media (max-width: 1000px) {
+                    display: none;
+                }
+            }
+
+            .b-5 {
+
+                // margin-left: 65%;
+                // transform: rotate(10deg);
+                @media (max-width: 1100px) {
+                    display: none;
+                }
+
+                // img {
+                //     @media (max-width: 768px) {
+                //         display: none;
+                //     }
+                // }
+            }
+
             .b-6 {
-                margin-left: 13%;
-                transform: rotate(15deg);
+
+                // margin-left: 13%;
+                // transform: rotate(15deg);
+                @media (max-width: 1200px) {
+                    display: none;
+                }
             }
 
             .b-7 {
-                margin-left: 50%;
-                transform: rotate(15deg);
+
+                // margin-left: 50%;
+                // transform: rotate(15deg);
+                @media (max-width: 1400px) {
+                    display: none;
+                }
             }
 
             .b-8 {
-                margin-left: 80%;
+                // margin-left: 80%;
+
+                @media (max-width: 1600px) {
+                    display: none;
+                }
 
                 img {
-                    margin-top: -50px;
+                    // margin-top: -50px;
 
-                    @media (max-width: 1024px) {
-                        display: none;
-                    }
                 }
 
             }
@@ -151,6 +173,7 @@
             border-left: 4px dashed rgb(var(--QUATERNARY-COLOR));
             background-color: rgb(var(--BACKGROUND-COLOR));
             border-radius: 0 20px 20px 0;
+            width: 300px;
 
             div {
                 width: 250px;
