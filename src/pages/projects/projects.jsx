@@ -5,6 +5,7 @@ import ProjectCard from '../../components/Project/ProjectCard'
 import ProjectFilter from '../../components/Project/ProjectFilter';
 import Loading from '../../components/Loading/Loading';
 import './projects.scss'
+import filterIcon from '../../assets/icons/filter-icon-white.png'
 
 function Projects() {
     const [allProjects, setAllProjects] = useState([]);
@@ -39,11 +40,16 @@ function Projects() {
             </div>
 
             <div className='filter-wrapper'>
-                <button className='btn secondary filter-btn' onClick={toggleFilter}>{showFilter ? "hide filter" : "show filter"}</button>
+                <div className='filter-icon' onClick={toggleFilter}>
+                    <img src={filterIcon} alt="filter icon"></img>
+
+                    {/* <button className='btn secondary filter-btn' onClick={toggleFilter}>{showFilter ? "hide filter" : "show filter"}</button> */}
+
+
+                    <div className='filter-result'>{filteredProjects ? <div><strong>{filteredProjects.length}</strong> project{filteredProjects.length > 1 ? "s" : ""} meet{filteredProjects.length === 1 ? "s" : ""} your criteria</div> : ""}</div>
+                </div>
 
                 {showFilter ? <ProjectFilter allProjects={allProjects} sendToParent={setFilteredProjects} /> : ""}
-
-                <div className='filter-result'>{filteredProjects ? <div><strong>{filteredProjects.length}</strong> project{filteredProjects.length > 1 ? "s" : ""} meet{filteredProjects.length === 1 ? "s" : ""} your criteria</div> : ""}</div>
             </div>
 
             <div className="project-card-wrapper">

@@ -5,7 +5,12 @@ Project & Sample filter
 */
 
 .filter-container {
-    box-shadow: 0px 0px 12px rgb(var(--PRIMARY-COLOR));
+    // box-shadow: 0px 0px 20px rgb(var(--QUATERNARY-COLOR));
+    // box-shadow: 0px 0px 20px rgb(var(--TERTIARY-COLOR));
+    width: 100%;
+    background-color: rgb(var(--BACKGROUND-COLOR));
+    position: relative;
+    border-radius: calc(20px);
 
     .filter {
         display: flex;
@@ -15,6 +20,40 @@ Project & Sample filter
         padding: 10px;
         margin: 0 auto;
         width: fit-content;
+
+        &:before {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            bottom: 15px;
+            left: -15px;
+            background: linear-gradient(to right, rgb(var(--QUATERNARY-COLOR)), rgb(var(--PRIMARY-COLOR)));
+            // background: linear-gradient(to left, rgb(var(--QUATERNARY-COLOR)), rgb(var(--PRIMARY-COLOR)));
+            transform: translate3d(0px, 20px, 0) scale(0.95);
+            filter: blur(20px);
+            opacity: var(0.7);
+            transition: opacity 0.3s;
+            border-radius: inherit;
+        }
+
+        /* 
+        * Prevents issues when the parent creates a 
+        * stacking context. (For example, using the transform
+        * property )
+        */
+        &::after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: inherit;
+            border-radius: inherit;
+        }
 
         @media (max-width: 1270px) {
             flex-direction: column;
@@ -33,6 +72,7 @@ Project & Sample filter
                 height: 100%;
                 width: 100%;
                 padding: 5px;
+                border-radius: calc(20px);
             }
 
             @media (max-width: 1024px) {
@@ -67,10 +107,11 @@ Project & Sample filter
                     padding: 5px;
                     color: var(--TERTIARY-COLOR);
                     background-color: rgb(var(--BACKGROUND-COLOR));
+                    border-radius: calc(20px);
                 }
 
                 select option:first-child {
-                    background-color: rgb(var(--SECONDARY-COLOR));
+                    background-color: rgb(var(--PRIMARY-COLOR));
                     font-size: 16px;
                 }
 

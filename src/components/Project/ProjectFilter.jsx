@@ -152,8 +152,8 @@ function ProjectFilter({ allProjects, sendToParent }) {
 
     return (
         <div className="filter-container">
+            {/* <div className='gradient'></div> */}
             <div className="filter">
-
                 {/* Text */}
                 <label>
                     <input type="text" name="text" value={search.text} onChange={handleFilterChange} placeholder=" -- type here to filter by text --"></input>

@@ -127,6 +127,11 @@
   .required-fields {
     display: flex;
     font-size: 12px;
+
+    @media (max-width: 480px) {
+      justify-content: center;
+    }
+
   }
 
   .container-genres {
@@ -137,7 +142,10 @@
   }
 
   .checkbox-genres-wrapper {
-    // background-color: rgb(218, 226, 218);
+    @media (max-width: 480px) {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .genre-upload-track {

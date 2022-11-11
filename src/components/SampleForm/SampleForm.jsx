@@ -143,7 +143,7 @@ function SampleForm(props) {
                             </div>
                         </label>
                         {/* Link Type */}
-                        <label className="label-title"><b>Select upload type:   </b><span className="required">*</span>
+                        <label className="label-title"><b>Select upload type:   <span className="required">*</span></b>
                             <label>
                                 <input type="radio" onChange={handleSampleType} name="linkType" value="url" defaultChecked="true" /><i>URL </i>
                             </label>

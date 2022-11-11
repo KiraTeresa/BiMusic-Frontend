@@ -24,11 +24,13 @@ Comment/Feedback
 
             input {
                 padding: 5px;
+                border-radius: calc(20px);
             }
 
             textarea {
-                padding: 5px;
+                padding: 10px;
                 min-height: 75px;
+                border-radius: calc(20px);
             }
         }
     }
@@ -70,6 +72,10 @@ Comment/Feedback
             @media (max-width: 507px) {
                 bottom: -101px;
             }
+
+            @media (max-width: 480px) {
+                bottom: -75px;
+            }
         }
 
         //  Arrow right
@@ -88,6 +94,10 @@ Comment/Feedback
 
             @media (max-width: 507px) {
                 bottom: -101px;
+            }
+
+            @media (max-width: 480px) {
+                bottom: -75px;
             }
         }
 

@@ -25,18 +25,18 @@ function SampleCard({ sampleInfo, backgroundColor }) {
     //     }
     // }
     return (
-        <div>
-            {/* <h4>{title}</h4> */}
-            {/* <h4>{genre}</h4> */}
-            <div style={{ backgroundColor: backgroundColor }}>
-                {linkType === "url" ?
-                    <div class="iframe-container">
-                        <iframe style={{ width: "340px", height: "255px" }} src={`https://www.youtube.com/embed/${embededCode}`} title={title} frameBorder="0"></iframe> </div>
-                    : linkType === "upload" ?
-                        <Audio link={uploadedLink} songName={title} />
-                        : "- no sample found -"
-                }
-            </div>
+        <div className="sample-card-container">
+            {/* <p className="title">{title}</p> */}
+            {/* <p>{genre}</p> */}
+            {/* <div style={{ backgroundColor: backgroundColor }}> */}
+            {linkType === "url" ?
+                <div className="iframe-container">
+                    <iframe className="responsive-iframe" src={`https://www.youtube.com/embed/${embededCode}`} title={title} frameBorder="0"></iframe> </div>
+                : linkType === "upload" ?
+                    <Audio link={uploadedLink} songName={title} />
+                    : "- no sample found -"
+            }
+            {/* </div> */}
         </div>
     )
 }

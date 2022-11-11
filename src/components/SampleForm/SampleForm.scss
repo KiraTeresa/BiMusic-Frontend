@@ -120,6 +120,12 @@
     margin-left: 0.5rem;
     margin-bottom: 0%;
     padding: 10px;
+
+    @media (max-width: 480px) {
+      display: flex;
+      flex-direction: column;
+    }
+
   }
 
   .tags-title-label {
@@ -135,6 +141,10 @@
   .required-fields {
     display: flex;
     font-size: 12px;
+
+    @media (max-width: 480px) {
+      justify-content: center;
+    }
   }
 
   .container-genres {
@@ -145,7 +155,10 @@
   }
 
   .checkbox-genres-wrapper {
-    // background-color: rgb(218, 226, 218);
+    @media (max-width: 480px) {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .genre-upload-track {
