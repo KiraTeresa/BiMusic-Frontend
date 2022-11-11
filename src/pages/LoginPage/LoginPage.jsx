@@ -45,7 +45,8 @@ function LoginPage() {
   };
 
   return (
-    <div className="mainwraplogin">
+    <div id="mainwraplogin">
+      <div className='gradient'></div>
       <p className="login-title" align="center">Login</p>
 
       <form onSubmit={handleLoginSubmit}>
@@ -69,7 +70,7 @@ function LoginPage() {
           onChange={handlePassword}
         />
 
-        <p><button className="btn primary" type="submit">Login</button></p>
+        <p><button className="btn primary" type="submit">LOGIN</button></p>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 

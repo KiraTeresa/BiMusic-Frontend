@@ -1,8 +1,8 @@
 import './ProjectCard.scss'
 import { Link } from 'react-router-dom';
-import commentIcon from '../../assets/icons/100.png'
-import contributorsIcon from '../../assets/icons/24.png'
-import sampleIcon from '../../assets/icons/71.png'
+import commentIcon from '../../assets/icons/chat-icon-white.png'
+import contributorsIcon from '../../assets/icons/collab-icon-white.png'
+import sampleIcon from '../../assets/icons/note-icon-white.png'
 
 function ProjectCard({ project, backgroundColor }) {
     const { _id, title, shortDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, collaborators, comments, sample } = project;
@@ -10,8 +10,8 @@ function ProjectCard({ project, backgroundColor }) {
     return (
         <div className="project-card" style={{ backgroundColor }}>
             <Link to={`/projects/${_id}`}>
-                <div className='card-head'>
 
+                <div className='card-head'>
                     <div className='main-info'>
                         <div className='about'>
                             <p className='title'>{title}</p>
@@ -25,7 +25,7 @@ function ProjectCard({ project, backgroundColor }) {
                                 <img className="icon" src={contributorsIcon} alt="contributors icon" />{collaborators ? collaborators.length : "0"}
                             </div>
                             {sample ?
-                                <div>
+                                <div className='sample-icon'>
                                     <img className={`icon`} src={sampleIcon} alt="sample icon" />
                                 </div>
                                 : ""}

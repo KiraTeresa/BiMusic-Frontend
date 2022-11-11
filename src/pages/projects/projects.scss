@@ -4,6 +4,15 @@ Projects
 --------------------------------------------- 
 */
 .projects-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    @media (max-width: 480px) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
     .head {
         display: flex;
         justify-content: space-between;
@@ -17,8 +26,20 @@ Projects
         @media (max-width: 768px) {
             flex-direction: column;
 
+            .btn {
+                margin-left: 0;
+            }
+
             h2 {
                 padding-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            align-items: center;
+
+            .btn {
+                margin: auto;
             }
         }
     }
@@ -26,16 +47,21 @@ Projects
     .filter-wrapper {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
         gap: 15px;
+        margin-bottom: 20px;
 
-        .filter-btn {
-            max-width: 100px;
-            align-self: flex-start;
+        .filter-icon {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            img {
+                height: 30px;
+                width: 30px;
+            }
         }
 
-        .filter-result {
-            margin-top: 15px;
-        }
     }
 
     .project-card-wrapper {

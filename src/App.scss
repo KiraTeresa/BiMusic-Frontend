@@ -85,10 +85,11 @@
 
   .btn {
     padding: 10px;
+    cursor: pointer;
+    border-radius: calc(20px);
 
     &.primary {
-      cursor: pointer;
-      border-radius: 5em;
+      // border-radius: 5em;
       color: rgb(var(--TERTIARY-COLOR));
       background: linear-gradient(to right, rgb(var(--QUATERNARY-COLOR)), rgb(var(--PRIMARY-COLOR)));
       border: 0;
@@ -100,10 +101,18 @@
       font-size: 13px;
       box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
       margin: 13px;
+      display: flex;
+      justify-content: center;
+
+      @media (max-width: 480px) {
+        margin: auto;
+        max-width: 80%;
+      }
 
 
       &:hover {
         background: linear-gradient(to right, rgb(91, 46, 169), rgb(1, 135, 142));
+        box-shadow: 0px 0px 12px rgb(var(--QUATERNARY-COLOR));
       }
     }
 
@@ -119,7 +128,7 @@
       font-size: 13px;
       box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
       margin: 13px;
-      border-radius: 5em;
+      // border-radius: 5em;
 
       &:hover {
         box-shadow: 0px 0px 12px rgb(var(--PRIMARY-COLOR));
@@ -127,29 +136,22 @@
     }
 
     &.tertiary {
-      background: linear-gradient(to right, rgb(var(--BACKGROUND-COLOR)), rgb(var(--TERTIARY-COLOR)), rgb(var(--BACKGROUND-COLOR)));
+      background-color: rgba(var(--TERTIARY-COLOR), .9);
       ;
       color: rgb(var(--BACKGROUND-COLOR));
-      padding-left: 80px;
-      padding-right: 80px;
-      padding-bottom: 10px;
-      padding-top: 10px;
+
       font-family: 'Ubuntu', sans-serif;
       font-size: 13px;
-      box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
-      margin: 13px;
-      border-radius: 5em;
 
       &:hover {
         background-color: rgba(var(--TERTIARY-COLOR), 0.8);
-        color: rgb(var(--TERTIARY-COLOR));
       }
     }
 
     &.delete {
       background-color: rgb(var(--ATTENTION-BACKGROUND-COLOR));
       color: rgb(var(--ATTENTION-TEXT-COLOR));
-      border-radius: 5em;
+      // border-radius: 5em;
 
       &:hover {
         box-shadow: 0px 0px 12px rgb(var(--ATTENTION-TEXT-COLOR));
@@ -178,7 +180,7 @@ breakpoint 1024px
 */
   @media (max-width: 1024px) {
     &>div {
-      border: purple solid 1px;
+      // border: purple solid 1px;
       max-width: 976px;
       margin: auto;
     }
@@ -191,7 +193,7 @@ breakpoint 768px
 */
   @media (max-width: 768px) {
     &>div {
-      border: blue solid 1px;
+      // border: blue solid 1px;
       max-width: 736;
       margin: auto;
     }
@@ -204,9 +206,11 @@ breakpoint 480px
 */
   @media (max-width: 480px) {
     &>div {
-      border: green solid 1px;
+      // border: green solid 1px;
       max-width: 90%;
       margin: auto;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }

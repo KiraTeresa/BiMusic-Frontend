@@ -5,6 +5,7 @@ import Loading from '../../components/Loading/Loading';
 // import SampleCard from '../../components/SampleCard/SampleCard';
 import SampleFilter from '../../components/SampleFilter/SampleFilter';
 import './samples.scss'
+import filterIcon from '../../assets/icons/filter-icon-white.png'
 
 function Samples() {
     const [allSamples, setAllSamples] = useState([]);
@@ -43,11 +44,16 @@ function Samples() {
             </div>
 
             <div className='filter-wrapper'>
-                <button className='btn secondary filter-btn' onClick={toggleFilter}>{showFilter ? "hide filter" : "show filter"}</button>
+
+                <div className='filter-icon' onClick={toggleFilter}>
+                    <img src={filterIcon} alt="filter icon"></img>
+                    <div className='filter-result'>{filteredSamples ? <div><strong>{filteredSamples.length}</strong> sample{filteredSamples.length > 1 ? "s" : ""} meet{filteredSamples.length === 1 ? "s" : ""} your criteria</div> : ""}</div>
+                </div>
+
+                {/* <button className='btn secondary filter-btn' onClick={toggleFilter}>{showFilter ? "hide filter" : "show filter"}</button> */}
 
                 {showFilter ? <SampleFilter allSamples={allSamples} sendToParent={setFilteredSamples} /> : ""}
 
-                <div>{filteredSamples ? <div><strong>{filteredSamples.length}</strong> sample{filteredSamples.length > 1 ? "s" : ""} meet{filteredSamples.length === 1 ? "s" : ""} your criteria</div> : ""}</div>
             </div>
 
             <div className="samples-container">

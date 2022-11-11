@@ -3,5 +3,5 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(var(--TERTIARY-COLOR), 0.2);
+    box-shadow: 0px 0px 6px rgb(var(--TERTIARY-COLOR));
 }

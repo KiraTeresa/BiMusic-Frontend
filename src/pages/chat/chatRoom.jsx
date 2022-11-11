@@ -150,7 +150,7 @@ function ChatRoom() {
 
 
     return (
-        <div>
+        <div className="chat-wrapper">
             <div className="chat-room-container">
                 <div className="chat-head">
                     <div className="side">

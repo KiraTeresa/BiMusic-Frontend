@@ -26,6 +26,7 @@ const UserInfo = ({ userInfo }) => {
   return (
     <div className="container">
       <div className="profile-header">
+        <div className='gradient'></div>
         <div className="profile-img">
           <img src={userInfo.avatar} alt="avatar" width="250px" height="250px" />
         </div>
@@ -47,6 +48,7 @@ const UserInfo = ({ userInfo }) => {
         }
       </div>
       <div className="main-bd">
+        <div className='gradient'></div>
         <div className="left-side">
           <div className="profile-side">
             {/* <p className="mobile-no"><i className="fa fa-phone"></i> placeholder</p> */}

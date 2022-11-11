@@ -4,8 +4,6 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import { useAuth } from "../../context/auth.context";
-import commentIcon from '../../assets/icons/100.png'
-import sampleIcon from '../../assets/icons/71.png'
 import CommentForm from "../../components/CommentFeedback/CommentFeedbackForm";
 import CommentCard from "../../components/CommentFeedback/CommentFeedbackCard";
 import SampleCard from "../../components/SampleCard/SampleCard";
@@ -226,7 +224,7 @@ function ProjectDetail() {
             {/* Sample */}
             {sample ?
                 <div className="sample border-top">
-                    <h4 className="full">sample</h4>
+                    <h4 className="full">sample: {sample.title}</h4>
                     {/* <p>---- sample sample ----</p> */}
                     {/* {sample?.linkType === "url" ?
                     <p>{initiator.name} added a video of <span className="title">{sample.title}</span>, check it out</p>

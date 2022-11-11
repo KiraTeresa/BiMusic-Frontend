@@ -7,8 +7,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;
-//   background-color: #212527;
-border-style:dotted;
+  //   background-color: #212527;
+  border: dotted rgb(var(--TERTIARY-COLOR)) 2px;
+  border-radius: calc(20px);
 
   .song {
     user-select: none;
@@ -20,6 +21,7 @@ border-style:dotted;
       color: white;
       font-weight: normal;
       font-size: 1.5em;
+
       &:hover {
         color: rgb(var(--PRIMARY-COLOR));
       }
@@ -53,10 +55,15 @@ border-style:dotted;
       }
     }
 
-    svg {
-      font-size: 4em;
-      color: white;
+    img {
+      height: 50px;
+      width: 50px;
     }
+
+    // svg {
+    //   font-size: 4em;
+    //   color: white;
+    // }
   }
 
   .bar {
@@ -117,18 +124,18 @@ border-style:dotted;
 }
 
 
-        // Border gradient
-        .gradient {
-            position: absolute;
-            top: -4px;
-            bottom: -4px;
-            left: -4px;
-            right: -4px;
-            border-radius: 16px;
-            border-image-slice: 1;
-            border-width: 5px;
-            background: linear-gradient(to left, #743ad5, rgb(var(--PRIMARY-COLOR)));
-            border-radius: 20px;
-            z-index: -1;
+// Border gradient
+.gradient {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  left: -4px;
+  right: -4px;
+  border-radius: 16px;
+  border-image-slice: 1;
+  border-width: 5px;
+  background: linear-gradient(to left, #743ad5, rgb(var(--PRIMARY-COLOR)));
+  border-radius: 20px;
+  z-index: -1;
 
-        }
+}

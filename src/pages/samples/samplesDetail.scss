@@ -41,6 +41,8 @@ Sample detail
     .project-info-wrapper {
         // border: blue double 1px;
         display: flex;
+        justify-content: space-between;
+        gap: 20px;
         // grid-template-columns: repeat(10, 1fr);
         padding-top: 15px;
 
@@ -91,9 +93,11 @@ Sample detail
                 border-radius: calc(15px);
 
                 @media (max-width: 1024px) {
-
                     width: 100px;
+                }
 
+                @media (max-width: 768px) {
+                    width: 300px;
                 }
 
                 img {
@@ -111,6 +115,27 @@ Sample detail
                 }
 
             }
+        }
+    }
+
+    /* 
+    ---------------------------------------------
+    sample
+    --------------------------------------------- 
+    */
+    .sample-description {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex-grow: 100;
+
+        @media (max-width: 768px) {
+            width: 300px;
+        }
+
+        p:first-child {
+            font-weight: bold;
+            padding-bottom: 5px;
         }
     }
 }
