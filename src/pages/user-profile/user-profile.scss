@@ -1,18 +1,14 @@
 .user-profile-container {
 
-
-  /* @import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
-  @import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap"); */
-
-
   .profile-header {
-    background: #fff;
+    background: rgb(var(--BACKGROUND-COLOR));
     width: 100%;
     display: flex;
     height: 190px;
     position: relative;
     box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.2);
-    margin-top: 4px
+    margin-top: 4px;
+    border-radius: calc(20px);
   }
 
   .profile-img {
@@ -52,7 +48,7 @@
   .profile-nav-info .address {
     display: flex;
     font-weight: bold;
-    color: #777;
+    color: rgb(var(--TERTIARY-COLOR));
   }
 
   .profile-nav-info .address p {
@@ -60,11 +56,11 @@
   }
 
   .profile-option {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     position: absolute;
-    right: 50px;
-    top: 50%;
+    right: 15px;
+    top: 83%;
     transform: translateY(-50%);
     border-radius: 50%;
     display: flex;
@@ -73,20 +69,20 @@
     cursor: pointer;
     transition: all 0.5s ease-in-out;
     outline: none;
-    background: #15883e;
+    background: rgb(var(--QUATERNARY-COLOR));
   }
 
   .profile-option:hover {
     background: #fff;
-    border: 1px solid #15883e;
+    border: 1px solid rgb(var(--PRIMARY-COLOR));
   }
 
   .profile-option:hover .notification i {
-    color: #15883e;
+    color: rgb(var(--PRIMARY-COLOR));
   }
 
   .profile-option:hover span {
-    background: #15883e;
+    background: rgb(var(--PRIMARY-COLOR));
   }
 
   .profile-option .notification i {
@@ -97,19 +93,19 @@
 
   .profile-option .notification .alert-message {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -3px;
+    right: -4px;
     background: #fff;
-    color: #15883e;
-    border: 1px solid #15883e;
-    padding: 5px;
+    color: rgb(var(--PRIMARY-COLOR));
+    border: 1px solid rgb(var(--PRIMARY-COLOR));
+    padding: 4px;
     border-radius: 50%;
-    height: 20px;
-    width: 20px;
+    height: 15px;
+    width: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: bold;
   }
 
@@ -117,38 +113,79 @@
     width: 100%;
     display: flex;
     padding-right: 15px;
+    border-radius: calc(20px);
+    position: relative;
   }
 
   .profile-side {
     width: 300px;
-    background: #fff;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
-    padding: 90px 30px 20px;
+    padding: 90px 10px 20px 10px;
     font-family: "Bree Serif", serif;
     margin-left: 10px;
     z-index: 99;
+    border-radius: calc(20px) 0 0 calc(20px);
+    background-color: rgb(var(--BACKGROUND-COLOR));
+    color: rgb(var(--TERTIARY-COLOR));
+
+    @media (max-width: 810px) {
+      border-radius: calc(20px);
+    }
   }
 
   .profile-side p {
     margin-bottom: 7px;
-    color: #333;
     font-size: 14px;
   }
 
   .profile-side p i {
-    color: #15883e;
+    color: rgb(var(--PRIMARY-COLOR));
     margin-right: 10px;
+  }
+
+  .right-side {
+    width: 100%;
+    background-color: rgb(var(--BACKGROUND-COLOR));
+    color: rgb(var(--TERTIARY-COLOR));
+    border-radius: 0 calc(20px) calc(20px) 0;
+    padding: 0 10px;
+
+    @media (max-width: 810px) {
+      border-radius: calc(20px);
+    }
+
+    .profile-project {
+      h3 {
+        text-align: left;
+        padding: 15px 0 0 4px;
+      }
+    }
   }
 
   .mobile-no i {
     transform: rotateY(180deg);
-    color: #15883e;
+    color: rgb(var(--PRIMARY-COLOR));
   }
 
-  // eve
   .profile-btn {
-    display: flex;
-    justify-content: space-between;
+
+    .btn {
+      padding: 10px;
+      width: 80%;
+      margin: 20px auto 10px auto;
+    }
+
+    @media (max-width: 1024px) {
+      a {
+        display: flex;
+        justify-content: center;
+      }
+
+      .btn {
+        width: 100px;
+      }
+    }
+
   }
 
   button.chatbtn,
@@ -180,34 +217,29 @@
     margin-right: 5px;
   }
 
-  .user-rating {
-    display: flex;
-  }
-
-  .user-rating h3 {
-    font-size: 2.5rem;
-    font-weight: 200;
-    margin-right: 5px;
-    letter-spacing: 1px;
-    color: #666;
-  }
-
-  .user-rating .no-of-user-rate {
-    font-size: 0.9rem;
+  .user-bio {
+    h3 {
+      margin-bottom: 5px;
+      text-decoration: underline;
+    }
   }
 
   .rate {
     padding-top: 6px;
+    list-style-type: none;
   }
 
   .rate i {
     font-size: 0.9rem;
-    color: #15883e;
+    color: rgb(var(--PRIMARY-COLOR));
   }
 
   .nav {
     width: 100%;
     z-index: -1;
+    color: rgb(var(--BACKGROUND-COLOR));
+    font-weight: bold;
+    border-radius: calc(20px);
   }
 
   .nav ul {
@@ -215,8 +247,10 @@
     justify-content: space-around;
     list-style-type: none;
     height: 40px;
-    background: #fff;
+    background: rgb(var(--BACKGROUND-COLOR));
+    color: rgb(var(--TERTIARY-COLOR));
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: calc(20px);
   }
 
   .nav ul li {
@@ -225,16 +259,22 @@
     cursor: pointer;
     text-align: center;
     transition: all 0.2s ease-in-out;
+
+    @media (max-width: 810px) {
+      border-radius: calc(20px);
+    }
   }
 
   .nav ul li:hover,
   .nav ul li.active {
-    box-shadow: 0px -3px 0px #15883e inset;
+    box-shadow: 0px -3px 0px rgb(var(--PRIMARY-COLOR)) inset;
+    border-radius: calc(20px);
   }
 
   .profile-body {
     width: 100%;
     z-index: -1;
+    color: rgb(var(--TERTIARY-COLOR));
   }
 
   .tab {
@@ -245,6 +285,12 @@
     padding: 20px;
     width: 100%;
     text-align: center;
+  }
+
+  .user-rating {
+    h3 {
+      text-decoration: underline;
+    }
   }
 
   @media (max-width: 1100px) {
@@ -291,12 +337,6 @@
       text-align: center;
     }
 
-    .profile-option {
-      right: 20px;
-      top: 75%;
-      transform: translateY(50%);
-    }
-
     .main-bd {
       flex-direction: column;
       padding-right: 0;
@@ -318,26 +358,23 @@
     }
   }
 
+  @media (max-width: 480px) {
+    .profile-img img {
+      height: 150px;
+      width: 150px;
+    }
 
-  .profile-option {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    right: 15px;
-    top: 83%;
-  }
-
-  .profile-option .notification .alert-message {
-    top: -3px;
-    right: -4px;
-    padding: 4px;
-    height: 15px;
-    width: 15px;
-    font-size: 0.7rem;
+    .profile-option {
+      right: 20px;
+      top: 55%;
+      transform: translateY(50%);
+    }
   }
 
   .profile-nav-info h3 {
     font-size: 1.9rem;
+    color: rgb(var(--PRIMARY-COLOR));
+
   }
 
   .profile-nav-info .address p,
@@ -347,7 +384,7 @@
 
   #see-more-bio,
   #see-less-bio {
-    color: blue;
+    color: rgb(var(--PRIMARY-COLOR));
     cursor: pointer;
     text-transform: lowercase;
   }

@@ -3,23 +3,63 @@
 Chatroom
 --------------------------------------------- 
 */
+.chat-wrapper {
+    position: relative;
+    border-radius: calc(20px);
+}
 
 .chat-room-container {
-    // border: 1px solid rgb(var(--TERTIARY-COLOR));
-    box-shadow: 0px 0px 6px rgb(var(--PRIMARY-COLOR));
-    // background-color: rgb(var(--BACKGROUND-COLOR));
+    background-color: rgb(var(--BACKGROUND-COLOR));
+    border-radius: calc(20px);
+    position: relative;
+
+    &:before {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        top: -25px;
+        right: -15px;
+        bottom: 15px;
+        left: -15px;
+        background: linear-gradient(to right, rgb(var(--QUATERNARY-COLOR)), rgb(var(--PRIMARY-COLOR)));
+        transform: translate3d(0px, 20px, 0) scale(0.95);
+        filter: blur(20px);
+        opacity: var(0.7);
+        transition: opacity 0.3s;
+        border-radius: inherit;
+    }
+
+    /* 
+    * Prevents issues when the parent creates a 
+    * stacking context. (For example, using the transform
+    * property )
+    */
+    &::after {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: inherit;
+        border-radius: inherit;
+    }
 
     .chat-head {
         height: 80px;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        // margin-bottom: 5px;
         border-bottom: 1px solid rgb(var(--TERTIARY-COLOR));
+
+        @media (max-width: 480px) {
+            display: flex;
+            justify-content: center;
+        }
 
         .title {
             grid-column: 2 / 5;
             align-self: center;
-            // color: rgb(var(--PRIMARY-COLOR));
         }
 
         .side {
@@ -35,6 +75,10 @@ Chatroom
         .side {
             display: flex;
             flex-direction: column;
+        }
+
+        .tertiary {
+            width: 100%;
         }
     }
 
@@ -65,9 +109,10 @@ Chatroom
 
         .chat-form {
             textarea {
-                width: 100%;
+                width: 90%;
                 height: 75px;
                 border-top: solid 1px rgb(var(--BACKGROUND-COLOR));
+                border-radius: calc(20px);
             }
         }
     }
@@ -117,7 +162,7 @@ Chatroom
         }
 
         &.unreadMsg {
-            border: rgb(var(--PRIMARY-COLOR)) dashed 3px;
+            border: rgb(var(--QUATERNARY-COLOR)) dashed 3px;
         }
     }
 
@@ -162,25 +207,55 @@ Chatroom
                 cursor: pointer;
             }
         }
-
-        // .skills {
-        //     display: flex;
-        //     flex-wrap: wrap;
-        //     justify-content: center;
-        //     gap: 2.5px;
-
-        //     .skill {
-        //         background-color: #c5e1f1;
-        //         border: #9db3ad dashed 1px;
-        //         padding: 2.5px;
-        //         font-size: 12px;
-        //     }
-        // }
     }
 
     .chat-member-item {
         border-bottom: rgba(var(--TERTIARY-COLOR), .7) solid 1px;
     }
+
+
+    /* 
+    ---------------------------------------------
+    responsive
+    --------------------------------------------- 
+    */
+
+    @media (max-width: 768px) {
+
+        .main {
+            grid-column: 2/6;
+            border-right: none;
+        }
+
+        .side {
+            .chat-member-wrapper {
+                display: none;
+            }
+
+            &.members {
+                display: none;
+            }
+
+            h4 {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main {
+            grid-column: 1/6;
+            border-left: none;
+        }
+
+        .side {
+            &.chats {
+                display: none;
+            }
+
+        }
+    }
+
 }
 
 
@@ -196,6 +271,7 @@ Chat list
     // border: red 1px solid;
     height: 100%;
     justify-content: space-between;
+    position: relative;
 
     .chat-link-wrapper {
         height: 550px;
@@ -208,7 +284,7 @@ Chat list
         align-items: center;
         justify-content: space-between;
         text-align: start;
-        padding: 5px;
+        padding: 10px;
         border-bottom: rgba(var(--TERTIARY-COLOR), .7) solid 1px;
 
         &:hover {
@@ -220,8 +296,6 @@ Chat list
 
 
     form {
-        // height: auto;
-        // border: yellow solid 1px;
 
         select {
             width: 100%;
@@ -229,9 +303,10 @@ Chat list
             padding: 5px;
             color: var(--TERTIARY-COLOR);
             background-color: rgb(var(--BACKGROUND-COLOR));
+            border-radius: calc(20px);
 
             option:first-child {
-                background-color: rgb(var(--SECONDARY-COLOR));
+                background-color: rgb(var(--PRIMARY-COLOR));
                 font-size: 16px;
             }
         }
@@ -271,6 +346,7 @@ Chat
         display: flex;
         flex-direction: column-reverse;
         justify-content: flex-end;
+        position: relative;
 
         .chat-link-wrapper {
             height: unset;
@@ -283,11 +359,52 @@ Chat
 
         form {
             display: flex;
-            box-shadow: 0px 0px 6px rgb(var(--PRIMARY-COLOR));
-            margin: 20px 0;
+            align-items: center;
+            padding: 20px;
+            background-color: rgb(var(--BACKGROUND-COLOR));
+            border-radius: calc(20px);
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+            }
+
+            &:before {
+                content: "";
+                z-index: -1;
+                position: absolute;
+                top: -15px;
+                right: -15px;
+                bottom: 15px;
+                left: -15px;
+                background: linear-gradient(to right, rgb(var(--QUATERNARY-COLOR)), rgb(var(--PRIMARY-COLOR)));
+                // background: linear-gradient(to left, rgb(var(--QUATERNARY-COLOR)), rgb(var(--PRIMARY-COLOR)));
+                transform: translate3d(0px, 20px, 0) scale(0.95);
+                filter: blur(20px);
+                opacity: var(0.7);
+                transition: opacity 0.3s;
+                border-radius: inherit;
+            }
+
+            /* 
+            * Prevents issues when the parent creates a 
+            * stacking context. (For example, using the transform
+            * property )
+            */
+            &::after {
+                content: "";
+                z-index: -1;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: inherit;
+                border-radius: inherit;
+            }
 
             select {
                 text-align: center;
+                border-radius: calc(20px);
             }
         }
     }

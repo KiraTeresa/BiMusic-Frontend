@@ -45,22 +45,23 @@ function LoginPage() {
   };
 
   return (
-<div className="mainwraplogin">
-<p className="login-title" align="center">Login</p>
+    <div id="mainwraplogin">
+      <div className='gradient'></div>
+      <p className="login-title" align="center">Login</p>
 
       <form onSubmit={handleLoginSubmit}>
 
-      <div className="login-row">
-        <div className="login-col-25">
-        <label className="login-title-labels">Email:</label>
-       </div>
-        <input className="login-input-field" type="email" name="email" value={email} onChange={handleEmail} />
+        <div className="login-row">
+          <div className="login-col-25">
+            <label className="login-title-labels">Email:</label>
+          </div>
+          <input className="login-input-field" type="email" name="email" value={email} onChange={handleEmail} />
         </div>
 
 
 
         <div className="login-col-25">
-        <label className="login-title-labels">Password:</label>
+          <label className="login-title-labels">Password:</label>
         </div>
         <input className="login-input-field"
           type="password"
@@ -69,7 +70,7 @@ function LoginPage() {
           onChange={handlePassword}
         />
 
-      <p><button className="loginbtn" type="submit">Login</button></p>
+        <p><button className="btn primary" type="submit">LOGIN</button></p>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 

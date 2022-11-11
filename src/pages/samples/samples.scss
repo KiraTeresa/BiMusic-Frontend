@@ -159,12 +159,12 @@
 // hj
 
 table {
-  border: 1px solid #ccc;
-  border-collapse: collapse;
+  border: 1px solid rgb(var(--TERTIARY-COLOR));
   margin: 0;
   padding: 0;
   width: 100%;
   table-layout: fixed;
+  border-radius: calc(20px);
 }
 
 table caption {
@@ -173,22 +173,39 @@ table caption {
 }
 
 table tr {
-  background: linear-gradient(to right, #424784b0, #5d62b1);
-  border: 1px solid #ddd;
+  border: 1px solid rgb(var(--TERTIARY-COLOR));
   padding: .35em;
+
+  &:hover {
+    background-color: rgba(var(--TERTIARY-COLOR), .8);
+    color: rgb(var(--BACKGROUND-COLOR));
+    // border-radius: calc(20px);
+  }
 }
 
 table th,
 table td {
   padding: .625em;
   text-align: center;
+  // border-radius: calc(20px);
+
+  &:first-child {
+    border-radius: calc(20px) 0 0 calc(20px);
+  }
+
+  &:last-child {
+    border-radius: 0 calc(20px) calc(20px) 0;
+  }
 }
 
 table th {
   font-size: .85em;
   letter-spacing: .1em;
   text-transform: uppercase;
-  background-color: #4a4c65b0;
+  background-color: rgb(var(--QUATERNARY-COLOR));
+  color: rgb(var(--TERTIARY-COLOR));
+
+
 }
 
 @media screen and (max-width: 600px) {

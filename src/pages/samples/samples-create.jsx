@@ -31,7 +31,8 @@ function SamplesCreate() {
     if (addedToProject) {
         return (
             <div>
-                <h2>Add a sample to your Project <span style={{ color: "blue" }}>{addedToProject.title}</span></h2>
+                {addedToProject ?
+                    <h2>Add a sample to your Project <span style={{ color: "blue" }}>{addedToProject.title}</span></h2> : ""}
                 <SampleForm projectId={addedToProject._id} />
             </div>
         )

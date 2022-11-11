@@ -58,96 +58,96 @@ const AccountSettings = () => {
       AccountSettings
 
 
-{/* Change Password */}
+      {/* Change Password */}
 
       <div className="parent-change-password-delete-profile">
 
-      <div className="container-grid-change-pw-delete-account">
-        
-      <h2 className="title-account-settings">Change password</h2>
-      <form onSubmit={handleChangePasswordSubmit}>
-      <div className="row">
-      <div className="col-25">
-        <label className='highlight hoverSOmething'>Email:</label>
-        </div>
-        <div className="col-75">
-        <input className="account-settings-un-input" type="email" name="email" value={changePass.email} required={true} onChange={handleChangePassword}
-        />
-         </div>
-         </div>
+        <div className="container-grid-change-pw-delete-account">
+
+          <h2 className="title-account-settings">Change password</h2>
+          <form onSubmit={handleChangePasswordSubmit}>
+            <div className="row">
+              <div className="col-25">
+                <label className='highlight hoverSOmething'>Email:</label>
+              </div>
+              <div className="col-75">
+                <input className="account-settings-un-input" type="email" name="email" value={changePass.email} required={true} onChange={handleChangePassword}
+                />
+              </div>
+            </div>
 
 
 
-         <div className="row">
-          <div className="col-25">
-        <label>Password:</label>
-        </div>
-        <div className="col-75">
-        <input className="account-settings-un-input"
-          type="password"
-          value={changePass.password}
-          name="password"
-          required={true}
-          onChange={handleChangePassword}
-        />
-        </div>
-        </div>
+            <div className="row">
+              <div className="col-25">
+                <label>Password:</label>
+              </div>
+              <div className="col-75">
+                <input className="account-settings-un-input"
+                  type="password"
+                  value={changePass.password}
+                  name="password"
+                  required={true}
+                  onChange={handleChangePassword}
+                />
+              </div>
+            </div>
 
-        <div className="row">
-        <div className="col-25">
-        <label>New Password:</label>
-        </div>
-        <div className="col-75">
-        <input className="account-settings-un-input"
-          onChange={handleChangePassword}
-          type="password"
-          name="changePassword"
-          value={changePass.changePassword}
-          required={true}
-        />
-         </div>
-         </div>
-        <button className='account-settings-submit-button' type="submit">Change Password</button>
-      </form>
-      </div>
-
-      <div className="container-grid-change-pw-delete-account">
-
-{/* Delete Profile */}
-<h2 className="title-account-settings">Delete Profile</h2>
-      <form onSubmit={handleDeleteProfile}>
-
-      <div className="row">
-        <div className="col-25">
-        <label>Email:</label>
-        </div>
-        <div className="col-75">
-        <input className="account-settings-un-input" type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required={true} />
-        </div>
+            <div className="row">
+              <div className="col-25">
+                <label>New Password:</label>
+              </div>
+              <div className="col-75">
+                <input className="account-settings-un-input"
+                  onChange={handleChangePassword}
+                  type="password"
+                  name="changePassword"
+                  value={changePass.changePassword}
+                  required={true}
+                />
+              </div>
+            </div>
+            <button className='btn secondary' type="submit">Change Password</button>
+          </form>
         </div>
 
+        <div className="container-grid-change-pw-delete-account">
 
-        <div className="row">
-        <div className="col-25">
-        <label>Password:</label>
+          {/* Delete Profile */}
+          <h2 className="title-account-settings">Delete Profile</h2>
+          <form onSubmit={handleDeleteProfile}>
+
+            <div className="row">
+              <div className="col-25">
+                <label>Email:</label>
+              </div>
+              <div className="col-75">
+                <input className="account-settings-un-input" type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required={true} />
+              </div>
+            </div>
+
+
+            <div className="row">
+              <div className="col-25">
+                <label>Password:</label>
+              </div>
+              <div className="col-75">
+                <input className="account-settings-un-input"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required={true}
+                />
+              </div>
+            </div>
+
+            <h6 class="warning_delete_user"> ⚠ By deleting your account, you will no longer be able to sign in, your activity will be removed from the Bi-Music platform and your username might be claimed by another user!</h6>
+
+            <button className="btn delete" type="submit">Delete Profile</button>
+          </form>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
-        <div className="col-75">
-        <input className="account-settings-un-input"
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required={true}
-        />
-        </div>
-         </div>
-
-         <h6 class="warning_delete_user"> ⚠ By deleting your account, you will no longer be able to sign in, your activity will be removed from the Bi-Music platform and your username might be claimed by another user!</h6> 
-
-        <button type="submit">Delete Profile</button>
-      </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      </div>
 
 
 

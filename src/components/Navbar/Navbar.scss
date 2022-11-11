@@ -1,26 +1,17 @@
-// nav {
-//     height: 80px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     background-color: $PRIMARY-COLOR;
-//     box-shadow: 0px 0px 6px $TERTIARY-COLOR;
-// }
-
-
 nav {
   height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 2rem;
-  background-color: rgb(var(--PRIMARY-COLOR));
   box-shadow: 0px 0px 6px rgb(var(--TERTIARY-COLOR));
 }
 
 nav ul {
   display: flex;
   list-style: none;
+  height: 100%;
+  align-items: center;
 }
 
 nav li {
@@ -28,6 +19,10 @@ nav li {
   line-height: 100px;
   padding-left: 0.8rem;
   text-transform: uppercase;
+
+  a {
+    display: flex;
+  }
 }
 
 .logouticon {
@@ -36,7 +31,64 @@ nav li {
 }
 
 .bimusicicon2 {
-  height: 80px;
+  height: 150px;
   position: center;
   margin: 0;
+  margin-top: 20px;
+}
+
+.logouticon {
+  height: 50px;
+}
+
+.menu-icon {
+  display: none;
+  height: 50px;
+  width: 50px;
+}
+
+/* 
+---------------------------------------------
+burger menu
+--------------------------------------------- 
+*/
+@media (max-width: 768px) {
+  nav {
+    position: relative;
+
+    ul {
+      flex-direction: column;
+      background-color: rgb(var(--BACKGROUND-COLOR));
+      z-index: 20;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: fit-content;
+      align-items: flex-end;
+
+      li {
+        background-color: rgb(var(--BACKGROUND-COLOR));
+        line-height: 40px;
+        width: fit-content;
+        margin-right: 20px;
+
+        a {
+          text-align: right;
+        }
+      }
+
+      &.show {
+        display: flex;
+      }
+
+      &.hide {
+        display: none;
+      }
+    }
+
+    .menu-icon {
+      display: block;
+    }
+  }
 }

@@ -4,8 +4,6 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
 import { AuthContext } from "../../context/auth.context";
-import commentIcon from '../../assets/icons/100.png'
-import sampleIcon from '../../assets/icons/71.png'
 import FeedbackForm from "../../components/CommentFeedback/CommentFeedbackForm";
 import FeedbackCard from "../../components/CommentFeedback/CommentFeedbackCard";
 import SampleCard from "../../components/SampleCard/SampleCard";
@@ -68,12 +66,16 @@ function SamplesDetail() {
                 </div>
 
                 {/* sample */}
-                <div className="description">
-                    {/* <h2>{title}</h2> */}
-                    <p className="longD">{description}</p>
+                <div className="border-top sample-description">
+                    <h4 className="full">{title}</h4>
                     {sample ? <SampleCard sampleInfo={sample} /> : "-- no sample --"}
+                    <div className='description'>
+                        <p>About the track:</p>
+                        <p>{description}</p>
+                    </div>
                 </div>
             </div>
+
 
             {/* feedback */}
             <div className='border-top'>
