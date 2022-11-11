@@ -76,18 +76,18 @@ function SampleForm(props) {
                 formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
                 setIsLoading(true);
                 const response = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData);
-                console.log(response);
+                // console.log(response);
                 const finalForm = { ...form, year: parseInt(form.year), uploadedLink: response.data.url, linkType: "upload", cloudinary_id: response.data.public_id }
-                console.log("SAMPLE --> ", finalForm);
+                // console.log("SAMPLE --> ", finalForm);
                 const res = await apiClient.post("/samples/create", { finalForm, projectId })
-                console.log("RES FROM BACKEND: ", res)
+                // console.log("RES FROM BACKEND: ", res)
                 setIsLoading(false);
                 navigate(`/profile/${user.name}`)
             } else {
-                console.log("SAMPLE --> ", form)
+                // console.log("SAMPLE --> ", form)
                 const finalForm = { ...form, year: parseInt(form.year), linkType: "url" }
                 const res = await apiClient.post("/samples/create", { finalForm, projectId })
-                console.log("RES FROM BACKEND: ", res)
+                // console.log("RES FROM BACKEND: ", res)
                 navigate(`/profile/${user.name}`)
             }
         } catch (err) {

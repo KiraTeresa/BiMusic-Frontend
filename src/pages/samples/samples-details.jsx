@@ -22,7 +22,7 @@ function SamplesDetail() {
 
     useEffect(() => {
         apiClient.get(`/samples/sample/${id}`).then(async (result) => {
-            console.log("Res from server: ", result)
+            // console.log("Res from server: ", result)
             setSample(result.data)
         }).catch((err) => {
             if (err.response.status === 500) {

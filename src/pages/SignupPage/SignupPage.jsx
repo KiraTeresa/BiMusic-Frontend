@@ -177,7 +177,7 @@ function SignupPage() {
             </div>
             <div className="signup-checkbox-genres-wrapper">
               {SKILL_ENUM.map((skill) => {
-                return <label key={skill}><input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
+                return <label key={skill}><input onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
               })}
             </div>
           </div>

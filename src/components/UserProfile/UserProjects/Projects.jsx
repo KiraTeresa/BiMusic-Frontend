@@ -28,7 +28,7 @@ const Projects = ({ projectArr, collabProjectArr }) => {
             </tr>)
           })}
         </tbody>
-      </table> : <p>Add Some Project</p>
+      </table> : <p>Add some projects</p>
     }
 
     <h3>Collab Project</h3>
@@ -54,7 +54,7 @@ const Projects = ({ projectArr, collabProjectArr }) => {
             </tr>)
           })}
         </tbody>
-      </table> : <p>Do Collaboration</p>
+      </table> : <p>Do collaborations</p>
     }
   </div>
 };
