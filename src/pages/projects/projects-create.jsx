@@ -44,7 +44,7 @@ function ProjectsCreate() {
                 setCountriesAndCities(resArray)
 
                 apiClient.get(`/projects/create?userId=${user._id}`).then((result) => {
-                    console.log("Info from backend: ", result);
+                    // console.log("Info from backend: ", result);
                     const { data } = result;
 
                     if (Object.keys(data).length > 0) {
@@ -59,7 +59,7 @@ function ProjectsCreate() {
 
                     } else {
                         setCitiesList(resArray[0].cities)
-                        console.log("First element: ", resArray[0])
+                        // console.log("First element: ", resArray[0])
                     }
                 })
             }).catch((err) => {
@@ -72,7 +72,7 @@ function ProjectsCreate() {
     function handleChange(e) {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value })
-        console.log("NEW --> ", name, " ", value)
+        // console.log("NEW --> ", name, " ", value)
     }
 
     function handleCountryChange(e) {
@@ -120,7 +120,7 @@ function ProjectsCreate() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log("FORM --> ", form)
+        // console.log("FORM --> ", form)
         let finalForm;
 
         if (form.isRemote) {
@@ -129,11 +129,11 @@ function ProjectsCreate() {
             finalForm = { ...form }
         }
 
-        console.log("Final Form: ", finalForm)
+        // console.log("Final Form: ", finalForm)
 
         apiClient.post("/projects/create", finalForm).then((res) => {
-            console.log("THE RES --> ", res)
-            console.log("ID of new project: --> ", res.data)
+            // console.log("THE RES --> ", res)
+            // console.log("ID of new project: --> ", res.data)
             if (!res.data) {
                 console.log("Missing input.")
             }
