@@ -59,7 +59,7 @@ function HomePage() {
         </div>
         <div className="join">
           <div>join the BiMusic family</div>
-          <Link to="/signup"><button className="btn primary">signup</button></Link>
+          <Link to="/signup"><button className="btn primary">SIGN UP</button></Link>
         </div>
       </div>
 

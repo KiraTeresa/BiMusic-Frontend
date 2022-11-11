@@ -103,92 +103,95 @@ function SignupPage() {
   }
 
   return (
-  <div className="mainwrap-signup">
-   <p className="signup-title" align="center">Sign up</p>
+    <div>
+      <div className="mainwrap-signup">
+        <div className='gradient'></div>
+        <p className="signup-title" align="center">Sign up</p>
 
-      <form onSubmit={handleSignupSubmit}>
-      <div className="signup-row">
-        <div className="sign-col-25">
-        <label>Email:</label>
-        </div>
-        <input className="signup-input-field" type="email" name="email" value={email} onChange={handleEmail} />
-        </div>
-
-
-        <div className="signup-row">
-        <div className="sign-col-25">
-        <label>Choose Password:</label>
-        </div>
-        <input
-        className="signup-input-field"
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
-         </div>
-
-        <div className="signup-row">
-        <div className="sign-col-25">
-        <label>Username:</label>
-        </div>
-        <input className="signup-input-field" type="text" name="username" value={username} onChange={handleName} placeholder="Choose a username" />
-        </div>
+        <form onSubmit={handleSignupSubmit}>
+          <div className="signup-row">
+            <div className="sign-col-25">
+              <label>Email:</label>
+            </div>
+            <input className="signup-input-field" type="email" name="email" value={email} onChange={handleEmail} />
+          </div>
 
 
-        <div className="signup-row">
-        <div className="sign-col-25">
-        <label>Where do you live?</label>
-        </div>
-        <select className="signup-input-field" name="country" onChange={handleCountry}>
-          <option value=""> Select the country</option>
-          {countries.map((element, index) => {
-            return <option key={index} value={element.country}>{element.country}</option>
-          })}
-        </select>
-        </div>
+          <div className="signup-row">
+            <div className="sign-col-25">
+              <label>Choose Password:</label>
+            </div>
+            <input
+              className="signup-input-field"
+              type="password"
+              name="password"
+              value={password}
+              onChange={handlePassword}
+            />
+          </div>
 
-        <div className="signup-row">
-        <div className="sign-col-25">
-        <label>Pick the city closest to you</label>
-        </div>
-        <select className="signup-input-field" name="city" onChange={handleCity} disabled={!country}>
-          <option value="">Select the city</option>
-          {cities && cities.map((element, index) => {
-            return <option key={index} value={element}>{element}</option>
-          })}
-        </select>
-        </div>
+          <div className="signup-row">
+            <div className="sign-col-25">
+              <label>Username:</label>
+            </div>
+            <input className="signup-input-field" type="text" name="username" value={username} onChange={handleName} />
+          </div>
 
 
+          <div className="signup-row">
+            <div className="sign-col-25">
+              <label>Where do you live?</label>
+            </div>
+            <select className="signup-input-field location" name="country" onChange={handleCountry}>
+              <option value=""> Select the country</option>
+              {countries.map((element, index) => {
+                return <option key={index} value={element.country}>{element.country}</option>
+              })}
+            </select>
+          </div>
 
-        <div className="signup-row">
-        <div className="sign-col-25">
-        <label>Tell a little bit about yourself:</label>
-        </div>
-        <textarea className="signup-input-field" type="text" name="country" value={aboutMe} onChange={handleAboutMe} placeholder="What inspires you? What drives you?..." />
-        </div>
-
-        <div className="signup-row">
-        <div className="sign-col-25">
-        <label className="label-title">What kind of musician are you?</label>
-        </div>
-        <div className="signup-checkbox-genres-wrapper">
-        {SKILL_ENUM.map((skill) => {
-          return <label key={skill}><input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
-        })}
-         </div>
-         </div>
-    
+          <div className="signup-row">
+            <div className="sign-col-25">
+              <label>Pick the city closest to you</label>
+            </div>
+            <select className="signup-input-field location" name="city" onChange={handleCity} disabled={!country}>
+              <option value="">Select the city</option>
+              {cities && cities.map((element, index) => {
+                return <option key={index} value={element}>{element}</option>
+              })}
+            </select>
+          </div>
 
 
-        <button className="loginbtn" type="submit">Sign Up</button>
-      </form>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <div className="signup-row">
+            <div className="sign-col-25">
+              <label>Tell a little bit about yourself:</label>
+            </div>
+            <textarea className="signup-input-field" type="text" name="aboutMe" value={aboutMe} onChange={handleAboutMe} placeholder="What inspires you? What drives you?..." />
+          </div>
 
-      <p>Already have account?</p>
-      <Link to={"/login"}> Log in here <span className="emojis">👈</span></Link>
+          <div className="signup-row">
+            <div className="sign-col-25">
+              <label className="label-title">What kind of musician are you?</label>
+            </div>
+            <div className="signup-checkbox-genres-wrapper">
+              {SKILL_ENUM.map((skill) => {
+                return <label key={skill}><input id="checkbox-rect1" onChange={handleCheckboxChange} type="checkbox" name="lookingFor" value={skill}></input>{skill}</label>
+              })}
+            </div>
+          </div>
+
+
+
+          <button className="btn primary" type="submit">SIGN UP</button>
+        </form>
+
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+        <p>Already have account?</p>
+        <Link to={"/login"}> Log in here <span className="emojis">👈</span></Link>
+      </div>
     </div>
   );
 }
