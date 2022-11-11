@@ -69,7 +69,7 @@ const UserInfo = ({ userInfo }) => {
                 </div> */}
                 <span className="no-of-user-rate"></span>
                 {userInfo.skills.map((skill) => {
-                  return <li>{skill}</li>
+                  return <li key={skill}>{skill}</li>
                 })}
                 {/* <span>placeholder</span>
                 <span>&nbsp;&nbsp;placeholer</span> */}

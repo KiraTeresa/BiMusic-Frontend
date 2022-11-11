@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
 import axios from "axios";
 import SKILL_ENUM from "../../consts/skillEnum"
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from "../../components/Loading/Loading";
 
@@ -54,7 +54,7 @@ const EditUserProfile = () => {
     apiClient
       .get(`/profile/${user.name}`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         const { samples, ownProjects } = response.data
         setUserInfo(response.data)
         setUserSample(samples)
@@ -85,7 +85,7 @@ const EditUserProfile = () => {
       let updatedData = { name: name.toLowerCase(), city, country, aboutMe, email: userInfo.email };
       //Updating data to database
       await apiClient.put("/profile/editinfo", updatedData).then((response) => {
-        console.log("Response token?? --> ", response.data)
+        // console.log("Response token?? --> ", response.data)
         const { authToken, user: updatedUser } = response.data
         storeToken(authToken);
         authenticateUser();
@@ -104,7 +104,7 @@ const EditUserProfile = () => {
   const handleAddSkills = async (e, skill) => {
     try {
       e.preventDefault();
-      console.log(skill);
+      // console.log(skill);
       let updatedData = { skill, email: userInfo.email };
       //Updating data to database
       const response = await apiClient.put("/profile/editskill", updatedData);
@@ -128,7 +128,7 @@ const EditUserProfile = () => {
       let updatedData = { skill, email: userInfo.email };
       //Updating data to database
       const response = await apiClient.put("/profile/deleteskill", updatedData);
-      console.log("Updated skill: ", response)
+      // console.log("Updated skill: ", response)
       //Fetching data again
       const updatedInfo = await apiClient.get(`/profile/${response.data.name}`);
       setUserInfo(updatedInfo.data);
@@ -146,10 +146,10 @@ const EditUserProfile = () => {
     try {
       e.preventDefault();
       let projectId = id;
-      console.log("Clicked.......", id);
+      // console.log("Clicked.......", id);
       //Updating data to database
       const result = await apiClient.post(`/projects/${projectId}/delete`);
-      console.log(result);
+      // console.log(result);
       // //Fetching data again
       // const updatedProject = await apiClient.get(`/profile/addedproject/${user._id}`);
       // setUserProject(updatedProject.data);

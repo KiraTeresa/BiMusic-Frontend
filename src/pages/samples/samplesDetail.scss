@@ -87,7 +87,7 @@ Sample detail
                 display: flex;
                 justify-content: center;
                 position: relative;
-                width: fit-content;
+                width: 250px;
                 overflow: hidden;
                 border: rgb(var(--TERTIARY-COLOR)) 1px solid;
                 border-radius: calc(15px);
@@ -97,7 +97,7 @@ Sample detail
                 }
 
                 @media (max-width: 768px) {
-                    width: 300px;
+                    width: 250px;
                 }
 
                 img {
