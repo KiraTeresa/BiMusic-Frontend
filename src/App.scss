@@ -93,8 +93,9 @@
       color: rgb(var(--TERTIARY-COLOR));
       background: linear-gradient(to right, rgb(var(--QUATERNARY-COLOR)), rgb(var(--PRIMARY-COLOR)));
       border: 0;
-      padding-left: 80px;
-      padding-right: 80px;
+      // padding-left: 80px;
+      // padding-right: 80px;
+      width: 100%;
       padding-bottom: 10px;
       padding-top: 10px;
       font-family: 'Ubuntu', sans-serif;
@@ -120,8 +121,8 @@
       background: linear-gradient(to right, rgb(var(--TERTIARY-COLOR)), rgb(var(--PRIMARY-COLOR)));
       ;
       color: rgb(var(--BACKGROUND-COLOR));
-      padding-left: 80px;
-      padding-right: 80px;
+      // padding-left: 80px;
+      // padding-right: 80px;
       padding-bottom: 10px;
       padding-top: 10px;
       font-family: 'Ubuntu', sans-serif;
@@ -174,10 +175,10 @@
   }
 
   /* 
----------------------------------------------
-breakpoint 1024px
---------------------------------------------- 
-*/
+  ---------------------------------------------
+  breakpoint 1024px
+  --------------------------------------------- 
+  */
   @media (max-width: 1024px) {
     &>div {
       // border: purple solid 1px;
@@ -187,13 +188,13 @@ breakpoint 1024px
   }
 
   /* 
----------------------------------------------
-breakpoint 768px
---------------------------------------------- 
-*/
+  ---------------------------------------------
+  breakpoint 768px
+  --------------------------------------------- 
+  */
   @media (max-width: 768px) {
     &>div {
-      // border: blue solid 1px;
+      border: blue solid 1px;
       max-width: 736;
       margin: auto;
     }
@@ -206,7 +207,7 @@ breakpoint 480px
 */
   @media (max-width: 480px) {
     &>div {
-      // border: green solid 1px;
+      border: green solid 1px;
       max-width: 90%;
       margin: auto;
       padding-left: 0;

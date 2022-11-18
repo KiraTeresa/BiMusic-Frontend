@@ -45,37 +45,40 @@ function LoginPage() {
   };
 
   return (
-    <div id="mainwraplogin">
-      <div className='gradient'></div>
-      <p className="login-title" align="center">Login</p>
+    <div>
 
-      <form onSubmit={handleLoginSubmit}>
+      <div id="mainwraplogin">
+        <div className='gradient'></div>
+        <p className="login-title" align="center">Login</p>
 
-        <div className="login-row">
-          <div className="login-col-25">
-            <label className="login-title-labels">Email:</label>
+        <form onSubmit={handleLoginSubmit}>
+
+          <div className="login-row">
+            <div className="login-col-25">
+              <label className="login-title-labels">Email:</label>
+            </div>
+            <input className="login-input-field" type="email" name="email" value={email} onChange={handleEmail} />
           </div>
-          <input className="login-input-field" type="email" name="email" value={email} onChange={handleEmail} />
-        </div>
 
 
 
-        <div className="login-col-25">
-          <label className="login-title-labels">Password:</label>
-        </div>
-        <input className="login-input-field"
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
+          <div className="login-col-25">
+            <label className="login-title-labels">Password:</label>
+          </div>
+          <input className="login-input-field"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handlePassword}
+          />
 
-        <p><button className="btn primary" type="submit">LOGIN</button></p>
-      </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <button className="btn primary" type="submit">LOGIN</button>
+        </form>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p>Don't have an account yet?</p>
-      <Link to={"/signup"}> Sign Up here <span className="emojis">👈</span></Link>
+        <p>Don't have an account yet?</p>
+        <Link to={"/signup"}> Sign Up here <span className="emojis">👈</span></Link>
+      </div>
     </div>
   );
 }

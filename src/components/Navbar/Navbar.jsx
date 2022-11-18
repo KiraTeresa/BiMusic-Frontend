@@ -34,20 +34,20 @@ function Navbar() {
 
 
             <li>
-              <Link to={`/profile/${user.name}`}>Profile</Link>
+              <Link to={`/profile/${user.name}`} onClick={toggleBurgerMenu}>Profile</Link>
             </li>
 
             <li>
-              <Link to="/projects">Projects</Link>
+              <Link to="/projects" onClick={toggleBurgerMenu}>Projects</Link>
             </li>
 
 
             <li>
-              <Link to="/samples">Samples</Link>
+              <Link to="/samples" onClick={toggleBurgerMenu}>Samples</Link>
             </li>
 
             <li>
-              <Link to="/chats">Chat</Link>
+              <Link to="/chats" onClick={toggleBurgerMenu}>Chat</Link>
             </li>
 
             <li>
