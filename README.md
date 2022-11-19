@@ -1,6 +1,6 @@
 # BiMusic
 
-This project was built by @nicberger and @KiraTeresa as the final project of the Web Development Bootcamp at Ironhack
+This project was built by [Nico](https://github.com/nicberger) and [Kira](https://github.com/KiraTeresa) as the final project of the Web Development Bootcamp at Ironhack
 
 ## Concept
 
@@ -13,19 +13,19 @@ one, easy-to-access website.
 
 ## Main features
 
-### User-generated sample library
+#### User-generated sample library
 Users can upload samples or finished songs 
 showcasing their work within a community
 of other musicians
 
-### Publication of collaboration requests
+#### Publication of collaboration requests
 Users can find and scout musicians profiles turning
 ideas into a finished collaboration
 
-### Feedback sharing
+#### Feedback sharing
 Users can post comments under music projects
 sharing ideas and suggestions
 
-### Direct Messaging platform
+#### Direct Messaging platform
 Users can contact each other directly
 via an internal chat to exchange information
