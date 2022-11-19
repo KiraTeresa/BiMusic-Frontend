@@ -69,7 +69,7 @@ const EditUserProfile = () => {
           console.log(err)
         }
       });
-  }, []);
+  }, [user.name, navigate]);
 
   useEffect(() => {
     let skillEnum2 = [...SKILL_ENUM];
@@ -148,7 +148,7 @@ const EditUserProfile = () => {
       let projectId = id;
       // console.log("Clicked.......", id);
       //Updating data to database
-      const result = await apiClient.post(`/projects/${projectId}/delete`);
+      await apiClient.post(`/projects/${projectId}/delete`);
       // console.log(result);
       // //Fetching data again
       // const updatedProject = await apiClient.get(`/profile/addedproject/${user._id}`);
@@ -168,7 +168,7 @@ const EditUserProfile = () => {
       setIsLoading(true);
       const response = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, formData);
       const avatarData = { avatar: response.data.url, cloudinary_id: response.data.public_id, email: userInfo.email }
-      const uploadedAvatar = await apiClient.put("/profile/uploadavatar", avatarData)
+      await apiClient.put("/profile/uploadavatar", avatarData)
       //Fetching data again
       const updatedInfo = await apiClient.get(`/profile/${user.name}`);
       if (updatedInfo.status === 200) {
@@ -191,7 +191,7 @@ const EditUserProfile = () => {
     try {
       e.preventDefault();
       //Updating data to database
-      const result = await apiClient.delete(`/samples/${id}`);
+      await apiClient.delete(`/samples/${id}`);
       // console.log(result);
       // //Fetching data again
       // const updatedSample = await apiClient.get(`/samples/${user._id}`);
@@ -224,7 +224,7 @@ const EditUserProfile = () => {
               <form onSubmit={handleAvatarUpdate}>
                 <input type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
                 <div className="upload-file-btn">
-                  <p><input className="btn primary" value="Upload file" type="submit" /></p>
+                  <input className="btn primary" value="Upload file" type="submit" />
                 </div>
               </form>
             </div>

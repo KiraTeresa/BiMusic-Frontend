@@ -58,6 +58,15 @@
     border-radius: 15px;
     background-color: #f2f2f2;
     padding: 20px;
+
+    @media (max-width: 480px) {
+      padding: 20px 0;
+    }
+
+    .btn {
+      margin: 0 auto;
+      width: 80%;
+    }
   }
 
   /* Floating column for labels: 25% width */
@@ -90,9 +99,6 @@
     border-color: black;
     border-width: 2px;
     border-style: dotted;
-    // width: 50vw;
-    // margin-left: auto;
-    // margin-right: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -145,6 +151,7 @@
     padding-top: 10%;
     display: flex;
     justify-content: center;
+    width: 100%;
   }
 
 
