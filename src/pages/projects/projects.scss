@@ -23,6 +23,11 @@ Projects
             padding: 0 15px 5px 0;
         }
 
+        a {
+            width: 80%;
+            max-width: 250px;
+        }
+
         @media (max-width: 768px) {
             flex-direction: column;
 

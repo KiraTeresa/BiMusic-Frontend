@@ -28,14 +28,14 @@ function useAudioPlayer() {
     if (clickedTime && clickedTime !== curTime) {
       audio.currentTime = clickedTime;
       setClickedTime(null);
-    } 
+    }
 
     // effect cleanup
     return () => {
       audio.removeEventListener("loadeddata", setAudioData);
       audio.removeEventListener("timeupdate", setAudioTime);
     }
-  });
+  }, [playing, clickedTime, curTime]);
 
   return {
     curTime,

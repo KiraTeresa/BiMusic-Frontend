@@ -1,15 +1,15 @@
 import "./user-profile.scss";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/auth.context";
+import { useEffect, useState } from "react";
+// import { AuthContext } from "../../context/auth.context";
 import apiClient from '../../services/apiClient';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UserInfo from "../../components/UserProfile/UserInfo";
 
 function ProfilePage() {
   const [userInfo, setUserInfo] = useState(null);
-  const { user } = useContext(AuthContext)//this function will give us the user info
+  // const { user } = useContext(AuthContext)//this function will give us the user info
   const { username } = useParams()
-  const isOwnProfile = (username === user.name)
+  // const isOwnProfile = (username === user.name)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function ProfilePage() {
           console.log(err)
         }
       });
-  }, [username]);
+  }, [username, navigate]);
 
   return (
     <div className="user-profile-container">

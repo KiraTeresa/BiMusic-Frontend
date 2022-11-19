@@ -16,7 +16,7 @@ function ChatLinkCard({ chatInfo }) {
                 navigate('/internal-server-error')
             } else console.log(err)
         })
-    }, [_id, currentChat])
+    }, [_id, currentChat, navigate])
 
     function goToChatroom() {
         navigate(`/chats/${_id}`)
