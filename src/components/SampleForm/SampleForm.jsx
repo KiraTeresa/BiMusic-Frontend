@@ -114,7 +114,10 @@ function SampleForm(props) {
 
     return (
         <div className="upload__form__c-samp">
-            <div className="upload__title">Upload a track to share it with the community</div>
+            {!projectId ?
+                <div className="upload__title">Upload a track to share it with the community</div>
+                : ""
+            }
             <div className="up__f__c">
                 <div className='gradient'></div>
                 <div style={{ display: "flex", flexDirection: "column" }} >

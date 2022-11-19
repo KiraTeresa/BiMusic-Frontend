@@ -1,3 +1,7 @@
+.samp-proj-title {
+  color: rgb(var(--PRIMARY-COLOR))
+}
+
 .upload__form__c-samp {
   display: flex;
   flex-direction: column;
@@ -14,7 +18,7 @@
     justify-content: center;
     background-color: rgb(var(--TERTIARY-COLOR));
     font-size: 15px;
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
     max-width: 85%;
     width: 100%;
     color: rgb(var(--BACKGROUND-COLOR));
