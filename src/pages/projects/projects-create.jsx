@@ -67,7 +67,7 @@ function ProjectsCreate() {
                     navigate('/internal-server-error')
                 } else { console.log(err) }
             }).finally(() => setIsLoading(false));
-    }, [user._id])
+    }, [user._id, navigate])
 
     function handleChange(e) {
         const { name, value } = e.target;

@@ -5,7 +5,7 @@ import contributorsIcon from '../../assets/icons/collab-icon-white.png'
 import sampleIcon from '../../assets/icons/note-icon-white.png'
 
 function ProjectCard({ project, backgroundColor }) {
-    const { _id, title, shortDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, collaborators, comments, sample } = project;
+    const { _id, title, shortDescription, lookingFor, initiator, collaborators, comments, sample } = project;
 
     return (
         <div className="project-card" style={{ backgroundColor }}>

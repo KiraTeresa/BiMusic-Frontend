@@ -24,7 +24,7 @@ function Samples() {
                 console.log(err)
             }
         }).finally(() => setIsLoading(false))
-    }, [])
+    }, [navigate])
 
     function toggleFilter() {
         setShowFilter(!showFilter)

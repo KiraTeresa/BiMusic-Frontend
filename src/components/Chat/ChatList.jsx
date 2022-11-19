@@ -23,7 +23,7 @@ function ChatList({ currentChat }) {
                 navigate('/internal-server-error')
             } else { console.log(err) }
         }).finally(() => setIsLoading(false))
-    }, [currentChat]) // needs this dependency to trigger update of unread messages
+    }, [currentChat, navigate]) // needs this dependency to trigger update of unread messages
 
     function handleChange(e) {
         const { value } = e.target

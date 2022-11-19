@@ -21,7 +21,7 @@ const UserInfo = ({ userInfo }) => {
         console.log(err)
       }
     })
-  }, [])
+  }, [navigate])
 
   return (
     <div className="container">

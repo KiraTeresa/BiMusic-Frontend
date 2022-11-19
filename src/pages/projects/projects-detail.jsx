@@ -92,8 +92,7 @@ function ProjectDetail() {
     }
 
 
-    // console.log("WHO is WHO *********** ", alreadyCollab, " | ", alreadyPending, " | ", isInitiator)
-    const { title, shortDescription, longDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, pendingCollabs, comments, sample } = project;
+    const { title, longDescription, genre, lookingFor, startDate, endDate, isRemote, city, country, initiator, pendingCollabs, sample } = project;
 
 
     return (
@@ -103,7 +102,6 @@ function ProjectDetail() {
                 <div className="description">
                     <h2>{title}</h2>
                     <p className="longD">{longDescription}</p>
-                    {/* {alreadyCollab ? "" : alreadyPending ? "" : isInitiator ? "" : <button onClick={triggerJoinLeave}>join</button>} */}
 
                     <div className="info">
                         <div className="date-location">
@@ -151,8 +149,6 @@ function ProjectDetail() {
                             return (
                                 <div className="collab" key={collab.name}>
                                     <Link to={`/profile/${collab.name}`}>
-                                        {/* <div className={`user-status ${collab.status}`}></div>
-                                <h4>{collab.name}</h4> */}
                                         <img src={collab.avatar} alt="user avatar" />
                                         <div className="user-info">
                                             <p>{collab.name}</p>
@@ -225,13 +221,6 @@ function ProjectDetail() {
             {sample ?
                 <div className="sample border-top">
                     <h4 className="full">sample: {sample.title}</h4>
-                    {/* <p>---- sample sample ----</p> */}
-                    {/* {sample?.linkType === "url" ?
-                    <p>{initiator.name} added a video of <span className="title">{sample.title}</span>, check it out</p>
-                    : sample?.linkType === "upload" ?
-                    <p>{initiator.name} uploaded a sample with the title <span className="title">{sample.title}</span>, listen i:</p>
-                : ""} */}
-                    {/* <img className={`icon ${!sample ? "grayout" : ""}`} src={sampleIcon} alt="sample icon" /> */}
                     <SampleCard sampleInfo={sample} />
                 </div>
                 : ""
