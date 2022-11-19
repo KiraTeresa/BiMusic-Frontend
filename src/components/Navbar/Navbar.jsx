@@ -63,11 +63,11 @@ function Navbar() {
         {!isLoggedIn && (
           <>
             <li>
-              <Link to="/signup">
+              <Link to="/signup" onClick={hideBurgerMenu}>
                 {" "}Sign Up{" "}</Link>
             </li>
             <li>
-              <Link to="/login">
+              <Link to="/login" onClick={hideBurgerMenu}>
                 {" "}Login{" "}
               </Link>
             </li>
