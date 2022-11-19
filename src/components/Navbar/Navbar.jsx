@@ -20,7 +20,10 @@ function Navbar() {
 
   function toggleBurgerMenu() {
     setBurgerMenu(!burgerMenu)
-    console.log("CLICKED")
+  }
+
+  function hideBurgerMenu() {
+    setBurgerMenu(false)
   }
 
   return (
@@ -34,20 +37,20 @@ function Navbar() {
 
 
             <li>
-              <Link to={`/profile/${user.name}`}>Profile</Link>
+              <Link to={`/profile/${user.name}`} onClick={hideBurgerMenu}>Profile</Link>
             </li>
 
             <li>
-              <Link to="/projects">Projects</Link>
+              <Link to="/projects" onClick={hideBurgerMenu}>Projects</Link>
             </li>
 
 
             <li>
-              <Link to="/samples">Samples</Link>
+              <Link to="/samples" onClick={hideBurgerMenu}>Samples</Link>
             </li>
 
             <li>
-              <Link to="/chats">Chat</Link>
+              <Link to="/chats" onClick={hideBurgerMenu}>Chat</Link>
             </li>
 
             <li>
@@ -60,11 +63,11 @@ function Navbar() {
         {!isLoggedIn && (
           <>
             <li>
-              <Link to="/signup">
+              <Link to="/signup" onClick={hideBurgerMenu}>
                 {" "}Sign Up{" "}</Link>
             </li>
             <li>
-              <Link to="/login">
+              <Link to="/login" onClick={hideBurgerMenu}>
                 {" "}Login{" "}
               </Link>
             </li>

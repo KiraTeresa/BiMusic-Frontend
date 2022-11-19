@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Samples = ({ sampleArr }) => {
-  console.log(sampleArr)
+  // console.log(sampleArr)
   return (
     <div>
       {sampleArr.length > 0 ?

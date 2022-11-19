@@ -75,12 +75,10 @@ Project detail
     */
 
     .project-info-wrapper {
-        // display: grid;
-        // grid-template-columns: repeat(10, 1fr);
         display: flex;
         justify-content: space-between;
-        // flex-wrap: wrap;
         padding-top: 15px;
+        gap: 10px;
 
         @media (max-width: 768px) {
             flex-direction: column;
@@ -88,12 +86,10 @@ Project detail
         }
 
         .description {
-            // grid-column: 1/7;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             max-width: 60%;
-            // border: dashed purple 1px;
 
             @media (max-width: 768px) {
                 gap: 8px;
@@ -102,14 +98,11 @@ Project detail
 
             h2 {
                 color: rgb(var(--PRIMARY-COLOR));
-                // margin-bottom: 30px;
-                // border: solid yellowgreen 1px;
             }
 
             .info {
                 display: flex;
                 justify-content: space-between;
-                // border: solid blue 1px;
 
                 @media (max-width: 1024px) {
                     flex-direction: column;
@@ -169,12 +162,10 @@ Project detail
             .longD {
                 overflow-wrap: break-word;
                 word-break: break-word;
-                // border: solid yellowgreen 1px;
             }
         }
 
         .initiator {
-            // grid-column: 9/11;
             width: 300px;
             height: 300px;
             display: flex;
@@ -184,6 +175,15 @@ Project detail
 
             .btn {
                 width: fit-content;
+            }
+
+            @media (max-width: 480px) {
+                width: 100%;
+                height: auto;
+
+                img {
+                    width: 100%;
+                }
             }
         }
     }
@@ -218,15 +218,23 @@ Project detail
                 }
             }
 
+            .collab {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
             .no-collab {
-                // border: pink 1px solid;
                 margin: auto;
             }
         }
 
-        .pending-list {
+        .pending-list>div {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
 
             @media (max-width: 768px) {
                 justify-content: center;
@@ -242,6 +250,7 @@ Project detail
 
                 @media (max-width: 480px) {
                     flex-direction: column;
+                    align-items: center;
                 }
 
                 .btn-wrapper {
@@ -266,6 +275,7 @@ Project detail
         hyphens: auto;
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 16px;
         max-width: 50%;
         justify-content: center;

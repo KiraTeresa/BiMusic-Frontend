@@ -67,7 +67,6 @@
             // flex-direction: column;
             justify-content: center;
             align-items: center;
-            // flex-wrap: wrap;
             gap: 4px;
             height: 100%;
 
@@ -81,9 +80,9 @@
                 }
             }
 
-            .b-1 {
-                // margin-left: 35%;
-            }
+            // .b-1 {
+            //     // margin-left: 35%;
+            // }
 
             .b-2 {
 
@@ -177,6 +176,16 @@
 
             div {
                 width: 250px;
+            }
+
+            a {
+                width: 80%;
+            }
+
+            @media (max-width: 480px) {
+                a {
+                    width: 80%;
+                }
             }
         }
 
