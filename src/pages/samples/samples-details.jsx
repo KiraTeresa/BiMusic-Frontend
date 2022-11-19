@@ -1,15 +1,15 @@
 import './samplesDetail.scss'
-import { useCallback, useEffect, useState, useContext } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
 import Loading from '../../components/Loading/Loading';
-import { AuthContext } from "../../context/auth.context";
+// import { AuthContext } from "../../context/auth.context";
 import FeedbackForm from "../../components/CommentFeedback/CommentFeedbackForm";
 import FeedbackCard from "../../components/CommentFeedback/CommentFeedbackCard";
 import SampleCard from "../../components/SampleCard/SampleCard";
 
 function SamplesDetail() {
-    const { user } = useContext(AuthContext)//this function will give us the user info
+    // const { user } = useContext(AuthContext)//this function will give us the user info
     const { id } = useParams();
     const [sample, setSample] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +33,7 @@ function SamplesDetail() {
                 navigate('/', { state: { errorMessage: errorDescription } })
             }
         }).finally(() => setIsLoading(false))
-    }, [id, refresh])
+    }, [id, refresh, navigate])
 
     // async function handleProjectDelete(e) {
     //     await apiClient.post(`/projects/${projectId}/delete`).then((result) => {
@@ -45,7 +45,7 @@ function SamplesDetail() {
     if (isLoading) {
         return <Loading />
     }
-    const { title, genre, artist, description } = sample;
+    const { title, artist, description } = sample;
 
     return (
         <div className="sample-detail-container">

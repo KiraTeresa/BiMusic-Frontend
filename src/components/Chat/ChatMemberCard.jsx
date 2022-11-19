@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 function ChatMemberCard({ userInfo }) {
-    const { name, avatar, skills, status } = userInfo
+    const { name, avatar, status } = userInfo
     const navigate = useNavigate()
 
     const goToUserProfile = () => {
@@ -19,11 +19,6 @@ function ChatMemberCard({ userInfo }) {
                     <div className={`user-status ${status}`}></div>
                 </div>
             </div>
-            {/* <div className="skills">
-                {skills.map((skill) => {
-                    return <p className="skill" key={skill}>{skill}</p>
-                })}
-            </div> */}
         </div>
     )
 }

@@ -1,9 +1,8 @@
 import "./sampleCard.scss";
-import { Link } from "react-router-dom";
 import Audio from "../Audio/Audio";
 
-function SampleCard({ sampleInfo, backgroundColor }) {
-    const { linkType, title, uploadedLink, link, genre } = sampleInfo;
+function SampleCard({ sampleInfo }) {
+    const { linkType, title, uploadedLink, link } = sampleInfo;
     // let sample;
     let embededCode;
 
@@ -26,9 +25,6 @@ function SampleCard({ sampleInfo, backgroundColor }) {
     // }
     return (
         <div className="sample-card-container">
-            {/* <p className="title">{title}</p> */}
-            {/* <p>{genre}</p> */}
-            {/* <div style={{ backgroundColor: backgroundColor }}> */}
             {linkType === "url" ?
                 <div className="iframe-container">
                     <iframe className="responsive-iframe" src={`https://www.youtube.com/embed/${embededCode}`} title={title} frameBorder="0"></iframe> </div>
@@ -36,7 +32,6 @@ function SampleCard({ sampleInfo, backgroundColor }) {
                     <Audio link={uploadedLink} songName={title} />
                     : "- no sample found -"
             }
-            {/* </div> */}
         </div>
     )
 }
