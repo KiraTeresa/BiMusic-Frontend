@@ -47,15 +47,17 @@ const AccountSettings = () => {
       const res = await apiClient.put("/user", changePass);
       if (res.status === 200) {
         console.log("Success")
+        navigate(`/profile/${res.data.user.name}`)
       }
     } catch (err) {
       const errorDescription = err.response.data.message;
       setErrorMessage(errorDescription)
     }
   }
+
   return (
     <div className="account-settings-container">
-      AccountSettings
+      <h2>AccountSettings</h2>
 
 
       {/* Change Password */}
@@ -64,7 +66,7 @@ const AccountSettings = () => {
 
         <div className="container-grid-change-pw-delete-account">
 
-          <h2 className="title-account-settings">Change password</h2>
+          <h3 className="title-account-settings">Change password</h3>
           <form onSubmit={handleChangePasswordSubmit}>
             <div className="row">
               <div className="col-25">
@@ -114,7 +116,7 @@ const AccountSettings = () => {
         <div className="container-grid-change-pw-delete-account">
 
           {/* Delete Profile */}
-          <h2 className="title-account-settings">Delete Profile</h2>
+          <h3 className="title-account-settings">Delete Profile</h3>
           <form onSubmit={handleDeleteProfile}>
 
             <div className="row">

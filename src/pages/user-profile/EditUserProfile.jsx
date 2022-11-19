@@ -224,7 +224,7 @@ const EditUserProfile = () => {
               <form onSubmit={handleAvatarUpdate}>
                 <input type="file" onChange={(e) => setUserAvatar(e.target.files[0])} />
                 <div className="upload-file-btn">
-                  <p><input className="btn primary" value="Upload file" type="submit" /></p>
+                  <input className="btn primary" value="Upload file" type="submit" />
                 </div>
               </form>
             </div>

@@ -1,6 +1,10 @@
 .account-settings-container {
   color: black;
 
+  h2 {
+    color: rgb(var(--TERTIARY-COLOR))
+  }
+
   /* Style inputs, select elements and textareas */
   input[type=text],
   select,
