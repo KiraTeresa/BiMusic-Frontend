@@ -1,6 +1,6 @@
 # BiMusic
 
-This project was built by [Nico](https://github.com/nicberger) and [Kira](https://github.com/KiraTeresa) as the final project of the Web Development Bootcamp at Ironhack
+This project was built by [Nico](https://github.com/nicberger) and [Kira](https://github.com/KiraTeresa) as the final project of the Web Development Bootcamp at Ironhack.
 
 ## Concept
 
